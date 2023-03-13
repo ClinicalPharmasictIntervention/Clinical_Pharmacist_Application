@@ -1,8 +1,6 @@
 # clinical_pharmacist_intervention
 
-A new Flutter project.
-
-## Getting Started
+## Graduation Project
 
 This project is a starting point for a Flutter application.
 
