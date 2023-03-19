@@ -1,4 +1,3 @@
-import 'package:clinical_pharmacist_intervention/business_logic/login_cubit/cubit.dart';
 import 'package:clinical_pharmacist_intervention/business_logic/login_cubit/states.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
