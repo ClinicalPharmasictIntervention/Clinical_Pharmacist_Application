@@ -37,6 +37,9 @@ dependencies:
   # firebase packages
   firebase_core: ^2.8.0
   firebase_auth: ^4.3.0
+  # indirect phone call
+  url_launcher: ^6.1.10
+
 
 dev_dependencies:
   flutter_test:
