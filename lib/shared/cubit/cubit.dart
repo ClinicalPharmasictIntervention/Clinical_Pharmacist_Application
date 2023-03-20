@@ -12,8 +12,10 @@ class AppCubit extends Cubit<AppStates> {
 
     emit(DialerLoadingState());
     if (await canLaunchUrl(url)) {
+      emit(DialerSuccessState());
       await launchUrl(url);
     } else {
+      emit(DialerErrorState());
       throw 'Error occurred trying to call that number.';
     }
   }

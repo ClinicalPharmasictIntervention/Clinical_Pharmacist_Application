@@ -1,3 +1,4 @@
+import 'package:clinical_pharmacist_intervention/business_logic/intervention_cubit/cubit.dart';
 import 'package:clinical_pharmacist_intervention/presentation/clinical_pharmacist_screen.dart';
 import 'package:clinical_pharmacist_intervention/presentation/physician_screen.dart';
 import 'package:clinical_pharmacist_intervention/shared/bloc_observer.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => AppCubit()),
+        BlocProvider(create: (context) => InterventionCubit()),
       ],
       child: const MaterialApp(
         home: PhysicianScreen(),

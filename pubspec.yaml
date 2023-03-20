@@ -39,6 +39,8 @@ dependencies:
   firebase_auth: ^4.3.0
   # indirect phone call
   url_launcher: ^6.1.10
+  image_picker: ^0.8.7
+
 
 
 dev_dependencies:
