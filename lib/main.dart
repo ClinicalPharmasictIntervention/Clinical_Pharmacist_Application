@@ -1,6 +1,5 @@
 import 'package:clinical_pharmacist_intervention/business_logic/intervention_cubit/cubit.dart';
-import 'package:clinical_pharmacist_intervention/presentation/clinical_pharmacist_screen.dart';
-import 'package:clinical_pharmacist_intervention/presentation/physician_screen.dart';
+import 'package:clinical_pharmacist_intervention/presentation/on_boarding_screen.dart';
 import 'package:clinical_pharmacist_intervention/shared/bloc_observer.dart';
 import 'package:clinical_pharmacist_intervention/shared/cubit/cubit.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +24,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => InterventionCubit()),
       ],
       child: const MaterialApp(
-        home: PhysicianScreen(),
+        home: OnBoardingScreen(),
       ),
     );
   }
