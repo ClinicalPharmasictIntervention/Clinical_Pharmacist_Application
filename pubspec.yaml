@@ -40,6 +40,8 @@ dependencies:
   # indirect phone call
   url_launcher: ^6.1.10
   image_picker: ^0.8.7
+  introduction_screen: ^3.1.4
+
 
 
 
@@ -52,3 +54,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
+  assets:
+    - assets/images/logo.jpg
+    - assets/images/
