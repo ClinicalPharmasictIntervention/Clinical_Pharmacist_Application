@@ -11,20 +11,21 @@ class PrimaryBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: () {
-          onPressed();
-        },
-        style: ElevatedButton.styleFrom(
-            backgroundColor: secondaryColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(cornersRadiusConst),
-            )),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: Text(
-            btnTitle,
-            style: txtTheme(context).titleLarge!.copyWith(color: primaryColor),
-          ),
-        ));
+      onPressed: () {
+        onPressed();
+      },
+      style: ElevatedButton.styleFrom(
+          backgroundColor: secondaryColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(cornersRadiusConst),
+          )),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Text(
+          btnTitle,
+          style: txtTheme(context).titleLarge!.copyWith(color: primaryColor),
+        ),
+      ),
+    );
   }
 }
