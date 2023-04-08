@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => AppCubit()),
         BlocProvider(create: (context) => InterventionCubit()),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
         home: OnBoardingScreen(),
       ),
     );
