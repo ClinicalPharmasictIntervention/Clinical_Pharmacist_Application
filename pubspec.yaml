@@ -51,10 +51,12 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  assets:
-    - assets/images/
-
   fonts:
-    - family: Roboto Slab
+    - family: almarai
       fonts:
-        - asset: assets/fonts/RobotoSlab-Regular.ttf
+        - asset: fonts/Almarai_Light.ttf
+        - asset: fonts/Almarai_Regular.ttf
+        - asset: fonts/Almarai_Bold.ttf
+        - asset: fonts/Almarai_ExtraBold.ttf
+
+
