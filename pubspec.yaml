@@ -60,12 +60,12 @@ flutter:
         - asset: fonts/Almarai_Bold.ttf
         - asset: fonts/Almarai_ExtraBold.ttf
 
+    - family: Roboto Slab
+      fonts:
+        - asset: assets/fonts/RobotoSlab-Regular.ttf
+
 
   assets:
     - assets/images/logo.jpg
     - assets/images/
 
-  fonts:
-    - family: Roboto Slab
-      fonts:
-        - asset: assets/fonts/RobotoSlab-Regular.ttf
