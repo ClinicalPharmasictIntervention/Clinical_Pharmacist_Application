@@ -13,7 +13,12 @@ class PhysicianScreen extends StatelessWidget {
     return BlocConsumer<InterventionCubit, InterventionStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        return Scaffold();
+        return const Scaffold(
+          backgroundColor: Colors.blue,
+          body: Center(
+            child: Text('Physician Screen'),
+          ),
+        );
       },
     );
   }
