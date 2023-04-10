@@ -1,7 +1,8 @@
+import 'package:clinical_pharmacist_intervention/main.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
-class OnBoardingScreen extends StatelessWidget {
+class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IntroductionScreen(
@@ -32,11 +33,10 @@ class OnBoardingScreen extends StatelessWidget {
               ),
             ],
           ),
-          decoration: const PageDecoration(
-            titleTextStyle: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 25.0,
-            ),
+          decoration: PageDecoration(
+            titleTextStyle:
+                txtTheme(context).titleLarge!.copyWith(fontSize: 29),
+            bodyTextStyle: txtTheme(context).bodySmall!.copyWith(fontSize: 16),
           ),
         ),
         PageViewModel(
@@ -65,9 +65,10 @@ class OnBoardingScreen extends StatelessWidget {
               ),
             ],
           ),
-          decoration: const PageDecoration(
+          decoration: PageDecoration(
             titleTextStyle:
-                TextStyle(fontWeight: FontWeight.w700, fontSize: 25.0),
+                txtTheme(context).titleLarge!.copyWith(fontSize: 27),
+            bodyTextStyle: txtTheme(context).bodySmall!.copyWith(fontSize: 16),
           ),
         ),
         PageViewModel(
@@ -96,9 +97,10 @@ class OnBoardingScreen extends StatelessWidget {
               ),
             ],
           ),
-          decoration: const PageDecoration(
+          decoration: PageDecoration(
             titleTextStyle:
-                TextStyle(fontWeight: FontWeight.w700, fontSize: 25.0),
+                txtTheme(context).titleLarge!.copyWith(fontSize: 27),
+            bodyTextStyle: txtTheme(context).bodySmall!.copyWith(fontSize: 16),
           ),
         ),
       ],
