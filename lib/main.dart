@@ -1,6 +1,5 @@
 import 'package:clinical_pharmacist_intervention/business_logic/intervention_cubit/cubit.dart';
 import 'package:clinical_pharmacist_intervention/presentation/clinical_pharmacist_screen.dart';
-import 'package:clinical_pharmacist_intervention/presentation/on_boarding_screen.dart';
 import 'package:clinical_pharmacist_intervention/presentation/physician_screen.dart';
 import 'package:clinical_pharmacist_intervention/shared/bloc_observer.dart';
 import 'package:clinical_pharmacist_intervention/shared/cubit/cubit.dart';
@@ -12,7 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -30,4 +29,13 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+}
+
+
+ThemeData appTheme(BuildContext context) {
+  return Theme.of(context);
+}
+
+TextTheme txtTheme(BuildContext context) {
+  return Theme.of(context).textTheme;
 }
