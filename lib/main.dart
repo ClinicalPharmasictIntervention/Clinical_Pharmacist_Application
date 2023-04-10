@@ -30,7 +30,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
 ThemeData appTheme(BuildContext context) {
   return Theme.of(context);
 }
