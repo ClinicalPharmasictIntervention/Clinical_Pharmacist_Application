@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
-class ClinicalPharmacistScreen extends StatelessWidget {
-  const ClinicalPharmacistScreen({super.key});
-
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text('Clinical Pharmacist Screen'),
+        child: Text('Home Screen'),
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:clinical_pharmacist_intervention/main.dart';
-import 'package:clinical_pharmacist_intervention/ui/screens/physician_screen.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/home_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/splash_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +91,7 @@ class OnBoardingScreen extends StatelessWidget {
             ),
           ],
         ),
-        nextScreen: const PhysicianScreen(),
+        nextScreen: HomeScreen(),
         splashTransition: SplashTransition.fadeTransition,
         backgroundColor: Colors.transparent,
       ),
