@@ -20,10 +20,10 @@ class SplashScreen extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(40.0),
+                padding: const EdgeInsets.all(17.0),
                 child: Container(
-                  height: 60.0,
-                  width: 60.0,
+                  height: 100.0,
+                  width: 100.0,
                   child: const Image(
                     image: AssetImage(
                       'assets/images/logo.png',
@@ -52,10 +52,10 @@ class SplashScreen extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(40.0),
+                padding: const EdgeInsets.all(17.0),
                 child: Container(
-                  height: 60.0,
-                  width: 60.0,
+                  height: 100.0,
+                  width: 100.0,
                   child: const Image(
                     image: AssetImage(
                       'assets/images/logo.png',
@@ -80,14 +80,14 @@ class SplashScreen extends StatelessWidget {
             children: [
               Center(
                 child: Image.asset(
-                  'assets/images/doc3.png',
+                  'assets/images/doc3.jpg',
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(40.0),
+                padding: const EdgeInsets.all(17.0),
                 child: Container(
-                  height: 60.0,
-                  width: 60.0,
+                  height: 100.0,
+                  width: 100.0,
                   child: const Image(
                     image: AssetImage(
                       'assets/images/logo.png',
