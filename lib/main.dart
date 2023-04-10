@@ -26,11 +26,10 @@ class MyApp extends StatelessWidget {
       ],
       child: const MaterialApp(
         home: OnBoardingScreen(),
-),
+      ),
     );
   }
 }
-
 
 ThemeData appTheme(BuildContext context) {
   return Theme.of(context);

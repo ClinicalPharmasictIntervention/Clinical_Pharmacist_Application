@@ -8,6 +8,7 @@ class PrimaryBtn extends StatelessWidget {
       : super(key: key);
   String btnTitle;
   Function onPressed;
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -28,4 +29,12 @@ class PrimaryBtn extends StatelessWidget {
       ),
     );
   }
+}
+
+ThemeData appTheme(BuildContext context) {
+  return Theme.of(context);
+}
+
+TextTheme txtTheme(BuildContext context) {
+  return Theme.of(context).textTheme;
 }

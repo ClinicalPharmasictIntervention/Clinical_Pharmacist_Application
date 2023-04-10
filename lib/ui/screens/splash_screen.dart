@@ -25,7 +25,7 @@ class SplashScreen extends StatelessWidget {
                   width: 60.0,
                   child: const Image(
                     image: AssetImage(
-                      'assets/images/logo.jpg',
+                      'assets/images/logo.png',
                     ),
                   ),
                 ),
@@ -58,7 +58,7 @@ class SplashScreen extends StatelessWidget {
                   width: 60.0,
                   child: const Image(
                     image: AssetImage(
-                      'assets/images/logo.jpg',
+                      'assets/images/logo.png',
                     ),
                   ),
                 ),
@@ -79,7 +79,7 @@ class SplashScreen extends StatelessWidget {
             children: [
               Center(
                 child: Image.asset(
-                  'assets/images/doc3.jpg',
+                  'assets/images/doc3.png',
                 ),
               ),
               Padding(
@@ -89,7 +89,7 @@ class SplashScreen extends StatelessWidget {
                   width: 60.0,
                   child: const Image(
                     image: AssetImage(
-                      'assets/images/logo.jpg',
+                      'assets/images/logo.png',
                     ),
                   ),
                 ),
