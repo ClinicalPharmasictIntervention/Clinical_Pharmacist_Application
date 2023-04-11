@@ -65,3 +65,7 @@ flutter:
         - asset: fonts/Almarai_Regular.ttf
         - asset: fonts/Almarai_Bold.ttf
         - asset: fonts/Almarai_ExtraBold.ttf
+
+    - family: IconBroken
+      fonts:
+        - asset: fonts/icons.ttf

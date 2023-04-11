@@ -1,11 +1,19 @@
+import 'package:clinical_pharmacist_intervention/main.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Home Screen'),
+    return Scaffold(
+      body: Padding(
+        padding: EdgeInsets.all(60.0),
+        child: Text(
+          'My Interventions',
+          style: txtTheme(context).displaySmall!.copyWith(
+                fontSize: 35,
+                fontWeight: FontWeight.bold,
+              ),
+        ),
       ),
     );
   }
