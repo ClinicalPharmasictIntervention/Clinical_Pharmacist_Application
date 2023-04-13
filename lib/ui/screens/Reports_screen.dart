@@ -17,18 +17,6 @@ class ReportsScreen extends StatelessWidget {
         tooltip: 'Make Report',
       ),
       appBar: AppBar(
-        // actions: [
-        //   Padding(
-        //     padding: const EdgeInsets.symmetric(horizontal: 15),
-        //     child: IconButton(
-        //       onPressed: () {},
-        //       icon: Icon(
-        //         IconBroken.,
-        //         color: Colors.black87,
-        //       ),
-        //     ),
-        //   )
-        // ],
         title: Padding(
           padding: const EdgeInsets.symmetric(vertical: 30.0),
           child: Row(
@@ -67,49 +55,30 @@ class ReportsScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  FilterChip(
-                    label: Text(
+              child: Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    defaultFilterChip(
+                      context,
                       'Accepted',
-                      style: txtTheme(context).titleMedium!.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      IconBroken.Shield_Done,
+                      secondaryColor,
                     ),
-                    onSelected: (val) {},
-                    backgroundColor: secondaryColor,
-                    elevation: 3.0,
-                    avatar: Icon(IconBroken.Shield_Done),
-                  ),
-                  FilterChip(
-                    label: Text(
+                    defaultFilterChip(
+                      context,
                       'Pending',
-                      style: txtTheme(context).titleMedium!.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      IconBroken.Time_Circle,
+                      Colors.grey[400],
                     ),
-                    onSelected: (val) {},
-                    backgroundColor: Colors.grey[400],
-                    elevation: 3.0,
-                    avatar: Icon(IconBroken.Time_Circle),
-                  ),
-                  FilterChip(
-                    label: Text(
+                    defaultFilterChip(
+                      context,
                       'Deinied',
-                      style: txtTheme(context).titleMedium!.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      IconBroken.Shield_Fail,
+                      Colors.grey[400],
                     ),
-                    onSelected: (val) {},
-                    backgroundColor: Colors.grey[400],
-                    elevation: 3.0,
-                    avatar: Icon(IconBroken.Shield_Fail),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             Expanded(
@@ -182,5 +151,19 @@ class ReportsScreen extends StatelessWidget {
                 ),
           ),
         ],
+      );
+
+  Widget defaultFilterChip(context, title, icon, color) => FilterChip(
+        label: Text(
+          title,
+          style: txtTheme(context).titleMedium!.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+        onSelected: (val) {},
+        backgroundColor: color,
+        elevation: 3.0,
+        avatar: Icon(icon),
       );
 }
