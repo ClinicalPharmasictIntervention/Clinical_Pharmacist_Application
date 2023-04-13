@@ -69,3 +69,4 @@ flutter:
     - family: IconBroken
       fonts:
         - asset: fonts/icons.ttf
+
