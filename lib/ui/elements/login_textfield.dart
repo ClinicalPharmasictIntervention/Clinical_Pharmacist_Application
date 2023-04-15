@@ -6,19 +6,24 @@ import 'package:flutter/material.dart';
 class LoginTextField extends StatelessWidget {
   LoginTextField(
       {Key? key,
-      required this.hintTxt,
+      required this.labelTxt,
+      this.hintTxt,
       required this.prefixIcon,
-      required this.onTxtChange})
+      required this.onTxtChange,
+      this.txtInputType})
       : super(key: key);
-  String hintTxt;
+  String labelTxt;
+  String? hintTxt;
   IconData prefixIcon;
   Function onTxtChange;
+  TextInputType? txtInputType;
   @override
   Widget build(BuildContext context) {
     return TextField(
       onChanged: (val) {
         onTxtChange(val);
       },
+      keyboardType: txtInputType,
       decoration: InputDecoration(
         focusedBorder:
             OutlineInputBorder(borderSide: BorderSide(color: secondaryColor)),
@@ -26,7 +31,8 @@ class LoginTextField extends StatelessWidget {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(cornersRadiusConst),
         ),
-        labelText: hintTxt,
+        labelText: labelTxt,
+        hintText: hintTxt,
         hintStyle: txtTheme(context).titleMedium!.copyWith(color: hintsClr),
       ),
       style: txtTheme(context)

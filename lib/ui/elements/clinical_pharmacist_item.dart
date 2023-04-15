@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class DrItem extends StatelessWidget {
-  DrItem({Key? key, required this.name, required this.department})
+class ClinicalPharmacistItem extends StatelessWidget {
+  ClinicalPharmacistItem({Key? key, required this.name, required this.department})
       : super(key: key);
   String name;
   String department;
@@ -15,7 +15,7 @@ class DrItem extends StatelessWidget {
         leading: Container(
           decoration: BoxDecoration(
             image: const DecorationImage(
-                image: AssetImage("assets/images/avatar_doctor.png",),),
+                image: AssetImage("assets/images/avatar_clinical_pharmacist.png",),),
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(7.0),
             border: Border.all(color: Colors.grey.shade300),
