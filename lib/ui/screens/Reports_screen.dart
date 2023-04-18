@@ -1,6 +1,8 @@
 import 'package:clinical_pharmacist_intervention/main.dart';
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_textfield.dart';
+import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/make_report_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +11,12 @@ class ReportsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MakeReportScreen()),
+          );
+        },
         child: Icon(Icons.add),
         backgroundColor: primaryColor,
         foregroundColor: secondaryColor,
@@ -55,30 +62,28 @@ class ReportsScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    defaultFilterChip(
-                      context,
-                      'Accepted',
-                      IconBroken.Shield_Done,
-                      secondaryColor,
-                    ),
-                    defaultFilterChip(
-                      context,
-                      'Pending',
-                      IconBroken.Time_Circle,
-                      Colors.grey[400],
-                    ),
-                    defaultFilterChip(
-                      context,
-                      'Deinied',
-                      IconBroken.Shield_Fail,
-                      Colors.grey[400],
-                    ),
-                  ],
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  defaultFilterChip(
+                    context,
+                    'Accepted',
+                    IconBroken.Shield_Done,
+                    secondaryColor,
+                  ),
+                  defaultFilterChip(
+                    context,
+                    'Pending',
+                    IconBroken.Time_Circle,
+                    Colors.grey[400],
+                  ),
+                  defaultFilterChip(
+                    context,
+                    'Deinied',
+                    IconBroken.Shield_Fail,
+                    Colors.grey[400],
+                  ),
+                ],
               ),
             ),
             Expanded(

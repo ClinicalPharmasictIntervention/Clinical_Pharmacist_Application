@@ -1,4 +1,5 @@
 import 'package:clinical_pharmacist_intervention/main.dart';
+import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:flutter/material.dart';
@@ -7,12 +8,12 @@ class DefaultTextField extends StatelessWidget {
   DefaultTextField({
     Key? key,
     this.suffixIcon,
+    this.prefixIcon,
     required this.hintTxt,
-    required this.prefixIcon,
     required this.onTxtChange,
   }) : super(key: key);
   String hintTxt;
-  IconData prefixIcon;
+  IconData? prefixIcon;
   IconData? suffixIcon;
   Function onTxtChange;
   @override
