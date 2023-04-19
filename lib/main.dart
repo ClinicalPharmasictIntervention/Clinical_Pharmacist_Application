@@ -3,11 +3,14 @@ import 'package:clinical_pharmacist_intervention/shared/bloc_observer.dart';
 import 'package:clinical_pharmacist_intervention/shared/cubit/cubit.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/dr_options_item.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/dr_item.dart';
+import 'package:clinical_pharmacist_intervention/ui/elements/notification_item.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/choose_acount_type_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/clinical_pharmacist_list_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/dr_list_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/login_screen.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/notification_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/on_boarding_screen.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/profile_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/register_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +35,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => InterventionCubit()),
       ],
       child:  MaterialApp(
-        home: AccountType(),
+        home: ProfileScreen(),
       ),
     );
   }
