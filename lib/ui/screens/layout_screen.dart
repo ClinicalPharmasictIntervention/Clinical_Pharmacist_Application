@@ -1,6 +1,7 @@
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/Reports_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/discuss_screen.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/dr_list_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/home_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/notification_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/profile_screen.dart';
@@ -18,7 +19,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
     HomeScreen(),
     ReportsScreen(),
     NotificationScreen(),
-    DiscussScreen(),
+    DrDiscussionScreen(),
     ProfileScreen(),
   ];
 

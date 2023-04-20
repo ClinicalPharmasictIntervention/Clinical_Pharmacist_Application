@@ -1,4 +1,3 @@
-import 'package:clinical_pharmacist_intervention/main.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
@@ -9,19 +8,24 @@ class DefaultTextField extends StatelessWidget {
     Key? key,
     this.suffixIcon,
     this.prefixIcon,
+    this.txtInputType,
+    this.labelTxt,
     required this.hintTxt,
     required this.onTxtChange,
   }) : super(key: key);
   String hintTxt;
+  String? labelTxt;
   IconData? prefixIcon;
   IconData? suffixIcon;
   Function onTxtChange;
+  TextInputType? txtInputType;
   @override
   Widget build(BuildContext context) {
     return TextField(
       onChanged: (val) {
         onTxtChange(val);
       },
+      keyboardType: txtInputType,
       decoration: InputDecoration(
         focusedBorder:
             OutlineInputBorder(borderSide: BorderSide(color: secondaryColor)),
@@ -30,7 +34,8 @@ class DefaultTextField extends StatelessWidget {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(cornersRadiusConst),
         ),
-        labelText: hintTxt,
+        labelText: labelTxt,
+        hintText: hintTxt,
         hintStyle: txtTheme(context).titleMedium!.copyWith(color: hintsClr),
       ),
       style: txtTheme(context)

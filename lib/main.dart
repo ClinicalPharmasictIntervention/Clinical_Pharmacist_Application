@@ -2,8 +2,6 @@ import 'package:clinical_pharmacist_intervention/business_logic/intervention_cub
 import 'package:clinical_pharmacist_intervention/shared/bloc_observer.dart';
 import 'package:clinical_pharmacist_intervention/shared/cubit/cubit.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/home_screen.dart';
-import 'package:clinical_pharmacist_intervention/ui/screens/layout_screen.dart';
-import 'package:clinical_pharmacist_intervention/ui/screens/make_report_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/on_boarding_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/splash_screen.dart';
 import 'package:flutter/material.dart';

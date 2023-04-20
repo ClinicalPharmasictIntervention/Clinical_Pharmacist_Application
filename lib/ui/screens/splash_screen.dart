@@ -124,6 +124,10 @@ class SplashScreen extends StatelessWidget {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => LayoutScreen()));
       },
+      onSkip: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => LayoutScreen()));
+      },
       next: Text('Next'),
       dotsDecorator: const DotsDecorator(
         activeSize: Size.square(15.0),
