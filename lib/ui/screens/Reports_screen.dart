@@ -27,39 +27,27 @@ class ReportsScreen extends StatelessWidget {
         tooltip: 'Make Report',
       ),
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(
-            IconBroken.Arrow___Left_2,
-            color: Colors.black87,
-          ),
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => LayoutScreen()));
-          },
-        ),
-        title: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 30.0),
-          child: Row(
-            children: [
-              const Icon(
-                size: 30,
-                IconBroken.Document,
-                color: Colors.black87,
-              ),
-              const SizedBox(
-                width: 15.0,
-              ),
-              Text(
-                'Daily Reports',
-                style: txtTheme(context).headlineLarge!.copyWith(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 30.0,
-                      color: Colors.black87,
-                      fontFamily: Lora,
-                    ),
-              ),
-            ],
-          ),
+        leadingWidth: 0,
+        title: Row(
+          children: [
+            const Icon(
+              size: 30,
+              IconBroken.Document,
+              color: Colors.black87,
+            ),
+            const SizedBox(
+              width: 15.0,
+            ),
+            Text(
+              'Daily Reports',
+              style: txtTheme(context).headlineLarge!.copyWith(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 30.0,
+                    color: Colors.black87,
+                    fontFamily: Lora,
+                  ),
+            ),
+          ],
         ),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,

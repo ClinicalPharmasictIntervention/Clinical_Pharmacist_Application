@@ -1,12 +1,18 @@
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/clicable_text.dart';
-import 'package:clinical_pharmacist_intervention/ui/elements/login_textfield.dart';
+import 'package:clinical_pharmacist_intervention/ui/elements/default_textfield.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +39,7 @@ class RegisterScreen extends StatelessWidget {
               const SizedBox(
                 height: 50,
               ),
-              LoginTextField(
+              DefaultTextField(
                   labelTxt: "User name",
                   hintTxt: "Please, enter at least 4 names.",
                   prefixIcon: IconBroken.User,
@@ -41,7 +47,7 @@ class RegisterScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              LoginTextField(
+              DefaultTextField(
                   labelTxt: "ID",
                   hintTxt: "Your ID in this Hospital.",
                   prefixIcon: IconBroken.Unlock,
@@ -49,7 +55,7 @@ class RegisterScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              LoginTextField(
+              DefaultTextField(
                   labelTxt: "E-Mail",
                   hintTxt: "ex: doctor17ahmed@cpi.com 😂🤭",
                   prefixIcon: IconBroken.Message,
@@ -58,7 +64,7 @@ class RegisterScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              LoginTextField(
+              DefaultTextField(
                   labelTxt: "Phone Number",
                   hintTxt: "your current phone number",
                   prefixIcon: IconBroken.Call,
@@ -67,7 +73,7 @@ class RegisterScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              LoginTextField(
+              DefaultTextField(
                   labelTxt: "Password",
                   hintTxt: "Strong Password",
                   prefixIcon: IconBroken.Password,
@@ -76,7 +82,7 @@ class RegisterScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              LoginTextField(
+              DefaultTextField(
                   labelTxt: "Confirm Password",
                   hintTxt: "typical Password",
                   prefixIcon: IconBroken.Password,
@@ -85,7 +91,16 @@ class RegisterScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              Center(child: PrimaryBtn(btnTitle: "Register", onPressed: () {})),
+              Center(
+                child: PrimaryBtn(
+                    btnTitle: "Register",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
+                    }),
+              ),
               const SizedBox(
                 height: 10,
               ),
@@ -100,7 +115,16 @@ class RegisterScreen extends StatelessWidget {
                     const SizedBox(
                       width: 20,
                     ),
-                    ClicableText(txt: "sign in now", onPressed: () {}),
+                    ClicableText(
+                      txt: "sign in now",
+                      onPressed: () {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) => LoginScreen()),
+                        // );
+                      },
+                    ),
                   ],
                 ),
               ),

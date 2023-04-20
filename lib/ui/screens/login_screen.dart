@@ -1,7 +1,10 @@
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/clicable_text.dart';
-import 'package:clinical_pharmacist_intervention/ui/elements/login_textfield.dart';
+import 'package:clinical_pharmacist_intervention/ui/elements/default_textfield.dart';
+import 'package:clinical_pharmacist_intervention/ui/elements/default_textfield.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/layout_screen.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -10,6 +13,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsetsDirectional.all(12.0),
         child: SingleChildScrollView(
@@ -33,14 +37,16 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(
                 height: 50,
               ),
-              LoginTextField(
+              DefaultTextField(
+                  hintTxt: '',
                   labelTxt: "User name",
                   prefixIcon: IconBroken.User,
                   onTxtChange: () {}),
               const SizedBox(
                 height: 30,
               ),
-              LoginTextField(
+              DefaultTextField(
+                  hintTxt: '',
                   labelTxt: "Password",
                   prefixIcon: IconBroken.Password,
                   //   txtInputType: TextInputType. ,
@@ -48,13 +54,23 @@ class LoginScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              Center(child: PrimaryBtn(btnTitle: "Login", onPressed: () {})),
+              Center(
+                  child: PrimaryBtn(
+                      btnTitle: "Login",
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LayoutScreen(),
+                          ),
+                        );
+                      })),
               const SizedBox(
                 height: 10,
               ),
               Center(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const Text(
                       "Do not have an acount?!",
