@@ -135,6 +135,7 @@ class _MakeReportScreenState extends State<MakeReportScreen> {
                           style: txtTheme(context).displaySmall!.copyWith(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,
+                                fontFamily: Lora,
                               ),
                         ),
                         content: Column(
@@ -201,6 +202,7 @@ class _MakeReportScreenState extends State<MakeReportScreen> {
                           style: txtTheme(context).displaySmall!.copyWith(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,
+                                fontFamily: Lora,
                               ),
                         ),
                         content: Column(
@@ -262,7 +264,7 @@ class _MakeReportScreenState extends State<MakeReportScreen> {
                               context,
                               'Is this problem also a medical error ?',
                               readOnly: true,
-                              size: 19.0,
+                              size: 16.0,
                             ),
                             SizedBox(
                               height: 10.0,
@@ -303,6 +305,7 @@ class _MakeReportScreenState extends State<MakeReportScreen> {
                           style: txtTheme(context).displaySmall!.copyWith(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,
+                                fontFamily: Lora,
                               ),
                         ),
                         content: Column(
@@ -349,6 +352,7 @@ class _MakeReportScreenState extends State<MakeReportScreen> {
                       if (isFinalStep) {
                         print('completed');
                         QuickAlert.show(
+                          textColor: Colors.transparent,
                           context: context,
                           type: QuickAlertType.success,
                           text: 'Transaction Completed Successfully!',
@@ -356,7 +360,7 @@ class _MakeReportScreenState extends State<MakeReportScreen> {
                           confirmBtnText: 'Reports',
                           cancelBtnText: 'Another',
                           title:
-                              'Your report is sent to physician, please wait for response',
+                              'Your report is sent to physician, please wait for response...',
                           onConfirmBtnTap: () {
                             Navigator.push(
                               context,
@@ -371,7 +375,6 @@ class _MakeReportScreenState extends State<MakeReportScreen> {
                                   builder: (context) => MakeReportScreen()),
                             );
                           },
-                          autoCloseDuration: Duration(seconds: 10),
                         );
                       } else {
                         setState(() => ++currentStep);
@@ -439,7 +442,8 @@ Widget appBarContent(context, title, IconData icon) => Padding(
             title,
             style: txtTheme(context).headlineLarge!.copyWith(
                   fontWeight: FontWeight.w600,
-                  fontSize: 34.0,
+                  fontSize: 30.0,
+                  fontFamily: Lora,
                   color: Colors.black87,
                 ),
           ),
@@ -457,6 +461,7 @@ Widget customTextField(
       readOnly: readOnly,
       style: TextStyle(
         fontSize: 18,
+        fontFamily: Lora,
       ),
       maxLines: 10,
       minLines: 1,
@@ -465,6 +470,7 @@ Widget customTextField(
         hintStyle: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: hintSize,
+          fontFamily: Lora,
         ),
         contentPadding: EdgeInsetsDirectional.only(start: 15),
         border: InputBorder.none,
@@ -476,6 +482,7 @@ Widget customTextField(
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: hintSize,
+                    fontFamily: Lora,
                   ),
                 ),
               )
@@ -519,6 +526,7 @@ Widget defaultRadio(context, selectedRadio, value, lable, onChanged) =>
         style: txtTheme(context).displaySmall!.copyWith(
               fontWeight: FontWeight.bold,
               fontSize: 17,
+              fontFamily: Lora,
             ),
       ),
       groupValue: selectedRadio,
@@ -539,6 +547,7 @@ Widget InterventionItem(
                   fontWeight: FontWeight.w800,
                   fontSize: 25,
                   color: secondaryColor,
+                  fontFamily: Lora,
                 ),
           ),
         ),
@@ -597,10 +606,12 @@ Widget InterventionItem(
                                     txtTheme(context).displaySmall!.copyWith(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 18,
+                                          fontFamily: Lora,
                                         ),
                                 textStyleHighlight: TextStyle(
                                   fontWeight: FontWeight.w800,
                                   color: secondaryColor,
+                                  fontFamily: Lora,
                                 ),
                               ),
                             );
@@ -647,12 +658,14 @@ Widget InterventionItem(
                 onEditingComplete: onEditingComplete,
                 style: TextStyle(
                   fontSize: 18,
+                  fontFamily: Lora,
                 ),
                 decoration: InputDecoration(
                   hintText: 'write some drug ..',
                   hintStyle: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
+                    fontFamily: Lora,
                   ),
                   contentPadding: EdgeInsetsDirectional.only(start: 15),
                   border: InputBorder.none,

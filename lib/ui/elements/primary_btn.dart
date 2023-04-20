@@ -24,7 +24,9 @@ class PrimaryBtn extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Text(
           btnTitle,
-          style: txtTheme(context).titleLarge!.copyWith(color: primaryColor),
+          style: txtTheme(context)
+              .titleLarge!
+              .copyWith(color: primaryColor, fontFamily: Lora),
         ),
       ),
     );

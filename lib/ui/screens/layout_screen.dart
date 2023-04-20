@@ -53,7 +53,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
             icon: Icon(IconBroken.Notification),
           ),
           BottomNavigationBarItem(
-            label: 'Discuss',
+            label: 'Physicians',
             icon: Icon(IconBroken.Chat),
           ),
           BottomNavigationBarItem(

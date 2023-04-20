@@ -1,5 +1,6 @@
 import 'package:clinical_pharmacist_intervention/main.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
+import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -13,6 +14,7 @@ class HomeScreen extends StatelessWidget {
           style: txtTheme(context).displaySmall!.copyWith(
                 fontSize: 35,
                 fontWeight: FontWeight.bold,
+                fontFamily: Lora,
               ),
         ),
       ),

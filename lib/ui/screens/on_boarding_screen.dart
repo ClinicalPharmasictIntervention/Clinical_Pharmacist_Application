@@ -4,6 +4,7 @@ import 'package:clinical_pharmacist_intervention/main.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/splash_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
+import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -43,6 +44,7 @@ class OnBoardingScreen extends StatelessWidget {
                 Expanded(
                   child: DefaultTextStyle(
                     style: txtTheme(context).headlineMedium!.copyWith(
+                      fontFamily: Lora,
                       shadows: [
                         Shadow(
                           color: Colors.black.withOpacity(0.3),

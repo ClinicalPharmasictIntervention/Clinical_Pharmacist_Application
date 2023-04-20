@@ -35,7 +35,7 @@ class DefaultTextField extends StatelessWidget {
       ),
       style: txtTheme(context)
           .titleMedium!
-          .copyWith(color: hintsClr.withOpacity(1)),
+          .copyWith(color: hintsClr.withOpacity(1), fontFamily: Lora),
     );
   }
 }
