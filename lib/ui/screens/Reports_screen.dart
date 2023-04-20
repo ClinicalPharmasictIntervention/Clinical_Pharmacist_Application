@@ -69,10 +69,13 @@ class ReportsScreen extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            DefaultTextField(
-              hintTxt: 'Search with resident name',
-              prefixIcon: IconBroken.Search,
-              onTxtChange: (text) {},
+            Container(
+              width: 360,
+              child: DefaultTextField(
+                hintTxt: 'Search with resident name',
+                prefixIcon: IconBroken.Search,
+                onTxtChange: (text) {},
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
