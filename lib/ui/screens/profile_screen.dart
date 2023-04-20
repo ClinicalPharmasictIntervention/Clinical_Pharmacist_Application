@@ -1,10 +1,7 @@
-import 'dart:math';
-
+import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/notification_item.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -15,30 +12,33 @@ class ProfileScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-              // title: Text("Profile"),
-    
               backgroundColor: Colors.white,
-              expandedHeight: MediaQuery.of(context).size.height * .15,
-              collapsedHeight:MediaQuery.of(context).size.height * .1 ,
+              expandedHeight: MediaQuery.of(context).size.height * .25,
+              collapsedHeight: MediaQuery.of(context).size.height * .25,
+              
               floating: false,
               flexibleSpace: Padding(
-                padding: const EdgeInsetsDirectional.only(top:60.0, start: 8, bottom: 8.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: 80,
-                      height: 80,
-                      child: CircleAvatar(
-                        
-                        child: Image.asset("assets/images/avatar_doctor.png"),
-                      ),
-                    ),
-              
-                    const SizedBox(width: 10,),
-                    Column(
-                      children: const [
+                padding: const EdgeInsetsDirectional.only(
+                    top: 60.0, start: 8, bottom: 8.0, end: 8.0),
+                child: Center(
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                       const SizedBox(
+                          width: 30,
+                        ),
+                        SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: CircleAvatar(
+                            child:
+                                Image.asset("assets/images/avatar_doctor.png"),
+                          ),
+                        ),
+                       const SizedBox(height: 10,),
                         Text(
                           "name",
                           style: TextStyle(
@@ -52,22 +52,31 @@ class ProfileScreen extends StatelessWidget {
                           "id",
                           style: TextStyle(fontSize: 18, color: Colors.grey),
                         ),
+                  
+                        GestureDetector(onTap:() {}
+                        , child: Row(
+                          mainAxisAlignment:MainAxisAlignment.end,
+                          children:const [
+                            Icon(IconBroken.Edit_Square,size: 22,),
+                            SizedBox(width: 5,),
+                            Text("Edit Profile")
+                          ],
+                        )), 
                       ],
                     ),
-                  ],
+                  ),
                 ),
               )),
-
-              SliverAppBar(
-                pinned: true,
-                floating: true,
-                backgroundColor: Color.fromARGB(255, 140, 171, 196),
-                leading: GestureDetector(
+          SliverAppBar(
+            pinned: true,
+            floating: true,
+            backgroundColor: Color.fromARGB(255, 140, 171, 196),
+            leading: GestureDetector(
               onTap: () {},
               child: Padding(
                 padding: const EdgeInsetsDirectional.only(top: 8.0, start: 8),
                 child: SizedBox(
-                 // height: 50,
+                  // height: 50,
                   width: 50,
                   child: Image.asset(
                     "assets/images/notification_filter.png",
@@ -75,19 +84,18 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
             ),
-
             leadingWidth: 50,
             actions: [
               SizedBox(
                 width: 350,
                 height: 50,
                 child: EasySearchBar(
-                backgroundColor: Color.fromARGB(255, 140, 171, 196),
+                    backgroundColor: Color.fromARGB(255, 140, 171, 196),
                     title: Text("Reports"),
                     onSearch: (value) {}),
               ),
             ],
-              ),
+          ),
           SliverFixedExtentList(
             //key: Random.secure().nextInt(500).toString(),
             delegate: SliverChildBuilderDelegate(
