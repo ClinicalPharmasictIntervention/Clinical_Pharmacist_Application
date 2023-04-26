@@ -9,6 +9,12 @@ class DrItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/background.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
       child: ListTile(
         title: Text(name, style: TextStyle(fontSize: 24),),
         subtitle: Text(department, style: TextStyle(fontSize: 18)),

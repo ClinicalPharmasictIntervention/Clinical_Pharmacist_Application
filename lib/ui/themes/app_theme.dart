@@ -25,91 +25,88 @@ TextTheme getTextTheme() {
   return const TextTheme(
     /// extraBold 24
     displayLarge: TextStyle(
-      fontFamily: almarai,
+      fontFamily: Lora,
       fontSize: 24,
       fontWeight: FontWeight.w800,
     ),
 
     /// bold 24
-    displayMedium: TextStyle(
-        fontFamily: almarai,
-        fontSize: 24,
-        fontWeight: FontWeight.bold
-    ),
+    displayMedium:
+        TextStyle(fontFamily: Lora, fontSize: 24, fontWeight: FontWeight.bold),
 
     /// regular 20
     displaySmall: TextStyle(
-      fontFamily: almarai,
+      fontFamily: Lora,
       fontSize: 20,
       fontWeight: FontWeight.w500,
     ),
 
     /// bold 20
     headlineLarge: TextStyle(
-      fontFamily: almarai,
+      fontFamily: Lora,
       fontSize: 20,
       fontWeight: FontWeight.bold,
     ),
 
     /// bold 18
     headlineMedium: TextStyle(
-      fontFamily: almarai,
+      fontFamily: Lora,
       fontSize: 18,
       fontWeight: FontWeight.bold,
     ),
 
     /// regular 16
     headlineSmall: TextStyle(
-      fontFamily: almarai,
+      fontFamily: Lora,
       fontSize: 16,
       fontWeight: FontWeight.w500,
     ),
 
     /// bold 16
     titleLarge: TextStyle(
-      fontFamily: almarai,
+      fontFamily: Lora,
       fontSize: 16,
       fontWeight: FontWeight.bold,
     ),
 
     /// extraBold 16
     bodyLarge: TextStyle(
-      fontFamily: almarai,
+      fontFamily: Lora,
       fontSize: 16,
       fontWeight: FontWeight.w800,
     ),
 
     /// regular 12
     titleMedium: TextStyle(
-      fontFamily: almarai,
+      fontFamily: Lora,
       fontSize: 12,
       fontWeight: FontWeight.w500,
     ),
 
     /// light 12
     titleSmall: TextStyle(
-      fontFamily: almarai,
+      fontFamily: Lora,
       fontSize: 12,
       fontWeight: FontWeight.w300,
     ),
 
     /// bold 12
     labelLarge: TextStyle(
-      fontFamily: almarai,
+      fontFamily: Lora,
       fontSize: 12,
       fontWeight: FontWeight.bold,
     ),
 
     /// bold 10
     labelMedium: TextStyle(
-      fontFamily: almarai,
+      fontFamily: Lora,
       fontSize: 10,
       fontWeight: FontWeight.bold,
     ),
 
     /// regular 8
     labelSmall: TextStyle(
-      fontFamily: almarai,
+      fontFamily: Lora,
       fontSize: 8,
       fontWeight: FontWeight.w300,
     ),

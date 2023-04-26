@@ -31,7 +31,8 @@ class ClinicalPharmacistDiscussionScreen extends StatelessWidget {
                 child: EasySearchBar(
                     backgroundColor: Colors.white,
                     title: const Text(
-                        textDirection: TextDirection.ltr, "search for a clinica parmacist"),
+                        textDirection: TextDirection.ltr,
+                        "search for a clinica parmacist"),
                     onSearch: (v) {}),
               ),
             ),

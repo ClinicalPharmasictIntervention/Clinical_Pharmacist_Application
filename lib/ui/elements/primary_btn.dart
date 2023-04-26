@@ -7,13 +7,13 @@ class PrimaryBtn extends StatelessWidget {
   PrimaryBtn({Key? key, required this.btnTitle, required this.onPressed})
       : super(key: key);
   String btnTitle;
-  Function onPressed;
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        onPressed();
+        onPressed!();
       },
       style: ElevatedButton.styleFrom(
           backgroundColor: secondaryColor,
@@ -24,7 +24,9 @@ class PrimaryBtn extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Text(
           btnTitle,
-          style: txtTheme(context).titleLarge!.copyWith(color: primaryColor),
+          style: txtTheme(context)
+              .titleLarge!
+              .copyWith(color: primaryColor, fontFamily: Lora),
         ),
       ),
     );

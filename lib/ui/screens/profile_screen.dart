@@ -1,21 +1,34 @@
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
+import 'package:clinical_pharmacist_intervention/ui/elements/default_textfield.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/notification_item.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/reports_screen.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/make_report_screen.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/report_details_screen.dart';
+import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-              backgroundColor: Colors.white,
+    return Container(
+      decoration: BoxDecoration(
+        image: const DecorationImage(
+          image: AssetImage('assets/images/background.jpg'),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              backgroundColor: Colors.transparent,
               expandedHeight: MediaQuery.of(context).size.height * .25,
               collapsedHeight: MediaQuery.of(context).size.height * .25,
-              
               floating: false,
               flexibleSpace: Padding(
                 padding: const EdgeInsetsDirectional.only(
@@ -27,7 +40,7 @@ class ProfileScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                       const SizedBox(
+                        const SizedBox(
                           width: 30,
                         ),
                         SizedBox(
@@ -38,7 +51,9 @@ class ProfileScreen extends StatelessWidget {
                                 Image.asset("assets/images/avatar_doctor.png"),
                           ),
                         ),
-                       const SizedBox(height: 10,),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         Text(
                           "name",
                           style: TextStyle(
@@ -52,61 +67,79 @@ class ProfileScreen extends StatelessWidget {
                           "id",
                           style: TextStyle(fontSize: 18, color: Colors.grey),
                         ),
-                  
-                        GestureDetector(onTap:() {}
-                        , child: Row(
-                          mainAxisAlignment:MainAxisAlignment.end,
-                          children:const [
-                            Icon(IconBroken.Edit_Square,size: 22,),
-                            SizedBox(width: 5,),
-                            Text("Edit Profile")
-                          ],
-                        )), 
+                        GestureDetector(
+                            onTap: () {},
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: const [
+                                Icon(
+                                  IconBroken.Edit_Square,
+                                  size: 22,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text("Edit Profile")
+                              ],
+                            )),
                       ],
                     ),
                   ),
                 ),
-              )),
-          SliverAppBar(
-            pinned: true,
-            floating: true,
-            backgroundColor: Color.fromARGB(255, 140, 171, 196),
-            leading: GestureDetector(
-              onTap: () {},
-              child: Padding(
-                padding: const EdgeInsetsDirectional.only(top: 8.0, start: 8),
-                child: SizedBox(
-                  // height: 50,
-                  width: 50,
-                  child: Image.asset(
-                    "assets/images/notification_filter.png",
+              ),
+            ),
+
+            SliverAppBar(
+              pinned: true,
+              floating: true,
+              //backgroundColor: Color.fromARGB(255, 140, 171, 196),
+              backgroundColor: Colors.transparent,
+              leading: GestureDetector(
+                onTap: () {},
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(top: 8.0, start: 8, end: 16.0),
+                  child: SizedBox(
+                    // height: 50,
+                    width: 50,
+                    child: Image.asset(
+                      "assets/images/notification_filter.png",
+                    ),
                   ),
                 ),
               ),
+              leadingWidth: 55,
+              actions: [
+                SizedBox(
+                  width: 350,
+                  height: 50,
+                  child:DefaultTextField(hintTxt: "search with ", onTxtChange: (){}),
+                ),
+              ],
             ),
-            leadingWidth: 50,
-            actions: [
-              SizedBox(
-                width: 350,
-                height: 50,
-                child: EasySearchBar(
-                    backgroundColor: Color.fromARGB(255, 140, 171, 196),
-                    title: Text("Reports"),
-                    onSearch: (value) {}),
+            SliverFixedExtentList(
+              //key: Random.secure().nextInt(500).toString(),
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  // add item report
+                  return InkWell(
+                    onTap: () {
+                      showMaterialModalBottomSheet(
+                        context: context,
+                        builder: (context) => ReportDetailsScreen(),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: reportCard(context, isProfile: true),
+                    ),
+                  );
+                },
+                childCount: 10,
               ),
-            ],
-          ),
-          SliverFixedExtentList(
-            //key: Random.secure().nextInt(500).toString(),
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return const NotificationItem();
-              },
-              childCount: 10,
-            ),
-            itemExtent: 110,
-          )
-        ],
+              itemExtent: 170,
+            )
+          ],
+        ),
       ),
     );
   }
