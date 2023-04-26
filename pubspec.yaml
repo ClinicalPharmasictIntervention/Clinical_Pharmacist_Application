@@ -43,13 +43,8 @@ dependencies:
   introduction_screen: ^3.1.4
   animated_splash_screen: ^1.3.0
   animated_text_kit: ^4.2.2
+  flutter_svg: ^2.0.5
   easy_search_bar: ^2.4.2
-  timelines: ^0.1.0
-  substring_highlight: ^1.0.33
-  quickalert: ^1.0.1
-  modal_bottom_sheet: ^2.1.2
-
-
 
 
 
@@ -73,19 +68,7 @@ flutter:
         - asset: fonts/Almarai_Regular.ttf
         - asset: fonts/Almarai_Bold.ttf
         - asset: fonts/Almarai_ExtraBold.ttf
-    - family: Lora
-      fonts:
-        - asset: fonts/Lora-Bold.ttf
-        - asset: fonts/Lora-BoldItalic.ttf
-        - asset: fonts/Lora-Italic.ttf
-        - asset: fonts/Lora-Medium.ttf
-        - asset: fonts/Lora-MediumItalic.ttf
-        - asset: fonts/Lora-Regular.ttf
-        - asset: fonts/Lora-SemiBold.ttf
-        - asset: fonts/Lora-SemiBoldItalic.ttf
-
 
     - family: IconBroken
       fonts:
         - asset: fonts/icons.ttf
-

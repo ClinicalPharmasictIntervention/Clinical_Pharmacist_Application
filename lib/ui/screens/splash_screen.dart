@@ -1,5 +1,6 @@
 import 'package:clinical_pharmacist_intervention/main.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/choose_acount_type_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/layout_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/login_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/register_screen.dart';
@@ -124,7 +125,7 @@ class SplashScreen extends StatelessWidget {
       done: const Text("Let\'s Go"),
       onDone: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => RegisterScreen()));
+            context, MaterialPageRoute(builder: (context) => AccountTypeScreen()));
       },
       onSkip: () {
         Navigator.push(
