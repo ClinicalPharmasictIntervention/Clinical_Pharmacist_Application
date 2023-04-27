@@ -64,12 +64,13 @@ class _MakeReportScreenState extends State<MakeReportScreen> {
             children: [
               Expanded(
                 child: Theme(
-                    data: ThemeData(
-                      canvasColor: const Color(0xffc1ddeb),
-                    ),
-                    child: BuildRepotSteper(
-                      currentStep: currentStep,
-                    )),
+                  data: ThemeData(
+                    canvasColor: const Color(0xffc1ddeb),
+                  ),
+                  child: BuildReportStepper(
+                    currentStep: currentStep,
+                  ),
+                ),
               ),
               const SizedBox(
                 height: 20.0,
@@ -80,27 +81,26 @@ class _MakeReportScreenState extends State<MakeReportScreen> {
       ),
     );
   }
+}
 
-  int drugNumber = 1;
+int drugNumber = 1;
 
-  drawFloatingActionButton(int currentStep) {
-    if (currentStep == 2) {
-      return Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: FloatingActionButton(
-          onPressed: () {
-            setState(() {
-              drugNumber++;
-            });
-          },
-          backgroundColor: const Color(0xffc1ddeb),
-          heroTag: const Text('Add another drug'),
-          child: Icon(Icons.add, color: secondaryColor),
-        ),
-      );
-    } else {
-      return Container();
-    }
+drawFloatingActionButton(int currentStep) {
+  if (currentStep == 2) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: FloatingActionButton(
+        onPressed: () {
+          MakeReportScreen;
+          drugNumber++;
+        },
+        backgroundColor: const Color(0xffc1ddeb),
+        heroTag: const Text('Add another drug'),
+        child: Icon(Icons.add, color: secondaryColor),
+      ),
+    );
+  } else {
+    return Container();
   }
 }
 

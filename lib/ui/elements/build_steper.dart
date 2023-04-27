@@ -6,16 +6,25 @@ import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/make_report_screen.dart';
 
-class BuildRepotSteper extends StatelessWidget {
-  BuildRepotSteper({Key? key, required this.currentStep}) : super(key: key);
+class BuildReportStepper extends StatefulWidget {
+  BuildReportStepper({Key? key, required this.currentStep}) : super(key: key);
   int currentStep;
 
+  @override
+  State<BuildReportStepper> createState() => _BuildReportStepperState();
+}
+
+class _BuildReportStepperState extends State<BuildReportStepper> {
   int selectedRadio1 = 0;
+
   int selectedRadio2 = 0;
+
   int selectedRadio3 = 0;
 
   TextEditingController? fieldController;
+
   int drugNumber = 1;
 
   List<String> drugs = [
@@ -59,20 +68,32 @@ class BuildRepotSteper extends StatelessWidget {
         buildOneStep(context, 1, "Problem", drawStep2Content(context)),
         buildOneStep(context, 2, "Intervention", drawStep3Content(context)),
       ],
-      currentStep: currentStep,
+      currentStep: widget.currentStep,
       type: StepperType.horizontal,
       elevation: 0,
       onStepContinue: () {
-        final isFinalStep = currentStep == 2;
+        final isFinalStep = widget.currentStep == 2;
         if (isFinalStep) {
           print('completed');
           drawQuickAlert(context);
         } else {
-          ++currentStep;
+          setState(() {
+            ++widget.currentStep;
+          });
         }
       },
-      onStepCancel: currentStep == 0 ? null : () => --currentStep,
-      onStepTapped: (step) => currentStep = step,
+      onStepCancel: widget.currentStep == 0
+          ? null
+          : () {
+              setState(() {
+                --widget.currentStep;
+              });
+            },
+      onStepTapped: (step) {
+        setState(() {
+          widget.currentStep = step;
+        });
+      },
       controlsBuilder: (context, ControlsDetails controlDetail) {
         final isLastStep = controlDetail.currentStep == 2;
         return drawControllerBuilder(context, isLastStep, controlDetail);
@@ -138,13 +159,17 @@ class BuildRepotSteper extends StatelessWidget {
             Expanded(
               child:
                   drawDefaultRadio(context, selectedRadio1, 0, 'Male', (value) {
-                selectedRadio1 = value;
+                setState(() {
+                  selectedRadio1 = value;
+                });
               }),
             ),
             Expanded(
               child: drawDefaultRadio(context, selectedRadio1, 1, 'Female',
                   (value) {
-                selectedRadio1 = value;
+                setState(() {
+                  selectedRadio1 = value;
+                });
               }),
             ),
           ],
@@ -207,13 +232,17 @@ class BuildRepotSteper extends StatelessWidget {
             Expanded(
               child:
                   drawDefaultRadio(context, selectedRadio2, 0, 'Yes', (value) {
-                selectedRadio2 = value;
+                setState(() {
+                  selectedRadio2 = value;
+                });
               }),
             ),
             Expanded(
               child:
                   drawDefaultRadio(context, selectedRadio2, 1, 'No', (value) {
-                selectedRadio2 = value;
+                setState(() {
+                  selectedRadio2 = value;
+                });
               }),
             ),
           ],
@@ -238,31 +267,27 @@ class BuildRepotSteper extends StatelessWidget {
         writeCard(
           context,
           cardTitles[5],
+          readOnly: true,
         ),
         const SizedBox(
           height: 20.0,
-        ),
-        writeCard(
-          context,
-          cardTitles[6],
-          readOnly: true,
-          size: 16.0,
-        ),
-        const SizedBox(
-          height: 10.0,
         ),
         Row(
           children: [
             Expanded(
               child:
                   drawDefaultRadio(context, selectedRadio3, 0, 'Yes', (value) {
-                selectedRadio3 = value;
+                setState(() {
+                  selectedRadio3 = value;
+                });
               }),
             ),
             Expanded(
               child:
                   drawDefaultRadio(context, selectedRadio3, 1, 'No', (value) {
-                selectedRadio3 = value;
+                setState(() {
+                  selectedRadio3 = value;
+                });
               }),
             ),
           ],
@@ -272,7 +297,8 @@ class BuildRepotSteper extends StatelessWidget {
         ),
         writeCard(
           context,
-          cardTitles[7],
+          cardTitles[6],
+          size: 20.0,
         ),
       ],
     );
@@ -318,6 +344,9 @@ class BuildRepotSteper extends StatelessWidget {
 
   buildOneStep(BuildContext context, int currentStep, String stepTitle,
       Widget stepContent) {
+    if (currentStep == 2) {
+      drawFloatingActionButton(currentStep);
+    }
     return Step(
       state: currentStep > 0 ? StepState.complete : StepState.indexed,
       isActive: currentStep >= currentStep,
@@ -357,14 +386,14 @@ class BuildRepotSteper extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 25.0),
       child: Row(
         children: [
-          if (currentStep != 0)
+          if (widget.currentStep != 0)
             Expanded(
               child: PrimaryBtn(
                 btnTitle: 'Back',
                 onPressed: controlDetail.onStepCancel,
               ),
             ),
-          if (currentStep != 0)
+          if (widget.currentStep != 0)
             const SizedBox(
               width: 10.0,
             ),
