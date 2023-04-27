@@ -9,7 +9,7 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: const BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/images/background.jpg'),
           fit: BoxFit.cover,
@@ -18,21 +18,21 @@ class NotificationScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Container(
-           decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/background.jpg'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/background.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
           child: CustomScrollView(
-            
             slivers: [
               SliverAppBar(
                 backgroundColor: Colors.transparent,
                 leading: GestureDetector(
                   onTap: () {},
                   child: Padding(
-                    padding: const EdgeInsetsDirectional.only(top: 8.0, start: 8),
+                    padding:
+                        const EdgeInsetsDirectional.only(top: 8.0, start: 8),
                     child: SizedBox(
                       height: 50,
                       width: 50,
@@ -45,18 +45,17 @@ class NotificationScreen extends StatelessWidget {
                 leadingWidth: 50,
                 actions: [
                   Container(
-                     decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/background.jpg'),
-                      fit: BoxFit.cover,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/background.jpg'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),                     
                     width: 350,
                     height: 50,
                     child: EasySearchBar(
-                      
-                      backgroundColor: Colors.transparent,
-                    //  foregroundColor: Colors.transparent,
+                        backgroundColor: Colors.transparent,
+                        //  foregroundColor: Colors.transparent,
                         title: Text("Notification"),
                         onSearch: (value) {}),
                   ),

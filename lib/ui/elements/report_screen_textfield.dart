@@ -1,14 +1,18 @@
 import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 class ReportScreenTextField extends StatelessWidget {
-   ReportScreenTextField({Key? key, required this.readOnly, required this.title, required this.hintSize}):super(key: key);
+  ReportScreenTextField(
+      {Key? key,
+      required this.readOnly,
+      required this.title,
+      required this.hintSize})
+      : super(key: key);
   bool readOnly;
-    String title;
-double hintSize;
-
+  String title;
+  double hintSize;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +47,7 @@ double hintSize;
               )
             : null,
       ),
-    );;
+    );
+    ;
   }
 }

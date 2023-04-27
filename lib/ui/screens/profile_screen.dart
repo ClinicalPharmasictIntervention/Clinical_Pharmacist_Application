@@ -88,7 +88,6 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
             ),
-
             SliverAppBar(
               pinned: true,
               floating: true,
@@ -97,7 +96,8 @@ class ProfileScreen extends StatelessWidget {
               leading: GestureDetector(
                 onTap: () {},
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.only(top: 8.0, start: 8, end: 16.0),
+                  padding: const EdgeInsetsDirectional.only(
+                      top: 8.0, start: 8, end: 16.0),
                   child: SizedBox(
                     // height: 50,
                     width: 50,
@@ -112,7 +112,8 @@ class ProfileScreen extends StatelessWidget {
                 SizedBox(
                   width: 350,
                   height: 50,
-                  child:DefaultTextField(hintTxt: "search with ", onTxtChange: (){}),
+                  child: DefaultTextField(
+                      hintTxt: "search with ", onTxtChange: () {}),
                 ),
               ],
             ),

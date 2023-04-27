@@ -8,16 +8,15 @@ class AccountTypeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/background.jpg'),
-            fit: BoxFit.cover,
-          ),
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/background.jpg'),
+          fit: BoxFit.cover,
         ),
+      ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Padding(
-          
           padding: const EdgeInsets.all(8.0),
           child: Center(
               child: Column(
@@ -28,13 +27,11 @@ class AccountTypeScreen extends StatelessWidget {
               ),
               const Text(
                 "Type of Account",
-                style:                
-                TextStyle(
+                style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
-                    fontFamily: Lora
-                    ),
+                    fontFamily: Lora),
               ),
               const Padding(
                 padding: EdgeInsets.all(12.0),
@@ -44,17 +41,15 @@ class AccountTypeScreen extends StatelessWidget {
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.grey,
-                    
                   ),
                   maxLines: 2,
-                                  textAlign: TextAlign.center,
-    
+                  textAlign: TextAlign.center,
                 ),
               ),
               const SizedBox(
                 height: 50,
               ),
-    
+
               //choose type
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,13 +90,15 @@ class AccountTypeScreen extends StatelessWidget {
                   const SizedBox(
                     height: 50,
                   ),
-    
-              // clnical pharmacist
-    
+
+                  // clnical pharmacist
+
                   GestureDetector(
-                    onTap: (){
-                           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => RegisterScreen()));
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RegisterScreen()));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -132,18 +129,17 @@ class AccountTypeScreen extends StatelessWidget {
                         ),
                         SizedBox(
                             width: 130,
-                            child: Image.asset("assets/images/avatar_clinical_pharmacist2.png"))
+                            child: Image.asset(
+                                "assets/images/avatar_clinical_pharmacist2.png"))
                       ],
                     ),
                   ),
                   const SizedBox(
                     height: 50,
                   ),
-    
-    
                 ],
               ),
-    /*
+              /*
               ListTile(
                 title: const Padding(
                   padding: EdgeInsets.only(bottom: 12.0),

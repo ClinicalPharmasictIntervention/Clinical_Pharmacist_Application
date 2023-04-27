@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 
 class DrItem extends StatelessWidget {
   DrItem({Key? key, required this.name, required this.department})
@@ -10,18 +10,24 @@ class DrItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/background.jpg'),
-            fit: BoxFit.cover,
-          ),
+        image: DecorationImage(
+          image: AssetImage('assets/images/background.jpg'),
+          fit: BoxFit.cover,
         ),
+      ),
       child: ListTile(
-        title: Text(name, style: TextStyle(fontSize: 24),),
+        title: Text(
+          name,
+          style: TextStyle(fontSize: 24),
+        ),
         subtitle: Text(department, style: TextStyle(fontSize: 18)),
         leading: Container(
           decoration: BoxDecoration(
             image: const DecorationImage(
-                image: AssetImage("assets/images/avatar_doctor.png",),),
+              image: AssetImage(
+                "assets/images/avatar_doctor.png",
+              ),
+            ),
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(7.0),
             border: Border.all(color: Colors.grey.shade300),
@@ -29,9 +35,7 @@ class DrItem extends StatelessWidget {
           ),
           width: 70,
           height: 100,
-          
         ),
-        
       ),
     );
   }

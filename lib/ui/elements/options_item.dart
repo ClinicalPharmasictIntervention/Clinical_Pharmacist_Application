@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 
 class OptionsItem extends StatelessWidget {
   OptionsItem({Key? key, required this.phoneNumber, required this.chatId})
@@ -18,8 +18,6 @@ class OptionsItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-            
-
               //call
               GestureDetector(
                 onTap: () {},
@@ -46,7 +44,7 @@ class OptionsItem extends StatelessWidget {
                   ),
                 ),
               ),
-                SizedBox(
+              SizedBox(
                 width: 10,
               ),
               //chat
@@ -79,8 +77,9 @@ class OptionsItem extends StatelessWidget {
               //contradiction
             ],
           ),
-
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           GestureDetector(
             onTap: () {},
             child: Container(

@@ -11,9 +11,9 @@ class BuildRepotSteper extends StatelessWidget {
   BuildRepotSteper({Key? key, required this.currentStep}) : super(key: key);
   int currentStep;
 
-  int? selectedRadio1 = 0;
-  int? selectedRadio2 = 0;
-  int? selectedRadio3 = 0;
+  int selectedRadio1 = 0;
+  int selectedRadio2 = 0;
+  int selectedRadio3 = 0;
 
   TextEditingController? fieldController;
   int drugNumber = 1;
@@ -50,7 +50,6 @@ class BuildRepotSteper extends StatelessWidget {
     'Morphine',
     'Motrin',
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -137,13 +136,14 @@ class BuildRepotSteper extends StatelessWidget {
         Row(
           children: [
             Expanded(
-              child: drawDefaultRadio(context, selectedRadio1, 0, 'Male', (value) {
+              child:
+                  drawDefaultRadio(context, selectedRadio1, 0, 'Male', (value) {
                 selectedRadio1 = value;
               }),
             ),
             Expanded(
-              child:
-                  drawDefaultRadio(context, selectedRadio1, 1, 'Female', (value) {
+              child: drawDefaultRadio(context, selectedRadio1, 1, 'Female',
+                  (value) {
                 selectedRadio1 = value;
               }),
             ),
@@ -205,12 +205,14 @@ class BuildRepotSteper extends StatelessWidget {
         Row(
           children: [
             Expanded(
-              child: drawDefaultRadio(context, selectedRadio2, 0, 'Yes', (value) {
+              child:
+                  drawDefaultRadio(context, selectedRadio2, 0, 'Yes', (value) {
                 selectedRadio2 = value;
               }),
             ),
             Expanded(
-              child: drawDefaultRadio(context, selectedRadio2, 1, 'No', (value) {
+              child:
+                  drawDefaultRadio(context, selectedRadio2, 1, 'No', (value) {
                 selectedRadio2 = value;
               }),
             ),
@@ -252,12 +254,14 @@ class BuildRepotSteper extends StatelessWidget {
         Row(
           children: [
             Expanded(
-              child: drawDefaultRadio(context, selectedRadio3, 0, 'Yes', (value) {
+              child:
+                  drawDefaultRadio(context, selectedRadio3, 0, 'Yes', (value) {
                 selectedRadio3 = value;
               }),
             ),
             Expanded(
-              child: drawDefaultRadio(context, selectedRadio3, 1, 'No', (value) {
+              child:
+                  drawDefaultRadio(context, selectedRadio3, 1, 'No', (value) {
                 selectedRadio3 = value;
               }),
             ),
@@ -314,14 +318,13 @@ class BuildRepotSteper extends StatelessWidget {
 
   buildOneStep(BuildContext context, int currentStep, String stepTitle,
       Widget stepContent) {
-    Step(
+    return Step(
       state: currentStep > 0 ? StepState.complete : StepState.indexed,
       isActive: currentStep >= currentStep,
       title: drawStepTitle(context, stepTitle),
       content: stepContent,
     );
   }
-
 
   drawQuickAlert(BuildContext context) {
     QuickAlert.show(
@@ -376,8 +379,8 @@ class BuildRepotSteper extends StatelessWidget {
     );
   }
 
-Widget drawDefaultRadio(context, selectedRadio, value, lable, onChanged){
-   return  RadioListTile(
+  Widget drawDefaultRadio(context, selectedRadio, value, lable, onChanged) {
+    return RadioListTile(
       value: value,
       title: Text(
         lable,
@@ -391,8 +394,5 @@ Widget drawDefaultRadio(context, selectedRadio, value, lable, onChanged){
       activeColor: secondaryColor,
       onChanged: onChanged,
     );
-}
- 
-
-
+  }
 }

@@ -1,6 +1,6 @@
 import 'package:clinical_pharmacist_intervention/ui/elements/dr_item.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/options_item.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 
 class DrDiscussionItem extends StatelessWidget {
   DrDiscussionItem({
@@ -24,28 +24,25 @@ class DrDiscussionItem extends StatelessWidget {
           ),
           borderRadius: const BorderRadius.all(
             Radius.circular(6),
-            
           ),
         ),
         child: Container(
-           decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/background.jpg'),
-            fit: BoxFit.cover,
-          ),
-        ),
-          
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                DrItem(name: "name", department: "department"),
-                OptionsItem(phoneNumber: "phoneNumber", chatId: "chatId")
-              ],
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/background.jpg'),
+              fit: BoxFit.cover,
             ),
           ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              DrItem(name: "name", department: "department"),
+              OptionsItem(phoneNumber: "phoneNumber", chatId: "chatId")
+            ],
+          ),
         ),
-      
+      ),
     );
   }
 }

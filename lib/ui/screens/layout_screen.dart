@@ -27,7 +27,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
   Widget build(BuildContext context) {
     return Container(
-        decoration: const BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/images/background.jpg'),
           fit: BoxFit.cover,
@@ -41,7 +41,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
           currentIndex: currentIndex,
           type: BottomNavigationBarType.fixed,
           unselectedItemColor: Colors.black,
-          selectedItemColor:Colors.white,
+          selectedItemColor: Colors.white,
           showUnselectedLabels: true,
           elevation: 20,
           onTap: (index) {

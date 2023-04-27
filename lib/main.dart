@@ -7,7 +7,7 @@ import 'package:clinical_pharmacist_intervention/ui/screens/make_report_screen.d
 import 'package:clinical_pharmacist_intervention/ui/screens/on_boarding_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/register_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/splash_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

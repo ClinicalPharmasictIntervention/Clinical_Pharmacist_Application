@@ -40,7 +40,7 @@ class DrDiscussionScreen extends StatelessWidget {
               const SizedBox(
                 height: 70,
               ),
-         Container(
+              Container(
                 width: 360,
                 child: DefaultTextField(
                   hintTxt: 'Search with physician name',
@@ -48,7 +48,6 @@ class DrDiscussionScreen extends StatelessWidget {
                   onTxtChange: (text) {},
                 ),
               ),
-             
               Expanded(
                 child: Container(
                   height: double.infinity,

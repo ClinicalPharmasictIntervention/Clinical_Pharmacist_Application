@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
@@ -12,11 +12,11 @@ class ClicableText extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onPressed(),
-      child: Text(txt, style: const TextStyle(
-        fontSize: 16,
-        color: Colors.grey,
-        fontWeight: FontWeight.bold
-      ),),
+      child: Text(
+        txt,
+        style: const TextStyle(
+            fontSize: 16, color: Colors.grey, fontWeight: FontWeight.bold),
+      ),
     );
   }
 }

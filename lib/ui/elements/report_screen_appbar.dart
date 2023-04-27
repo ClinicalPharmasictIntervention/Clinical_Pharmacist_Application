@@ -1,6 +1,6 @@
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 
 import '../themes/constants.dart';
 
@@ -44,25 +44,21 @@ class BuildReportScreenAppBarTitle extends StatelessWidget {
   }
 }
 
-
-
 class BuildReportScreenAppBarLeading extends StatelessWidget {
-  const BuildReportScreenAppBarLeading(
-      {Key? key, 
-     }):
-     super(key: key);
- 
+  const BuildReportScreenAppBarLeading({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return IconButton(
-            icon: const Icon(
-              IconBroken.Arrow___Left_2,
-              color: Colors.black87,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          );
+      icon: const Icon(
+        IconBroken.Arrow___Left_2,
+        color: Colors.black87,
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
   }
 }

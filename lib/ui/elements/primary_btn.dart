@@ -1,7 +1,7 @@
 import 'package:clinical_pharmacist_intervention/main.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 
 class PrimaryBtn extends StatelessWidget {
   PrimaryBtn({Key? key, required this.btnTitle, required this.onPressed})

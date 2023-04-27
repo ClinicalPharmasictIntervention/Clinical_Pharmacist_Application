@@ -124,8 +124,8 @@ class SplashScreen extends StatelessWidget {
       skip: const Text("Skip"),
       done: const Text("Let\'s Go"),
       onDone: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => AccountTypeScreen()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => AccountTypeScreen()));
       },
       onSkip: () {
         Navigator.push(
