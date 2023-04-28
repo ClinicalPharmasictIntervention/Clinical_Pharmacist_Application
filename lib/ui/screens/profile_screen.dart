@@ -1,4 +1,5 @@
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
+import 'package:clinical_pharmacist_intervention/ui/elements/default_daily_report_card.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_textfield.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/notification_item.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/reports_screen.dart';
@@ -131,7 +132,13 @@ class ProfileScreen extends StatelessWidget {
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: reportCard(context, isProfile: true),
+                      child: DefaultDailyReportCard(
+                        context: context,
+                        residentName: 'Ali',
+                        physicianName: 'Karim',
+                        isProfile: true,
+                        date: '25/4/2020',
+                      ),
                     ),
                   );
                 },

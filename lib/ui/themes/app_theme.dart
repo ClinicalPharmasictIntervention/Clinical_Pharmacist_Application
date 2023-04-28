@@ -6,6 +6,7 @@ var secondaryColor = const Color(0xff06A3D6);
 var accentColor = const Color(0xff014A96);
 var hintsClr = const Color.fromRGBO(21, 22, 36, .4);
 var pureWhite = const Color.fromRGBO(255, 255, 255, 1);
+var defaultColor = const Color(0xffc1ddeb);
 
 ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
