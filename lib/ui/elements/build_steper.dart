@@ -1,102 +1,79 @@
+import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/cubit.dart';
+import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/states.dart';
+import 'package:clinical_pharmacist_intervention/shared/cubit/cubit.dart';
+import 'package:clinical_pharmacist_intervention/ui/elements/default_radio_item.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
+import 'package:clinical_pharmacist_intervention/ui/elements/report_screen_item.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/reports_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/make_report_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
-import 'package:clinical_pharmacist_intervention/ui/screens/make_report_screen.dart';
 
-class BuildReportStepper extends StatefulWidget {
-  BuildReportStepper({Key? key, required this.currentStep}) : super(key: key);
-  int currentStep;
-
-  @override
-  State<BuildReportStepper> createState() => _BuildReportStepperState();
-}
-
-class _BuildReportStepperState extends State<BuildReportStepper> {
-  int selectedRadio1 = 0;
-
-  int selectedRadio2 = 0;
-
-  int selectedRadio3 = 0;
+class BuildReportStepper extends StatelessWidget {
+  BuildReportStepper({
+    Key? key,
+  }) : super(key: key);
 
   TextEditingController? fieldController;
 
-  int drugNumber = 1;
-
-  List<String> drugs = [
-    'Acetaminophen',
-    'Acetylcysteine',
-    'Actemra',
-    'Actos',
-    'Acyclovir',
-    'Adderall',
-    'Adderall XR',
-    'Advair Diskus',
-    'Advil',
-    'Afinitor',
-    'Aimovig',
-    'Ajovy',
-    'Albuterol',
-    'Aldactone',
-    'Alecensa',
-    'Alendronate',
-    'Glucotrol',
-    'Glumetza',
-    'Glutathione',
-    'Glyburide',
-    'Glycerin',
-    'GlycoLax',
-    'Glycopyrrolate',
-    'Glyxambi',
-    'Gocovri',
-    'Modafinil',
-    'Mometasone',
-    'Montelukast',
-    'Morphine',
-    'Motrin',
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return Stepper(
-      steps: [
-        buildOneStep(context, 0, "Resident", drawStep1Content(context)),
-        buildOneStep(context, 1, "Problem", drawStep2Content(context)),
-        buildOneStep(context, 2, "Intervention", drawStep3Content(context)),
-      ],
-      currentStep: widget.currentStep,
-      type: StepperType.horizontal,
-      elevation: 0,
-      onStepContinue: () {
-        final isFinalStep = widget.currentStep == 2;
-        if (isFinalStep) {
-          print('completed');
-          drawQuickAlert(context);
-        } else {
-          setState(() {
-            ++widget.currentStep;
-          });
-        }
-      },
-      onStepCancel: widget.currentStep == 0
-          ? null
-          : () {
-              setState(() {
-                --widget.currentStep;
-              });
-            },
-      onStepTapped: (step) {
-        setState(() {
-          widget.currentStep = step;
-        });
-      },
-      controlsBuilder: (context, ControlsDetails controlDetail) {
-        final isLastStep = controlDetail.currentStep == 2;
-        return drawControllerBuilder(context, isLastStep, controlDetail);
+    return BlocConsumer<ReportsCubit, ReportsStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        var cubit = ReportsCubit.get(context);
+        return Stepper(
+          steps: [
+            buildOneStep(context, 0, "Resident",
+                drawStep1Content(context, cubit), cubit),
+            buildOneStep(
+                context, 1, "Problem", drawStep2Content(context, cubit), cubit),
+            buildOneStep(context, 2, "Intervention",
+                drawStep3Content(context, cubit), cubit),
+          ],
+          currentStep: cubit.currentStep,
+          type: StepperType.horizontal,
+          elevation: 0,
+          onStepContinue: () {
+            final isFinalStep = cubit.currentStep == 2;
+            if (isFinalStep) {
+              print('completed');
+
+              showQuickAlert(
+                context: context,
+                alertType: QuickAlertType.success,
+                dialogMessage: 'Wait For Physician Acceptance',
+                actionTitle: 'Your Report Is Done Successfully!',
+                nextButtonTitle: 'Reports',
+                backButtonTitle: 'Another',
+                onNext: () {
+                  navigateTo(context, ReportsScreen());
+                },
+                onBack: () {
+                  navigateTo(context, MakeReportScreen());
+                },
+              );
+            } else {
+              cubit.changeForwardStep();
+            }
+          },
+          onStepCancel: cubit.currentStep == 0
+              ? null
+              : () {
+                  cubit.changeBackwardStep();
+                },
+          onStepTapped: (step) {
+            cubit.onTappedStep(step);
+          },
+          controlsBuilder: (context, ControlsDetails controlDetail) {
+            final isLastStep = controlDetail.currentStep == 2;
+            return drawControllerBuilder(context, isLastStep, controlDetail);
+          },
+        );
       },
     );
   }
@@ -112,7 +89,7 @@ class _BuildReportStepperState extends State<BuildReportStepper> {
     );
   }
 
-  drawStep1Content(BuildContext context) {
+  drawStep1Content(BuildContext context, cubit) {
     var cardTitles = [
       'Your Name',
       'Consultant Name',
@@ -126,30 +103,34 @@ class _BuildReportStepperState extends State<BuildReportStepper> {
         const SizedBox(
           height: 20.0,
         ),
-        writeCard(
-          context,
-          cardTitles[0],
+        ReportScreenItem(
+          context: context,
+          title: cardTitles[0],
+          readOnly: false,
         ),
         const SizedBox(
           height: 20.0,
         ),
-        writeCard(
-          context,
-          cardTitles[1],
+        ReportScreenItem(
+          context: context,
+          title: cardTitles[1],
+          readOnly: false,
         ),
         const SizedBox(
           height: 20.0,
         ),
-        writeCard(
-          context,
-          cardTitles[2],
+        ReportScreenItem(
+          context: context,
+          title: cardTitles[2],
+          readOnly: false,
         ),
         const SizedBox(
           height: 20.0,
         ),
-        writeCard(
-          context,
-          cardTitles[3],
+        ReportScreenItem(
+          context: context,
+          title: cardTitles[3],
+          readOnly: false,
         ),
         const SizedBox(
           height: 10.0,
@@ -157,47 +138,57 @@ class _BuildReportStepperState extends State<BuildReportStepper> {
         Row(
           children: [
             Expanded(
-              child:
-                  drawDefaultRadio(context, selectedRadio1, 0, 'Male', (value) {
-                setState(() {
-                  selectedRadio1 = value;
-                });
-              }),
+              child: DefaultRadioItem(
+                context: context,
+                selectedRadio: cubit.selectedRadio,
+                value: 0,
+                label: 'Male',
+                activeColor: secondaryColor,
+                onChanged: (value) {
+                  cubit.changeFirstRadioMode(value);
+                },
+              ),
             ),
             Expanded(
-              child: drawDefaultRadio(context, selectedRadio1, 1, 'Female',
-                  (value) {
-                setState(() {
-                  selectedRadio1 = value;
-                });
-              }),
+              child: DefaultRadioItem(
+                context: context,
+                selectedRadio: cubit.selectedRadio,
+                value: 1,
+                label: 'Female',
+                activeColor: secondaryColor,
+                onChanged: (value) {
+                  cubit.changeFirstRadioMode(value);
+                },
+              ),
             ),
           ],
         ),
         const SizedBox(
           height: 10.0,
         ),
-        writeCard(
-          context,
-          cardTitles[4],
+        ReportScreenItem(
+          context: context,
+          title: cardTitles[4],
+          readOnly: false,
         ),
         const SizedBox(
           height: 20.0,
         ),
-        writeCard(
-          context,
-          cardTitles[5],
+        ReportScreenItem(
+          context: context,
+          title: cardTitles[5],
+          readOnly: false,
         ),
       ],
     );
   }
 
-  drawStep2Content(BuildContext context) {
+  drawStep2Content(BuildContext context, cubit) {
     var cardTitles = [
       'Problem Type',
       'Problem Description',
-      'Is this a drug therapy problem ?'
-          'Error Category',
+      'Is this a drug therapy problem ?',
+      'Error Category',
       'Error Description',
       'Stage and Type of error',
       'Is this problem also a medical error ?',
@@ -205,23 +196,25 @@ class _BuildReportStepperState extends State<BuildReportStepper> {
     ];
     return Column(
       children: [
-        writeCard(
-          context,
-          cardTitles[0],
+        ReportScreenItem(
+          context: context,
+          title: cardTitles[0],
+          readOnly: false,
         ),
         const SizedBox(
           height: 20.0,
         ),
-        writeCard(
-          context,
-          cardTitles[1],
+        ReportScreenItem(
+          context: context,
+          title: cardTitles[1],
+          readOnly: false,
         ),
         const SizedBox(
           height: 20.0,
         ),
-        writeCard(
-          context,
-          cardTitles[2],
+        ReportScreenItem(
+          context: context,
+          title: cardTitles[2],
           readOnly: true,
         ),
         const SizedBox(
@@ -230,88 +223,118 @@ class _BuildReportStepperState extends State<BuildReportStepper> {
         Row(
           children: [
             Expanded(
-              child:
-                  drawDefaultRadio(context, selectedRadio2, 0, 'Yes', (value) {
-                setState(() {
-                  selectedRadio2 = value;
-                });
-              }),
+              child: DefaultRadioItem(
+                context: context,
+                selectedRadio: cubit.selectedRadio1,
+                value: 0,
+                label: 'Yes',
+                activeColor: secondaryColor,
+                onChanged: (value) {
+                  cubit.changeSecondRadioMode(value);
+                },
+              ),
             ),
             Expanded(
-              child:
-                  drawDefaultRadio(context, selectedRadio2, 1, 'No', (value) {
-                setState(() {
-                  selectedRadio2 = value;
-                });
-              }),
+              child: DefaultRadioItem(
+                context: context,
+                selectedRadio: cubit.selectedRadio1,
+                value: 1,
+                label: 'No',
+                activeColor: secondaryColor,
+                onChanged: (value) {
+                  cubit.changeSecondRadioMode(value);
+                },
+              ),
             ),
           ],
         ),
         const SizedBox(
           height: 10.0,
         ),
-        writeCard(
-          context,
-          cardTitles[3],
+        ReportScreenItem(
+          context: context,
+          title: cardTitles[3],
+          readOnly: false,
         ),
         const SizedBox(
           height: 20.0,
         ),
-        writeCard(
-          context,
-          cardTitles[4],
+        ReportScreenItem(
+          context: context,
+          title: cardTitles[4],
+          readOnly: false,
         ),
         const SizedBox(
           height: 20.0,
         ),
-        writeCard(
-          context,
-          cardTitles[5],
+        ReportScreenItem(
+          context: context,
+          title: cardTitles[5],
+          readOnly: false,
+        ),
+        const SizedBox(
+          height: 20.0,
+        ),
+        ReportScreenItem(
+          context: context,
+          title: cardTitles[6],
           readOnly: true,
         ),
         const SizedBox(
-          height: 20.0,
+          height: 10.0,
         ),
         Row(
           children: [
             Expanded(
-              child:
-                  drawDefaultRadio(context, selectedRadio3, 0, 'Yes', (value) {
-                setState(() {
-                  selectedRadio3 = value;
-                });
-              }),
+              child: DefaultRadioItem(
+                context: context,
+                selectedRadio: cubit.selectedRadio2,
+                value: 0,
+                label: 'Yes',
+                activeColor: secondaryColor,
+                onChanged: (value) {
+                  cubit.changeThirdRadioMode(value);
+                },
+              ),
             ),
             Expanded(
-              child:
-                  drawDefaultRadio(context, selectedRadio3, 1, 'No', (value) {
-                setState(() {
-                  selectedRadio3 = value;
-                });
-              }),
+              child: DefaultRadioItem(
+                context: context,
+                selectedRadio: cubit.selectedRadio2,
+                value: 1,
+                label: 'No',
+                activeColor: secondaryColor,
+                onChanged: (value) {
+                  cubit.changeThirdRadioMode(value);
+                },
+              ),
             ),
           ],
         ),
         const SizedBox(
           height: 10.0,
         ),
-        writeCard(
-          context,
-          cardTitles[6],
-          size: 20.0,
+        ReportScreenItem(
+          context: context,
+          title: cardTitles[7],
+          readOnly: false,
         ),
       ],
     );
   }
 
-  drawStep3Content(BuildContext context) {
+  drawStep3Content(BuildContext context, cubit) {
     var cardTitles = [
       'Write Your Intervention Here..',
     ];
 
     return Column(
       children: [
-        writeCard(context, cardTitles[0]),
+        ReportScreenItem(
+          context: context,
+          title: cardTitles[0],
+          readOnly: false,
+        ),
         const SizedBox(
           height: 20.0,
         ),
@@ -323,14 +346,15 @@ class _BuildReportStepperState extends State<BuildReportStepper> {
               child: ListView.separated(
                 itemBuilder: (context, index) => InterventionItem(
                   context,
-                  drugs,
+                  cubit.drugs,
                   fieldController,
-                  drugNumber,
+                  cubit,
+                  cubit.drugNumber,
                 ),
                 separatorBuilder: (context, index) => const SizedBox(
                   height: 40,
                 ),
-                itemCount: drugNumber,
+                itemCount: cubit.drugNumber,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
               ),
@@ -343,40 +367,17 @@ class _BuildReportStepperState extends State<BuildReportStepper> {
   }
 
   buildOneStep(BuildContext context, int currentStep, String stepTitle,
-      Widget stepContent) {
+      Widget stepContent, cubit) {
     if (currentStep == 2) {
-      drawFloatingActionButton(currentStep);
+      drawFloatingActionButton(currentStep, cubit);
     }
     return Step(
-      state: currentStep > 0 ? StepState.complete : StepState.indexed,
-      isActive: currentStep >= currentStep,
+      state: cubit.currentStep > currentStep
+          ? StepState.complete
+          : StepState.indexed,
+      isActive: cubit.currentStep >= currentStep,
       title: drawStepTitle(context, stepTitle),
       content: stepContent,
-    );
-  }
-
-  drawQuickAlert(BuildContext context) {
-    QuickAlert.show(
-      textColor: Colors.transparent,
-      context: context,
-      type: QuickAlertType.success,
-      text: 'Transaction Completed Successfully!',
-      showCancelBtn: true,
-      confirmBtnText: 'Reports',
-      cancelBtnText: 'Another',
-      title: 'Your report is sent to physician, please wait for response...',
-      onConfirmBtnTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ReportsScreen()),
-        );
-      },
-      onCancelBtnTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => MakeReportScreen()),
-        );
-      },
     );
   }
 
@@ -386,14 +387,14 @@ class _BuildReportStepperState extends State<BuildReportStepper> {
       padding: const EdgeInsets.symmetric(vertical: 25.0),
       child: Row(
         children: [
-          if (widget.currentStep != 0)
+          if (controlDetail.currentStep != 0)
             Expanded(
               child: PrimaryBtn(
                 btnTitle: 'Back',
                 onPressed: controlDetail.onStepCancel,
               ),
             ),
-          if (widget.currentStep != 0)
+          if (controlDetail.currentStep != 0)
             const SizedBox(
               width: 10.0,
             ),
@@ -405,23 +406,6 @@ class _BuildReportStepperState extends State<BuildReportStepper> {
           )
         ],
       ),
-    );
-  }
-
-  Widget drawDefaultRadio(context, selectedRadio, value, lable, onChanged) {
-    return RadioListTile(
-      value: value,
-      title: Text(
-        lable,
-        style: txtTheme(context).displaySmall!.copyWith(
-              fontWeight: FontWeight.bold,
-              fontSize: 17,
-              fontFamily: Lora,
-            ),
-      ),
-      groupValue: selectedRadio,
-      activeColor: secondaryColor,
-      onChanged: onChanged,
     );
   }
 }

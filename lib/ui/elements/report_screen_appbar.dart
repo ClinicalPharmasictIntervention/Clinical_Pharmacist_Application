@@ -5,12 +5,12 @@ import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import '../themes/constants.dart';
 
 class BuildReportScreenAppBarTitle extends StatelessWidget {
-  BuildReportScreenAppBarTitle(
-      {Key? key,
-      required this.context,
-      required this.titleText,
-      required this.icon})
-      : super(key: key);
+  BuildReportScreenAppBarTitle({
+    Key? key,
+    required this.context,
+    required this.titleText,
+    required this.icon,
+  }) : super(key: key);
   BuildContext context;
   String titleText;
   IconData icon;

@@ -36,7 +36,7 @@ class ReportsScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => MakeReportScreen()),
                 );
               },
-              child: Icon(IconBroken.Paper_Plus, size: 30),
+              child: Icon(Icons.add, color: secondaryColor),
               tooltip: 'Make Report',
             ),
             appBar: AppBar(

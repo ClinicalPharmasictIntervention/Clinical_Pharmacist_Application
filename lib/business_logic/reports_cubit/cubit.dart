@@ -1,4 +1,5 @@
 import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/states.dart';
+import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,5 +25,91 @@ class ReportsCubit extends Cubit<ReportsStates> {
       rejectedSelected = secondaryColor;
     }
     emit(ReportsFilterChipChanged());
+  }
+
+  //Make Report Screen
+  List<String> titles = [
+    'Resident Info',
+    'Problems',
+    'Your Intervention',
+  ];
+
+  List<dynamic> icons = [
+    IconBroken.Profile,
+    IconBroken.Info_Circle,
+    IconBroken.Edit,
+  ];
+  int currentStep = 0;
+
+  void changeForwardStep() {
+    currentStep++;
+    emit(ReportschangeForwardStep());
+  }
+
+  void changeBackwardStep() {
+    currentStep--;
+    emit(ReportschangeBackwardStep());
+  }
+
+  void onTappedStep(value) {
+    currentStep = value;
+    emit(ReportsTappedStep());
+  }
+
+  bool isCompleted = false;
+
+  int drugNumber = 1;
+
+  List<String> drugs = [
+    'Acetaminophen',
+    'Acetylcysteine',
+    'Actemra',
+    'Actos',
+    'Acyclovir',
+    'Aldactone',
+    'Alecensa',
+    'Alendronate',
+    'Glucotrol',
+    'Glumetza',
+    'Glutathione',
+    'Glyburide',
+    'Glycerin',
+    'GlycoLax',
+    'Glycopyrrolate',
+    'Glyxambi',
+    'Gocovri',
+    'Modafinil',
+    'Mometasone',
+    'Montelukast',
+    'Morphine',
+    'Motrin',
+  ];
+
+  void updateNewDrug() {
+    ++drugNumber;
+    emit(ReportsUpdateNewDrug());
+  }
+
+  int selectedRadio = 0;
+  int selectedRadio1 = 0;
+  int selectedRadio2 = 0;
+
+  void changeFirstRadioMode(value) {
+    selectedRadio = value;
+    emit(ReportsChangeFirstRadioMode());
+  }
+
+  void changeSecondRadioMode(value) {
+    selectedRadio1 = value;
+    emit(ReportsChangeSecondRadioMode());
+  }
+
+  void changeThirdRadioMode(value) {
+    selectedRadio2 = value;
+    emit(ReportsChangeThirdRadioMode());
+  }
+
+  void onAutoCompleteChanged() {
+    emit(ReportsAutoCompleteChanged());
   }
 }

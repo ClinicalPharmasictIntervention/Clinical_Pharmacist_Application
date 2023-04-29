@@ -1,3 +1,4 @@
+import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
 import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -30,6 +31,7 @@ class CustomAppBar extends AppBar {
       actions: actions,
       backgroundColor: backgroundColor,
       bottomOpacity: opacity!,
+      foregroundColor: secondaryColor,
     );
   }
 }
