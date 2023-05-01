@@ -1,100 +1,90 @@
+import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/cubit.dart';
+import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/states.dart';
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/build_steper.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/custom_app_bar.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/report_screen_appbar.dart';
+import 'package:clinical_pharmacist_intervention/ui/elements/report_screen_item.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/report_screen_textfield.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:substring_highlight/substring_highlight.dart';
 import 'package:flutter/material.dart';
 
-class MakeReportScreen extends StatefulWidget {
+class MakeReportScreen extends StatelessWidget {
   @override
-  State<MakeReportScreen> createState() => _MakeReportScreenState();
-}
-
-class _MakeReportScreenState extends State<MakeReportScreen> {
-  @override
-  List<String> titles = [
-    'Resident Info',
-    'Problems',
-    'Your Intervention',
-  ];
-
-  List<dynamic> icons = [
-    IconBroken.Profile,
-    IconBroken.Info_Circle,
-    IconBroken.Edit,
-  ];
-
-  PageController controller = PageController(initialPage: 0);
-
-  int pageIndex = 0;
-  int currentStep = 0;
-
-  bool isCompleted = false;
-
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/background.jpg'),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        floatingActionButton: drawFloatingActionButton(currentStep),
-        appBar: CustomAppBar(
-          titleWidget: BuildReportScreenAppBarTitle(
-            context: context,
-            titleText: titles[currentStep],
-            icon: icons[currentStep],
+    return BlocConsumer<ReportsCubit, ReportsStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        var cubit = ReportsCubit.get(context);
+        return Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/background.jpg'),
+              fit: BoxFit.cover,
+            ),
           ),
-          backgroundColor: Colors.transparent,
-          opacity: 0.0,
-          elevation: 0.0,
-          leading: const BuildReportScreenAppBarLeading(),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Theme(
-                  data: ThemeData(
-                    canvasColor: const Color(0xffc1ddeb),
-                  ),
-                  child: BuildReportStepper(
-                    currentStep: currentStep,
-                  ),
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            floatingActionButton:
+                drawFloatingActionButton(cubit.currentStep, cubit),
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              bottomOpacity: 0,
+              title: BuildReportScreenAppBarTitle(
+                context: context,
+                icon: cubit.icons[cubit.currentStep],
+                titleText: cubit.titles[cubit.currentStep],
+              ),
+              leading: IconButton(
+                icon: Icon(
+                  IconBroken.Arrow___Left_2,
+                  color: Colors.black,
                 ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
-              const SizedBox(
-                height: 20.0,
+            ),
+            body: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Theme(
+                      data: ThemeData(
+                        canvasColor: const Color(0xffc1ddeb),
+                      ),
+                      child: BuildReportStepper(),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
 
-int drugNumber = 1;
-
-drawFloatingActionButton(int currentStep) {
+drawFloatingActionButton(int currentStep, cubit) {
   if (currentStep == 2) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: FloatingActionButton(
         onPressed: () {
-          MakeReportScreen;
-          drugNumber++;
+          cubit.updateNewDrug();
         },
-        backgroundColor: const Color(0xffc1ddeb),
+        backgroundColor: defaultColor,
         heroTag: const Text('Add another drug'),
         child: Icon(Icons.add, color: secondaryColor),
       ),
@@ -104,33 +94,13 @@ drawFloatingActionButton(int currentStep) {
   }
 }
 
-Widget writeCard(
-  context,
-  String title, {
-  double hintSize = 20.0,
-  readOnly = false,
-  size = 20.0,
-}) =>
-    Container(
-      padding: const EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        color: const Color(0xffc1ddeb),
-        borderRadius: BorderRadius.circular(15.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            blurRadius: 10,
-            spreadRadius: 1,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: ReportScreenTextField(
-          title: title, readOnly: readOnly, hintSize: size),
-    );
-
 Widget InterventionItem(
-        context, List<String> drugs, fieldController, drugNumber) =>
+  context,
+  List<String> drugs,
+  fieldController,
+  cubit,
+  drugNumber,
+) =>
     Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -158,12 +128,12 @@ Widget InterventionItem(
                 return word.toLowerCase().contains(
                       textEditingValue.text.toLowerCase(),
                     );
-                return true;
               }).toList();
             }
           },
           onSelected: (value) {
             fieldController.text = value;
+            cubit.onAutoCompleteChanged();
           },
           optionsViewBuilder: (
             context,
@@ -193,6 +163,7 @@ Widget InterventionItem(
                             return ListTile(
                               onTap: () {
                                 fieldController.text = option;
+                                cubit.onAutoCompleteChanged();
                               },
                               title: SubstringHighlight(
                                 text: option.toString(),
@@ -273,11 +244,23 @@ Widget InterventionItem(
         const SizedBox(height: 5.0),
         Row(
           children: [
-            Expanded(child: writeCard(context, 'Physician Dose')),
+            Expanded(
+              child: ReportScreenItem(
+                title: 'Physician Dose',
+                readOnly: false,
+                context: context,
+              ),
+            ),
             // SizedBox(
             //   width: 10,
             // ),
-            Expanded(child: writeCard(context, 'Your Dose')),
+            Expanded(
+              child: ReportScreenItem(
+                title: 'Your Dose',
+                readOnly: false,
+                context: context,
+              ),
+            ),
           ],
         ),
       ],

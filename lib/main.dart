@@ -1,13 +1,13 @@
-import 'package:clinical_pharmacist_intervention/business_logic/intervention_cubit/cubit.dart';
+import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/cubit.dart';
 import 'package:clinical_pharmacist_intervention/shared/bloc_observer.dart';
 import 'package:clinical_pharmacist_intervention/shared/cubit/cubit.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/choose_acount_type_screen.dart';
-import 'package:clinical_pharmacist_intervention/ui/screens/home_screen.dart';
-import 'package:clinical_pharmacist_intervention/ui/screens/make_report_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/on_boarding_screen.dart';
-import 'package:clinical_pharmacist_intervention/ui/screens/register_screen.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/reports_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/splash_screen.dart';
-import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
+import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
+import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
+import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,10 +26,17 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => AppCubit()),
-        BlocProvider(create: (context) => InterventionCubit()),
+        BlocProvider(create: (context) => ReportsCubit()),
       ],
       child: MaterialApp(
-        home: AccountTypeScreen(),
+        theme: ThemeData(
+          fontFamily: Lora,
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+            backgroundColor: defaultColor,
+            foregroundColor: Colors.black54,
+          ),
+        ),
+        home: OnBoardingScreen(),
       ),
     );
   }
