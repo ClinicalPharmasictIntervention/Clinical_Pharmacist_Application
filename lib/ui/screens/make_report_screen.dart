@@ -6,7 +6,6 @@ import 'package:clinical_pharmacist_intervention/ui/elements/custom_app_bar.dart
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/report_screen_appbar.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/report_screen_item.dart';
-import 'package:clinical_pharmacist_intervention/ui/elements/report_screen_textfield.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

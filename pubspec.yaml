@@ -48,6 +48,10 @@ dependencies:
   quickalert: ^1.0.1
   substring_highlight: ^1.0.33
   modal_bottom_sheet: 3.0.0-pre
+  regexpattern: ^2.1.0
+  shared_preferences: ^2.1.0
+
+
 
 
 

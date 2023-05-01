@@ -1,12 +1,14 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:clinical_pharmacist_intervention/main.dart';
+import 'package:clinical_pharmacist_intervention/shared/network/local/cache_helper.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/splash_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
@@ -81,7 +83,7 @@ class OnBoardingScreen extends StatelessWidget {
                             PageTransition(
                               duration: const Duration(milliseconds: 4000),
                               type: PageTransitionType.theme,
-                              child: SplashScreen(),
+                              child: homeOrRegisterWidget!,
                             ),
                           );
                         }

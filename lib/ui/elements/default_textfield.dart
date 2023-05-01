@@ -10,21 +10,32 @@ class DefaultTextField extends StatelessWidget {
     this.prefixIcon,
     this.txtInputType,
     this.labelTxt,
+    this.controller,
+    this.validate,
+    this.isPassword,
+    this.onSubmitted,
+    this.onTxtChange,
     required this.hintTxt,
-    required this.onTxtChange,
   }) : super(key: key);
   String hintTxt;
   String? labelTxt;
   IconData? prefixIcon;
   IconData? suffixIcon;
-  Function onTxtChange;
+  var onTxtChange;
+  var validate;
   TextInputType? txtInputType;
+  TextEditingController? controller;
+  bool? isPassword;
+  var onSubmitted;
+
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      onChanged: (val) {
-        onTxtChange(val);
-      },
+    return TextFormField(
+      onFieldSubmitted: onSubmitted,
+      obscureText: isPassword == null ? false : isPassword!,
+      validator: validate,
+      controller: controller,
+      onChanged: onTxtChange,
       keyboardType: txtInputType,
       decoration: InputDecoration(
         focusedBorder:

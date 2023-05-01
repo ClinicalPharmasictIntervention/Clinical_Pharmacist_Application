@@ -114,7 +114,8 @@ class ProfileScreen extends StatelessWidget {
                   width: 350,
                   height: 50,
                   child: DefaultTextField(
-                      hintTxt: "search with ", onTxtChange: () {}),
+                    hintTxt: "search with ",
+                  ),
                 ),
               ],
             ),

@@ -14,11 +14,16 @@ import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class BuildReportStepper extends StatelessWidget {
-  BuildReportStepper({
-    Key? key,
-  }) : super(key: key);
+  TextEditingController nameController = TextEditingController();
+  TextEditingController consultantController = TextEditingController();
+  TextEditingController departController = TextEditingController();
+  TextEditingController residentNameController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
+  TextEditingController bedController = TextEditingController();
+  TextEditingController medicalController = TextEditingController();
+  TextEditingController fieldController = TextEditingController();
 
-  TextEditingController? fieldController;
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,53 +31,57 @@ class BuildReportStepper extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = ReportsCubit.get(context);
-        return Stepper(
-          steps: [
-            buildOneStep(context, 0, "Resident",
-                drawStep1Content(context, cubit), cubit),
-            buildOneStep(
-                context, 1, "Problem", drawStep2Content(context, cubit), cubit),
-            buildOneStep(context, 2, "Intervention",
-                drawStep3Content(context, cubit), cubit),
-          ],
-          currentStep: cubit.currentStep,
-          type: StepperType.horizontal,
-          elevation: 0,
-          onStepContinue: () {
-            final isFinalStep = cubit.currentStep == 2;
-            if (isFinalStep) {
-              print('completed');
+        return Form(
+          key: formKey,
+          child: Stepper(
+            steps: [
+              buildOneStep(context, 0, "Resident",
+                  drawStep1Content(context, cubit), cubit),
+              buildOneStep(context, 1, "Problem",
+                  drawStep2Content(context, cubit), cubit),
+              buildOneStep(context, 2, "Intervention",
+                  drawStep3Content(context, cubit), cubit),
+            ],
+            currentStep: cubit.currentStep,
+            type: StepperType.horizontal,
+            elevation: 0,
+            onStepContinue: () {
+              final isFinalStep = cubit.currentStep == 2;
+              if (isFinalStep) {
+                print('completed');
 
-              showQuickAlert(
-                context: context,
-                alertType: QuickAlertType.success,
-                dialogMessage: 'Wait For Physician Acceptance',
-                actionTitle: 'Your Report Is Done Successfully!',
-                nextButtonTitle: 'Reports',
-                backButtonTitle: 'Another',
-                onNext: () {
-                  navigateTo(context, ReportsScreen());
-                },
-                onBack: () {
-                  navigateTo(context, MakeReportScreen());
-                },
-              );
-            } else {
-              cubit.changeForwardStep();
-            }
-          },
-          onStepCancel: cubit.currentStep == 0
-              ? null
-              : () {
-                  cubit.changeBackwardStep();
-                },
-          onStepTapped: (step) {
-            cubit.onTappedStep(step);
-          },
-          controlsBuilder: (context, ControlsDetails controlDetail) {
-            final isLastStep = controlDetail.currentStep == 2;
-            return drawControllerBuilder(context, isLastStep, controlDetail);
-          },
+                showQuickAlert(
+                  context: context,
+                  alertType: QuickAlertType.success,
+                  dialogMessage: 'Wait For Physician Acceptance',
+                  actionTitle: 'Your Report Is Done Successfully!',
+                  nextButtonTitle: 'Reports',
+                  backButtonTitle: 'Another',
+                  onNext: () {
+                    navigateTo(context, ReportsScreen());
+                  },
+                  onBack: () {
+                    navigateTo(context, MakeReportScreen());
+                  },
+                );
+              } else {
+                cubit.changeForwardStep();
+              }
+            },
+            onStepCancel: cubit.currentStep == 0
+                ? null
+                : () {
+                    cubit.changeBackwardStep();
+                  },
+            onStepTapped: (step) {
+              cubit.onTappedStep(step);
+            },
+            controlsBuilder: (context, ControlsDetails controlDetail) {
+              final isLastStep = controlDetail.currentStep == 2;
+
+              return drawControllerBuilder(context, isLastStep, controlDetail);
+            },
+          ),
         );
       },
     );
@@ -89,6 +98,7 @@ class BuildReportStepper extends StatelessWidget {
     );
   }
 
+  // STEP NUMBER ONE
   drawStep1Content(BuildContext context, cubit) {
     var cardTitles = [
       'Your Name',
@@ -100,13 +110,18 @@ class BuildReportStepper extends StatelessWidget {
     ];
     return Column(
       children: [
-        const SizedBox(
-          height: 20.0,
-        ),
         ReportScreenItem(
           context: context,
           title: cardTitles[0],
           readOnly: false,
+          controller: nameController,
+          validate: (value) {
+            if (nameController.text.isEmpty) {
+              return 'Your name is empty';
+            } else {
+              return null;
+            }
+          },
         ),
         const SizedBox(
           height: 20.0,
@@ -115,6 +130,14 @@ class BuildReportStepper extends StatelessWidget {
           context: context,
           title: cardTitles[1],
           readOnly: false,
+          controller: consultantController,
+          validate: (value) {
+            if (consultantController.text.isEmpty) {
+              return 'Consultant name is empty';
+            } else {
+              return null;
+            }
+          },
         ),
         const SizedBox(
           height: 20.0,
@@ -123,6 +146,15 @@ class BuildReportStepper extends StatelessWidget {
           context: context,
           title: cardTitles[2],
           readOnly: false,
+          controller: departController,
+          validate: (value) {
+            print('dsfs');
+            if (value.isEmpty) {
+              return 'Department name is empty';
+            } else {
+              return null;
+            }
+          },
         ),
         const SizedBox(
           height: 20.0,
@@ -131,6 +163,14 @@ class BuildReportStepper extends StatelessWidget {
           context: context,
           title: cardTitles[3],
           readOnly: false,
+          controller: residentNameController,
+          validate: (value) {
+            if (residentNameController.text.isEmpty) {
+              return 'Resident name is empty';
+            } else {
+              return null;
+            }
+          },
         ),
         const SizedBox(
           height: 10.0,
@@ -147,6 +187,24 @@ class BuildReportStepper extends StatelessWidget {
                 onChanged: (value) {
                   cubit.changeFirstRadioMode(value);
                 },
+              ),
+            ),
+            SizedBox(
+              width: 60,
+              child: ReportScreenItem(
+                context: context,
+                title: 'Age',
+                readOnly: false,
+                hintSize: 17,
+                controller: ageController,
+                validate: (value) {
+                  if (ageController.text.isEmpty) {
+                    return 'Resident age is empty';
+                  } else {
+                    return null;
+                  }
+                },
+                keyboardType: TextInputType.number,
               ),
             ),
             Expanded(
@@ -170,6 +228,15 @@ class BuildReportStepper extends StatelessWidget {
           context: context,
           title: cardTitles[4],
           readOnly: false,
+          controller: bedController,
+          validate: (value) {
+            if (bedController.text.isEmpty) {
+              return 'Bed number is empty';
+            } else {
+              return null;
+            }
+          },
+          keyboardType: TextInputType.number,
         ),
         const SizedBox(
           height: 20.0,
@@ -178,11 +245,20 @@ class BuildReportStepper extends StatelessWidget {
           context: context,
           title: cardTitles[5],
           readOnly: false,
+          controller: medicalController,
+          validate: (value) {
+            if (medicalController.text.isEmpty) {
+              return 'Medical record number is empty';
+            } else {
+              return null;
+            }
+          },
         ),
       ],
     );
   }
 
+  // STEP NUMBER TWO
   drawStep2Content(BuildContext context, cubit) {
     var cardTitles = [
       'Problem Type',
@@ -323,6 +399,7 @@ class BuildReportStepper extends StatelessWidget {
     );
   }
 
+  //STEP NUMBER THREE
   drawStep3Content(BuildContext context, cubit) {
     var cardTitles = [
       'Write Your Intervention Here..',

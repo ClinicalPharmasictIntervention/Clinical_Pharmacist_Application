@@ -7,16 +7,25 @@ class ReportScreenTextField extends StatelessWidget {
     Key? key,
     required this.readOnly,
     required this.title,
+    this.validate,
+    this.controller,
     this.hintSize,
+    this.keyboardType,
   }) : super(key: key);
   bool readOnly;
   String title;
   double? hintSize;
+  var controller;
+  var validate;
+  var keyboardType;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      controller: controller,
+      validator: validate,
       readOnly: readOnly,
+      keyboardType: keyboardType,
       style: const TextStyle(
         fontSize: 18,
         fontFamily: Lora,
@@ -47,6 +56,5 @@ class ReportScreenTextField extends StatelessWidget {
             : null,
       ),
     );
-    ;
   }
 }
