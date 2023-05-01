@@ -9,7 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 part 'app_state.dart';
 
 class AppCubit extends Cubit<AppState> {
-  bool editProfileAbsorbing = false;
+  bool editProfileAbsorbing = true;
 
   AppCubit() : super(AppInitial());
 
