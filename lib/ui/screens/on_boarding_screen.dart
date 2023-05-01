@@ -83,7 +83,7 @@ class OnBoardingScreen extends StatelessWidget {
                             PageTransition(
                               duration: const Duration(milliseconds: 4000),
                               type: PageTransitionType.theme,
-                              child: homeOrRegisterWidget!,
+                              child: SplashScreen(),
                             ),
                           );
                         }

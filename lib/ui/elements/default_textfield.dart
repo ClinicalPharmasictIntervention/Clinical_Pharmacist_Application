@@ -23,7 +23,7 @@ class DefaultTextField extends StatelessWidget {
   bool? isEnabled;
   IconData? prefixIcon;
   IconData? suffixIcon;
-  var onTxtChange;
+  Function? onTxtChange;
   var validate;
   TextInputType? txtInputType;
   TextEditingController? controller;
@@ -37,7 +37,9 @@ class DefaultTextField extends StatelessWidget {
       obscureText: isPassword == null ? false : isPassword!,
       validator: validate,
       controller: controller,
-      onChanged: onTxtChange,
+      onChanged: (val) {
+        onTxtChange!(val);
+      },
       keyboardType: txtInputType,
       enabled: isEnabled,
       decoration: InputDecoration(

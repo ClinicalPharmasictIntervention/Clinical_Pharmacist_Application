@@ -31,6 +31,7 @@ void main() async {
   String? uId = CacheHelper.getData(key: 'token');
 
   uId = null;
+  onBoarding = null;
   if (onBoarding != null) {
     if (onBoarding == true) {
       startWidget = OnBoardingScreen();
@@ -74,6 +75,4 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
-  
-  
 }

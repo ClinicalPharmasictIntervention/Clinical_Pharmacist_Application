@@ -25,17 +25,17 @@ class EditProfileScreen extends StatelessWidget {
             return Scaffold(
               backgroundColor: Colors.transparent,
               body: drawBody(context),
-              floatingActionButton:( context.read<AppCubit>().editProfileAbsorbing==false)?null:
-              
-                  drawEnableEditingFloatingActionButton(context),
-                  
+              floatingActionButton:
+                  (context.read<AppCubit>().editProfileAbsorbing == false)
+                      ? null
+                      : drawEnableEditingFloatingActionButton(context),
             );
           }),
     );
   }
 
   drawBody(BuildContext context) {
-   return AbsorbPointer(
+    return AbsorbPointer(
       absorbing: (context.read<AppCubit>().editProfileAbsorbing == false)
           ? false
           : true,
@@ -75,6 +75,7 @@ class EditProfileScreen extends StatelessWidget {
                 labelTxt: "User name",
                 hintTxt: "Please, enter at least 4 names.",
                 prefixIcon: IconBroken.User,
+                isEnabled: false,
                 onTxtChange: () {},
               ),
               const SizedBox(
