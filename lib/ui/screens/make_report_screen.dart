@@ -2,7 +2,6 @@ import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/cu
 import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/states.dart';
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/build_steper.dart';
-import 'package:clinical_pharmacist_intervention/ui/elements/custom_app_bar.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/report_screen_appbar.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/report_screen_item.dart';

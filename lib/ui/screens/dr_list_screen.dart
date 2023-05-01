@@ -1,3 +1,4 @@
+import 'package:clinical_pharmacist_intervention/data/models/doctor_model.dart';
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_textfield.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/dr_options_item.dart';
@@ -40,7 +41,7 @@ class DrDiscussionScreen extends StatelessWidget {
               const SizedBox(
                 height: 70,
               ),
-              Container(
+              SizedBox(
                 width: 360,
                 child: DefaultTextField(
                   hintTxt: 'Search with physician name',
@@ -49,11 +50,19 @@ class DrDiscussionScreen extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: Container(
+                child: SizedBox(
                   height: double.infinity,
                   child: ListView.builder(
                       itemBuilder: (context, index) {
-                        return DrDiscussionItem();
+                        DoctorModel doctor = DoctorModel(
+                            name: "Samer Othman",
+                            department: "Orthopedics",
+                            id: "2301so",
+                            phoneNumber: "01011245647",
+                            email: "dev.cs.mohamed@gmail.com");
+                        return DrOptionsItem(
+                          doctor: doctor,
+                        );
                       },
                       // separatorBuilder: (context, index) {
                       //   return Divider();

@@ -1,8 +1,9 @@
 import 'package:clinical_pharmacist_intervention/ui/elements/clinical_pharmacist_item.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/options_item.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/dr_item.dart';
-import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
+import 'package:flutter/material.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
+
 
 class ClinicalPharmacistDiscussionItem extends StatelessWidget {
   ClinicalPharmacistDiscussionItem({
@@ -32,11 +33,12 @@ class ClinicalPharmacistDiscussionItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClinicalPharmacistItem(name: "name", department: "clinical"),
-              OptionsItem(phoneNumber: "phoneNumber", chatId: "chatId")
+              OptionsItem(phoneNumber: "phoneNumber", email: "", chatId: "chatId", )
             ],
           ),
         ),
       ),
     );
   }
+
 }

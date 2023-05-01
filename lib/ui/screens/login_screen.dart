@@ -1,14 +1,11 @@
 import 'package:clinical_pharmacist_intervention/business_logic/sign_in_cubit/cubit.dart';
 import 'package:clinical_pharmacist_intervention/business_logic/sign_in_cubit/states.dart';
-import 'package:clinical_pharmacist_intervention/shared/cubit/cubit.dart';
-import 'package:clinical_pharmacist_intervention/shared/network/local/cache_helper.dart';
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
+import 'package:clinical_pharmacist_intervention/shared/utilities.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/clicable_text.dart';
-import 'package:clinical_pharmacist_intervention/ui/elements/default_textfield.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_textfield.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/layout_screen.dart';
-import 'package:clinical_pharmacist_intervention/ui/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

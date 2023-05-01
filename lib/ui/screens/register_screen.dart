@@ -2,6 +2,7 @@ import 'package:clinical_pharmacist_intervention/business_logic/sign_up_cubit/cu
 import 'package:clinical_pharmacist_intervention/business_logic/sign_up_cubit/states.dart';
 import 'package:clinical_pharmacist_intervention/shared/cubit/cubit.dart';
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
+import 'package:clinical_pharmacist_intervention/shared/utilities.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/clicable_text.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_textfield.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';

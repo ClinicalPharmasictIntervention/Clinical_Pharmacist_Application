@@ -2,6 +2,7 @@ import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/cu
 import 'package:clinical_pharmacist_intervention/business_logic/sign_in_cubit/cubit.dart';
 import 'package:clinical_pharmacist_intervention/business_logic/sign_up_cubit/cubit.dart';
 import 'package:clinical_pharmacist_intervention/shared/bloc_observer.dart';
+import 'package:clinical_pharmacist_intervention/business_logic/cubit/app_cubit.dart';
 import 'package:clinical_pharmacist_intervention/shared/cubit/cubit.dart';
 import 'package:clinical_pharmacist_intervention/shared/network/local/cache_helper.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/layout_screen.dart';
@@ -12,6 +13,10 @@ import 'package:clinical_pharmacist_intervention/ui/screens/splash_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:flutter/material.dart';
+
+import 'package:clinical_pharmacist_intervention/ui/screens/profile_screen.dart';
+
+import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,11 +24,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   await Firebase.initializeApp();
+  runApp(const MyApp());
   await CacheHelper.init();
 
   bool? onBoarding = CacheHelper.getData(key: 'onBoarding');
   String? uId = CacheHelper.getData(key: 'token');
 
+  uId = null;
   if (onBoarding != null) {
     if (onBoarding == true) {
       startWidget = OnBoardingScreen();
