@@ -25,16 +25,17 @@ class EditProfileScreen extends StatelessWidget {
             return Scaffold(
               backgroundColor: Colors.transparent,
               body: drawBody(context),
-              floatingActionButton:( context.read<AppCubit>().editProfileAbsorbing==false)?
-              null:
+              floatingActionButton:( context.read<AppCubit>().editProfileAbsorbing==false)?null:
+              
                   drawEnableEditingFloatingActionButton(context),
+                  
             );
           }),
     );
   }
 
   drawBody(BuildContext context) {
-    AbsorbPointer(
+   return AbsorbPointer(
       absorbing: (context.read<AppCubit>().editProfileAbsorbing == false)
           ? false
           : true,
