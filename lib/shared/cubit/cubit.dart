@@ -1,7 +1,7 @@
 import 'package:clinical_pharmacist_intervention/shared/cubit/states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+/*
 class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(AppInitialState());
 
@@ -20,3 +20,4 @@ class AppCubit extends Cubit<AppStates> {
     }
   }
 }
+*/

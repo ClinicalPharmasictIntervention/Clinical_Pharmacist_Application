@@ -1,10 +1,8 @@
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/clicable_text.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_textfield.dart';
-import 'package:clinical_pharmacist_intervention/ui/elements/default_textfield.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/layout_screen.dart';
-import 'package:clinical_pharmacist_intervention/ui/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -29,7 +27,7 @@ class LoginScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(
-                  height: 30,
+                  height: 50,
                 ),
                 Center(
                   child: Container(
@@ -42,11 +40,12 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(0),
-                  child: const Text(
+                const Padding(
+                  padding: EdgeInsets.all(0),
+                  child: Text(
                     "Login",
                     style: TextStyle(
+                      //   color:Colors.blue,
                       fontSize: 40,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 30.0,
@@ -56,7 +55,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 30,
                 ),
                 DefaultTextField(
                     hintTxt: '',

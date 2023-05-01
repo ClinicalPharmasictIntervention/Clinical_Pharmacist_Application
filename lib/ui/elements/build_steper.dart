@@ -6,25 +6,16 @@ import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
-import 'package:clinical_pharmacist_intervention/ui/screens/make_report_screen.dart';
 
-class BuildReportStepper extends StatefulWidget {
-  BuildReportStepper({Key? key, required this.currentStep}) : super(key: key);
+class BuildRepotSteper extends StatelessWidget {
+  BuildRepotSteper({Key? key, required this.currentStep}) : super(key: key);
   int currentStep;
 
-  @override
-  State<BuildReportStepper> createState() => _BuildReportStepperState();
-}
-
-class _BuildReportStepperState extends State<BuildReportStepper> {
-  int selectedRadio1 = 0;
-
-  int selectedRadio2 = 0;
-
-  int selectedRadio3 = 0;
+  int? selectedRadio1 = 0;
+  int? selectedRadio2 = 0;
+  int? selectedRadio3 = 0;
 
   TextEditingController? fieldController;
-
   int drugNumber = 1;
 
   List<String> drugs = [
@@ -60,6 +51,7 @@ class _BuildReportStepperState extends State<BuildReportStepper> {
     'Motrin',
   ];
 
+
   @override
   Widget build(BuildContext context) {
     return Stepper(
@@ -68,32 +60,20 @@ class _BuildReportStepperState extends State<BuildReportStepper> {
         buildOneStep(context, 1, "Problem", drawStep2Content(context)),
         buildOneStep(context, 2, "Intervention", drawStep3Content(context)),
       ],
-      currentStep: widget.currentStep,
+      currentStep: currentStep,
       type: StepperType.horizontal,
       elevation: 0,
       onStepContinue: () {
-        final isFinalStep = widget.currentStep == 2;
+        final isFinalStep = currentStep == 2;
         if (isFinalStep) {
           print('completed');
           drawQuickAlert(context);
         } else {
-          setState(() {
-            ++widget.currentStep;
-          });
+          ++currentStep;
         }
       },
-      onStepCancel: widget.currentStep == 0
-          ? null
-          : () {
-              setState(() {
-                --widget.currentStep;
-              });
-            },
-      onStepTapped: (step) {
-        setState(() {
-          widget.currentStep = step;
-        });
-      },
+      onStepCancel: currentStep == 0 ? null : () => --currentStep,
+      onStepTapped: (step) => currentStep = step,
       controlsBuilder: (context, ControlsDetails controlDetail) {
         final isLastStep = controlDetail.currentStep == 2;
         return drawControllerBuilder(context, isLastStep, controlDetail);
@@ -157,19 +137,14 @@ class _BuildReportStepperState extends State<BuildReportStepper> {
         Row(
           children: [
             Expanded(
-              child:
-                  drawDefaultRadio(context, selectedRadio1, 0, 'Male', (value) {
-                setState(() {
-                  selectedRadio1 = value;
-                });
+              child: drawDefaultRadio(context, selectedRadio1, 0, 'Male', (value) {
+                selectedRadio1 = value;
               }),
             ),
             Expanded(
-              child: drawDefaultRadio(context, selectedRadio1, 1, 'Female',
-                  (value) {
-                setState(() {
-                  selectedRadio1 = value;
-                });
+              child:
+                  drawDefaultRadio(context, selectedRadio1, 1, 'Female', (value) {
+                selectedRadio1 = value;
               }),
             ),
           ],
@@ -230,19 +205,13 @@ class _BuildReportStepperState extends State<BuildReportStepper> {
         Row(
           children: [
             Expanded(
-              child:
-                  drawDefaultRadio(context, selectedRadio2, 0, 'Yes', (value) {
-                setState(() {
-                  selectedRadio2 = value;
-                });
+              child: drawDefaultRadio(context, selectedRadio2, 0, 'Yes', (value) {
+                selectedRadio2 = value;
               }),
             ),
             Expanded(
-              child:
-                  drawDefaultRadio(context, selectedRadio2, 1, 'No', (value) {
-                setState(() {
-                  selectedRadio2 = value;
-                });
+              child: drawDefaultRadio(context, selectedRadio2, 1, 'No', (value) {
+                selectedRadio2 = value;
               }),
             ),
           ],
@@ -267,27 +236,29 @@ class _BuildReportStepperState extends State<BuildReportStepper> {
         writeCard(
           context,
           cardTitles[5],
-          readOnly: true,
         ),
         const SizedBox(
           height: 20.0,
         ),
+        writeCard(
+          context,
+          cardTitles[6],
+          readOnly: true,
+          size: 16.0,
+        ),
+        const SizedBox(
+          height: 10.0,
+        ),
         Row(
           children: [
             Expanded(
-              child:
-                  drawDefaultRadio(context, selectedRadio3, 0, 'Yes', (value) {
-                setState(() {
-                  selectedRadio3 = value;
-                });
+              child: drawDefaultRadio(context, selectedRadio3, 0, 'Yes', (value) {
+                selectedRadio3 = value;
               }),
             ),
             Expanded(
-              child:
-                  drawDefaultRadio(context, selectedRadio3, 1, 'No', (value) {
-                setState(() {
-                  selectedRadio3 = value;
-                });
+              child: drawDefaultRadio(context, selectedRadio3, 1, 'No', (value) {
+                selectedRadio3 = value;
               }),
             ),
           ],
@@ -297,8 +268,7 @@ class _BuildReportStepperState extends State<BuildReportStepper> {
         ),
         writeCard(
           context,
-          cardTitles[6],
-          size: 20.0,
+          cardTitles[7],
         ),
       ],
     );
@@ -344,16 +314,14 @@ class _BuildReportStepperState extends State<BuildReportStepper> {
 
   buildOneStep(BuildContext context, int currentStep, String stepTitle,
       Widget stepContent) {
-    if (currentStep == 2) {
-      drawFloatingActionButton(currentStep);
-    }
-    return Step(
+    Step(
       state: currentStep > 0 ? StepState.complete : StepState.indexed,
       isActive: currentStep >= currentStep,
       title: drawStepTitle(context, stepTitle),
       content: stepContent,
     );
   }
+
 
   drawQuickAlert(BuildContext context) {
     QuickAlert.show(
@@ -386,14 +354,14 @@ class _BuildReportStepperState extends State<BuildReportStepper> {
       padding: const EdgeInsets.symmetric(vertical: 25.0),
       child: Row(
         children: [
-          if (widget.currentStep != 0)
+          if (currentStep != 0)
             Expanded(
               child: PrimaryBtn(
                 btnTitle: 'Back',
                 onPressed: controlDetail.onStepCancel,
               ),
             ),
-          if (widget.currentStep != 0)
+          if (currentStep != 0)
             const SizedBox(
               width: 10.0,
             ),
@@ -408,8 +376,8 @@ class _BuildReportStepperState extends State<BuildReportStepper> {
     );
   }
 
-  Widget drawDefaultRadio(context, selectedRadio, value, lable, onChanged) {
-    return RadioListTile(
+Widget drawDefaultRadio(context, selectedRadio, value, lable, onChanged){
+   return  RadioListTile(
       value: value,
       title: Text(
         lable,
@@ -423,5 +391,8 @@ class _BuildReportStepperState extends State<BuildReportStepper> {
       activeColor: secondaryColor,
       onChanged: onChanged,
     );
-  }
+}
+ 
+
+
 }

@@ -23,7 +23,7 @@ class AccountTypeScreen extends StatelessWidget {
             children: [
               //start page
               const SizedBox(
-                height: 140,
+                height: 180,
               ),
               const Text(
                 "Type of Account",
@@ -36,7 +36,7 @@ class AccountTypeScreen extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.all(12.0),
                 child: Text(
-                  "Choose the type of your account, the careful to change it is impossible.",
+                  "Be sure that is your system role, the careful to change it is impossible.",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -51,9 +51,102 @@ class AccountTypeScreen extends StatelessWidget {
               ),
 
               //choose type
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+              // clnical pharmacist
+
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RegisterScreen()));
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const SizedBox(
+                      width: 200,
+                      child: ListTile(
+                        title: Padding(
+                          padding: EdgeInsets.only(bottom: 12.0),
+                          child: Text(
+                            "I am a clinical pharmacist",
+                            style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                        ),
+                        subtitle: Text(
+                          "The easiest way to write your recommendation to a doctor.",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey,
+                          ),
+                          maxLines: 4,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                        width: 130,
+                        child: Image.asset(
+                            "assets/images/avatar_clinical_pharmacist2.png"))
+                  ],
+                ),
+              ),
+
+              const SizedBox(
+                height: 50,
+              ),
+              const Text(
+                "Click the job to start, or ask manager to give you the right system",
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                style: TextStyle(
+                  fontFamily: Lora,
+                ),
+                
+              ),
+            ],
+          )),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+
+      /*
+              ListTile(
+                title: const Padding(
+                  padding: EdgeInsets.only(bottom: 12.0),
+                  child: Text(
+                    "I am a doctor",
+                    style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
+                ),
+                subtitle: const Text(
+                  "The easiest way to communicate between the physician and the clinical pharmacist.",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey,
+                  ),
+                  maxLines: 2,
+                ),
+                trailing: Image.asset("assets/images/avatar_doctor.png"),
+              ),
+    
+              */
+
+              /**
+               * 
                   // doctor
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -87,87 +180,5 @@ class AccountTypeScreen extends StatelessWidget {
                           child: Image.asset("assets/images/avatar_doctor.png"))
                     ],
                   ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-
-                  // clnical pharmacist
-
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => RegisterScreen()));
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const SizedBox(
-                          width: 200,
-                          child: ListTile(
-                            title: Padding(
-                              padding: EdgeInsets.only(bottom: 12.0),
-                              child: Text(
-                                "I am a clinical pharmacist",
-                                style: TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
-                              ),
-                            ),
-                            subtitle: Text(
-                              "The easiest way to write your recommendation to a doctor.",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey,
-                              ),
-                              maxLines: 4,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                            width: 130,
-                            child: Image.asset(
-                                "assets/images/avatar_clinical_pharmacist2.png"))
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                ],
-              ),
-              /*
-              ListTile(
-                title: const Padding(
-                  padding: EdgeInsets.only(bottom: 12.0),
-                  child: Text(
-                    "I am a doctor",
-                    style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
-                ),
-                subtitle: const Text(
-                  "The easiest way to communicate between the physician and the clinical pharmacist.",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey,
-                  ),
-                  maxLines: 2,
-                ),
-                trailing: Image.asset("assets/images/avatar_doctor.png"),
-              ),
-    
-              */
-            ],
-          )),
-        ),
-      ),
-    );
-  }
-}
+               
+               */

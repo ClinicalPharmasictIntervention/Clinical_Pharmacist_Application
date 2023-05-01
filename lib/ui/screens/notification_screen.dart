@@ -1,7 +1,15 @@
+import 'package:clinical_pharmacist_intervention/business_logic/cubit/app_cubit.dart';
+import 'package:clinical_pharmacist_intervention/data/models/notification_model.dart';
+import 'package:clinical_pharmacist_intervention/shared/utilities.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/notification_item.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/make_report_screen.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/reports_screen.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
@@ -28,44 +36,46 @@ class NotificationScreen extends StatelessWidget {
             slivers: [
               SliverAppBar(
                 backgroundColor: Colors.transparent,
-                leading: GestureDetector(
-                  onTap: () {},
-                  child: Padding(
-                    padding:
-                        const EdgeInsetsDirectional.only(top: 8.0, start: 8),
-                    child: SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: Image.asset(
-                        "assets/images/notification_filter.png",
-                      ),
-                    ),
-                  ),
+                automaticallyImplyLeading: false,
+                leading: BlocConsumer<AppCubit, AppState>(
+                  listener: (BuildContext context, Object? state) {
+                    if (state is ShowDateDialogueState) {
+                      ShowDateDialogue(context);
+                    }
+                  },
+                  builder: (BuildContext context, state) {
+                    return drawLeaddingSliverAppBar(context);
+                  },
                 ),
                 leadingWidth: 50,
                 actions: [
-                  Container(
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/background.jpg'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    width: 350,
-                    height: 50,
-                    child: EasySearchBar(
-                        backgroundColor: Colors.transparent,
-                        //  foregroundColor: Colors.transparent,
-                        title: Text("Notification"),
-                        onSearch: (value) {}),
-                  ),
+                  BlocConsumer<AppCubit, AppState>(
+                  listener: (BuildContext context, Object? state) {
+                    if (state is ShowDateDialogueState) {
+                    }
+                  },
+                  builder: (BuildContext context, state) {
+                    return drawEasySearchBar(context,"");
+                  },
+                ),
+                  
                 ],
               ),
               SliverFixedExtentList(
                 //key: Random.secure().nextInt(500).toString(),
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    return NotificationItem();
+                    NotificationModel notification = NotificationModel(
+                      clinicalPharmacistName: "Ahmed Essam",
+                      patientName: "Mohamed Amr",
+                      time: DateTime.now().toString().substring(11, 19),
+                      date: DateTime.now().toString().substring(0, 11),
+                      status: "pending",
+                      type: "recommendation",
+                    );
+                    return NotificationItem(
+                      notification: notification,
+                    );
                   },
                   childCount: 10,
                 ),
@@ -75,6 +85,42 @@ class NotificationScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget drawLeaddingSliverAppBar(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        context.read<AppCubit>().showDateDialogue(context);
+      },
+      child: Padding(
+        padding: const EdgeInsetsDirectional.only(top: 8.0, start: 8),
+        child: SizedBox(
+          height: 50,
+          width: 50,
+          child: Image.asset(
+            "assets/images/notification_filter.png",
+          ),
+        ),
+      ),
+    );
+  }
+
+  drawEasySearchBar(BuildContext conext, String titleTxt) {
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/background.jpg'),
+          fit: BoxFit.cover,
+        ),
+      ),
+      width: 350,
+      height: 50,
+      child: EasySearchBar(
+          backgroundColor: Colors.transparent,
+          //  foregroundColor: Colors.transparent,
+          title:  Text(titleTxt),
+          onSearch: (value) {}),
     );
   }
 }

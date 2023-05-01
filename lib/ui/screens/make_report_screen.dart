@@ -6,8 +6,8 @@ import 'package:clinical_pharmacist_intervention/ui/elements/report_screen_appba
 import 'package:clinical_pharmacist_intervention/ui/elements/report_screen_textfield.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
-import 'package:substring_highlight/substring_highlight.dart';
 import 'package:flutter/material.dart';
+import 'package:substring_highlight/substring_highlight.dart';
 
 class MakeReportScreen extends StatefulWidget {
   @override
@@ -35,6 +35,7 @@ class _MakeReportScreenState extends State<MakeReportScreen> {
 
   bool isCompleted = false;
 
+
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
@@ -44,34 +45,41 @@ class _MakeReportScreenState extends State<MakeReportScreen> {
         ),
       ),
       child: Scaffold(
+        
         backgroundColor: Colors.transparent,
         floatingActionButton: drawFloatingActionButton(currentStep),
+
         appBar: CustomAppBar(
-          titleWidget: BuildReportScreenAppBarTitle(
-            context: context,
-            titleText: titles[currentStep],
-            icon: icons[currentStep],
-          ),
-          backgroundColor: Colors.transparent,
-          opacity: 0.0,
-          elevation: 0.0,
-          leading: const BuildReportScreenAppBarLeading(),
-        ),
+            titleWidget: BuildReportScreenAppBarTitle(
+              context: context,
+              titleText: titles[currentStep],
+              icon: icons[currentStep],
+            ),
+            backgroundColor: Colors.transparent,
+            opacity: 0.0,
+            elevation: 0.0,
+            leading: const BuildReportScreenAppBarLeading(),
+            ),
+
+
         body: Padding(
           padding: const EdgeInsets.all(5.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
+
               Expanded(
                 child: Theme(
                   data: ThemeData(
                     canvasColor: const Color(0xffc1ddeb),
                   ),
-                  child: BuildReportStepper(
-                    currentStep: currentStep,
-                  ),
+                  child: BuildRepotSteper(currentStep: currentStep,)
+       
                 ),
               ),
+
+
               const SizedBox(
                 height: 20.0,
               ),
@@ -81,28 +89,30 @@ class _MakeReportScreenState extends State<MakeReportScreen> {
       ),
     );
   }
-}
+  int drugNumber = 1;
 
-int drugNumber = 1;
-
-drawFloatingActionButton(int currentStep) {
-  if (currentStep == 2) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: FloatingActionButton(
-        onPressed: () {
-          MakeReportScreen;
-          drugNumber++;
-        },
-        backgroundColor: const Color(0xffc1ddeb),
-        heroTag: const Text('Add another drug'),
-        child: Icon(Icons.add, color: secondaryColor),
-      ),
-    );
-  } else {
-    return Container();
+  drawFloatingActionButton(int currentStep) {
+    if (currentStep == 2) {
+      return Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: FloatingActionButton(
+          onPressed: () {
+            setState(() {
+              drugNumber++;
+            });
+          },
+          backgroundColor: const Color(0xffc1ddeb),
+          heroTag: const Text('Add another drug'),
+          child: Icon(Icons.add, color: secondaryColor),
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 }
+
+
 
 Widget writeCard(
   context,
@@ -125,9 +135,11 @@ Widget writeCard(
           ),
         ],
       ),
-      child: ReportScreenTextField(
-          title: title, readOnly: readOnly, hintSize: size),
+      child:
+          ReportScreenTextField(title: title, readOnly: readOnly, hintSize: size),
     );
+
+
 
 Widget InterventionItem(
         context, List<String> drugs, fieldController, drugNumber) =>

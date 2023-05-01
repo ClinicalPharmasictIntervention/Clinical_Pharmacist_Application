@@ -187,7 +187,7 @@ Widget cardContent(context, label, title) => Row(
 
 Widget reportCard(context, {required bool isProfile}) => Container(
       decoration: BoxDecoration(
-        boxShadow: const [
+        boxShadow:const [
           BoxShadow(
             offset: Offset(3, 3),
             spreadRadius: 1,
