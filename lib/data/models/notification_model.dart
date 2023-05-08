@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class NotificationModel {
   NotificationModel({
-    required this.clinicalPharmacistName,
+    required this.doctorName,
     required this.patientName,
     required this.time,
     required this.date,
@@ -10,7 +10,7 @@ class NotificationModel {
     required this.type,
   });
 
-  String clinicalPharmacistName;
+  String doctorName;
   String patientName;
   String time;
   String date;

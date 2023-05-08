@@ -13,6 +13,7 @@ import 'package:clinical_pharmacist_intervention/ui/screens/splash_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart' show CalendarCarousel;
 
 import 'package:clinical_pharmacist_intervention/ui/screens/profile_screen.dart';
 
@@ -71,7 +72,7 @@ class MyApp extends StatelessWidget {
             foregroundColor: Colors.black54,
           ),
         ),
-        home: startWidget,
+        home: LayoutScreen(),
       ),
     );
   }

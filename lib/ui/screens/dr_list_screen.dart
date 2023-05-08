@@ -2,8 +2,7 @@ import 'package:clinical_pharmacist_intervention/data/models/doctor_model.dart';
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_textfield.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/dr_options_item.dart';
-import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
-import 'package:easy_search_bar/easy_search_bar.dart';
+
 import 'package:flutter/material.dart';
 
 class DrDiscussionScreen extends StatelessWidget {
@@ -22,31 +21,20 @@ class DrDiscussionScreen extends StatelessWidget {
         ),
         child: Scaffold(
           backgroundColor: Colors.transparent,
-          /*
-          appBar: AppBar(
-            elevation: 0,
-            title: const Text(
-              "Doctors List",
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
-            titleSpacing: 3.0,
-            centerTitle: true,
-            backgroundColor: Colors.white,
-          ),
-          */
           body: Column(
             children: [
-              const SizedBox(
-                height: 70,
-              ),
               SizedBox(
-                width: 360,
-                child: DefaultTextField(
-                  hintTxt: 'Search with physician name',
-                  prefixIcon: IconBroken.Search,
-                  onTxtChange: (text) {},
+                height: MediaQuery.of(context).size.height * .05,
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.all(16.0),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 7,
+                  child: DefaultTextField(
+                    hintTxt: 'Search with physician name',
+                    prefixIcon: IconBroken.Search,
+                    onTxtChange: (text) {},
+                  ),
                 ),
               ),
               Expanded(
@@ -64,9 +52,6 @@ class DrDiscussionScreen extends StatelessWidget {
                           doctor: doctor,
                         );
                       },
-                      // separatorBuilder: (context, index) {
-                      //   return Divider();
-                      // },
                       itemCount: 10),
                 ),
               ),

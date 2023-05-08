@@ -24,7 +24,7 @@ class NotificationItem extends StatelessWidget {
                 width: 50,
                 child: Image.asset(
                     "assets/images/notification_${notification.type}.png")),
-            title: Text(notification.clinicalPharmacistName),
+            title: Text(notification.doctorName),
             subtitle: Text(notification.patientName),
             isThreeLine: false,
           ),

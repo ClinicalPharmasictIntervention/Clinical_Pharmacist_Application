@@ -53,6 +53,7 @@ dependencies:
   date_time_picker: ^2.1.0
   regexpattern: ^2.1.0
   shared_preferences: ^2.1.0
+  flutter_calendar_carousel: ^2.4.1
 
 
 

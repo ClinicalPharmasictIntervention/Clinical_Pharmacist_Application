@@ -1,17 +1,19 @@
 import 'package:clinical_pharmacist_intervention/business_logic/cubit/app_cubit.dart';
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/shared/utilities.dart';
+import 'package:clinical_pharmacist_intervention/ui/elements/build_calindar_item.dart';
+import 'package:clinical_pharmacist_intervention/ui/elements/build_date_dialogue_actions.dart';
+import 'package:clinical_pharmacist_intervention/ui/elements/build_date_dialogue_title.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_daily_report_card.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_textfield.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/edit_profile_screen.dart';
-import 'package:clinical_pharmacist_intervention/ui/screens/reports_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/report_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  const ProfileScreen();
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +31,8 @@ class ProfileScreen extends StatelessWidget {
             SliverAppBar(
               backgroundColor: Colors.transparent,
               automaticallyImplyLeading: false,
-              expandedHeight: MediaQuery.of(context).size.height * .32,
-              collapsedHeight: MediaQuery.of(context).size.height * .32,
+              expandedHeight: MediaQuery.of(context).size.height * .40,
+              collapsedHeight: MediaQuery.of(context).size.height * .40,
               floating: false,
               flexibleSpace: drawFlixibleSpaceFirstSliverAppBar(context),
             ),
@@ -42,14 +44,14 @@ class ProfileScreen extends StatelessWidget {
               leading: BlocConsumer<AppCubit, AppState>(
                 listener: (context, state) {
                   if (state is ShowDateDialogueState) {
-                    ShowDateDialogue(context);
+                    showDateDialogue(context, const BuildDateDialogueTitle(), BuildCalendarItem(context), const [BuildDateDialogueAction()]);
                   }
                 },
                 builder: (context, state) {
                   return drawLeaddingSecondSliverAppBar(context);
                 },
               ),
-              leadingWidth: 55,
+              leadingWidth: MediaQuery.of(context).size.width*.2,
               actions: [
                 BlocConsumer<AppCubit, AppState>(
                   listener: (context, state) {
@@ -74,13 +76,7 @@ class ProfileScreen extends StatelessWidget {
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: DefaultDailyReportCard(
-                        context: context,
-                        physicianName: 'Karim',
-                        residentName: 'Ali',
-                        date: DateTime.now().toString().substring(0, 16),
-                        isProfile: true,
-                      ),
+                      child: DefaultDailyReportCard( isProfile: true, context:context, physicianName: 'Ali',residentName: "kk"),
                     ),
                   );
                 },
@@ -105,12 +101,10 @@ class ProfileScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(
-                width: 30,
-              ),
+          
               SizedBox(
-                width: 80,
-                height: 80,
+                width: MediaQuery.of(context).size.width*.4,
+                height: MediaQuery.of(context).size.height*.2,
                 child: CircleAvatar(
                   child: Image.asset("assets/images/avatar_doctor.png"),
                 ),
@@ -140,32 +134,28 @@ class ProfileScreen extends StatelessWidget {
                     );
                   }),
               BlocConsumer<AppCubit, AppState>(
-                listener: (context, state) {},
-                builder: (context, state) {
-                  return GestureDetector(
-                    onTap: () {
-                      //BlocProvider.of<AppCubit>(context).goTo(context,EditProfileScreen());
-                      //AppCubit().goTo(context, EditProfileScreen());
-                      context
-                          .read<AppCubit>()
-                          .goTo(context, EditProfileScreen());
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: const [
-                        Icon(
-                          IconBroken.Edit_Square,
-                          size: 22,
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text("Edit Profile")
-                      ],
-                    ),
-                  );
-                },
-              ),
+                  listener: (context, state) {},
+                  builder: (context, state) {
+                    return GestureDetector(
+                      onTap: () {
+                        context.read<AppCubit>().goTo(context, EditProfileScreen());
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: const [
+                          Icon(
+                            IconBroken.Edit_Square,
+                            size: 22,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text("Edit Profile")
+                        ],
+                      ),
+                    );
+                  },
+                  ),
             ],
           ),
         ),
@@ -180,10 +170,8 @@ class ProfileScreen extends StatelessWidget {
       },
       child: Padding(
         padding:
-            const EdgeInsetsDirectional.only(top: 8.0, start: 8, end: 16.0),
+            const EdgeInsetsDirectional.only(top: 4.0, start: 8, end: 8.0),
         child: SizedBox(
-          // height: 50,
-          width: 50,
           child: Image.asset(
             "assets/images/notification_filter.png",
           ),
@@ -194,10 +182,9 @@ class ProfileScreen extends StatelessWidget {
 
   drawSearchTextField(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(4.0),
       child: SizedBox(
-        width: 350,
-        height: 50,
+        width: MediaQuery.of(context).size.width*.8,
         child: DefaultTextField(
             hintTxt: "search with ",
             onTxtChange: (searchedString) {

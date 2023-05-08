@@ -1,10 +1,15 @@
 import 'package:clinical_pharmacist_intervention/business_logic/cubit/app_cubit.dart';
+import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
+import 'package:clinical_pharmacist_intervention/ui/elements/build_calindar_item.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
+import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart' show CalendarCarousel;
+
 
 printToast(String? msg, {Toast? toastLenght}) {
   Fluttertoast.showToast(
@@ -19,162 +24,34 @@ printToast(String? msg, {Toast? toastLenght}) {
   );
 }
 
-ShowDateDialogue(BuildContext context) async {
+showDateDialogue(BuildContext context, Widget title, Widget content, List<Widget> actions)async{
+ShowCustomDialogue(context, title, content, actions);
+}
+
+
+ShowCustomDialogue(BuildContext context, Widget title, Widget content, List<Widget> actions) async {
   showDialog<void>(
     useSafeArea: true,
     context: context,
+
     barrierDismissible: false, // user must tap button!
     builder: (BuildContext context) {
       return AlertDialog(
         elevation: 3.0,
         scrollable: true,
+        
         titlePadding: EdgeInsetsDirectional.zero,
         contentPadding: EdgeInsetsDirectional.zero,
         actionsPadding: EdgeInsetsDirectional.zero,
         buttonPadding: EdgeInsetsDirectional.zero,
-        title: drawDialogueTitle(context),
-        content: drawDialogueContent(context),
-        actions: drawDialogueActions(context),
+        title: title,
+        content: content,
+        actions: actions,
       );
     },
   );
 }
 
-drawDateTime(BuildContext context) {
-  return DateTimePicker(
-    enableSuggestions: true,
-    cursorColor: Colors.deepOrange,
-    decoration: const InputDecoration(
-      fillColor: Colors.deepOrange,
-      focusColor: Colors.deepOrange,
-      hoverColor: Colors.amber,
-      iconColor: Colors.deepOrange,
-    ),
-    calendarTitle: "Select a Date to filter",
-    type: DateTimePickerType.date,
-    dateMask: 'd MMM, yyyy',
-    icon: const Icon(Icons.event),
-    dateLabelText: 'Search for',
-    initialValue: DateTime.now().toString(),
-    firstDate: DateTime(2023),
-    lastDate: DateTime(2100),
-    onChanged: (selectedDate) {
-      context.read<AppCubit>().setFilterDate(selectedDate);
-      context.read<AppCubit>().filterNotifications(selectedDate);
-
-      print(selectedDate + selectedDate.runtimeType.toString());
-    },
-    validator: (value) {
-      if (value!.isEmpty)
-        return 'required';
-      else {
-        return null;
-      }
-    },
-  );
-}
-
-drawDialogueTitle(BuildContext context) {
-  return Container(
-    width: MediaQuery.of(context).size.width,
-    decoration: const BoxDecoration(
-      image: DecorationImage(
-        image: AssetImage('assets/images/background.jpg'),
-        fit: BoxFit.cover,
-      ),
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        SizedBox(
-          height: 20,
-        ),
-        Text("  Press to select date"),
-      ],
-    ),
-  );
-}
-
-drawDialogueContent(BuildContext context) {
-  return Container(
-    decoration: const BoxDecoration(
-      image: DecorationImage(
-        image: AssetImage('assets/images/background.jpg'),
-        fit: BoxFit.cover,
-      ),
-    ),
-    child: SingleChildScrollView(
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height * .15,
-        child: Row(
-          children: [
-            const SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.black,
-                    width: 2,
-                  ),
-                ),
-                child: drawDateTime(context),
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
-}
-
-drawDialogueActions(BuildContext context) {
-  return [
-    Row(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Expanded(
-          child: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/background.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: TextButton(
-              child: const Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ),
-        ),
-        Expanded(
-          child: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/background.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: TextButton(
-              child: const Text('Search'),
-              onPressed: () {
-                Navigator.of(context).pop();
-                context.read<AppCubit>().searchInNotifications(
-                    context.read<AppCubit>().filterDate!);
-              },
-            ),
-          ),
-        ),
-      ],
-    ),
-  ];
-}
 
 drawEnableEditingFloatingActionButton(BuildContext context) {
   return FloatingActionButton(
@@ -217,3 +94,38 @@ void showQuickAlert({
     onCancelBtnTap: onBack,
   );
 }
+
+drawDropDownList(BuildContext context) {
+  return Container(
+    decoration: BoxDecoration(
+        borderRadius: BorderRadiusDirectional.circular(12),
+        color: Colors.blue[300]),
+    child: DropdownButton(
+      dropdownColor: Colors.blue[200],
+      hint: Text(
+        '  Choose our Department ',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 20,
+        ),
+      ),
+      iconEnabledColor: Colors.black,
+      value: "",
+      onChanged: (String? ch) {},
+      items: ["1","2","3"].map<DropdownMenuItem<String>>(
+        (department) {
+          return const DropdownMenuItem<String>(
+            value: "",
+            child: Text(
+                  '',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.black),
+                ),
+          );
+        },
+      ).toList(),
+    ),
+  );
+}
+
