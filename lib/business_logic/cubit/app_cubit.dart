@@ -1,5 +1,9 @@
 import 'package:bloc/bloc.dart';
+import 'package:clinical_pharmacist_intervention/data/models/clinical_pharmacist_model.dart';
+import 'package:clinical_pharmacist_intervention/data/models/doctor_model.dart';
 import 'package:clinical_pharmacist_intervention/shared/utilities.dart';
+import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
@@ -11,6 +15,8 @@ class AppCubit extends Cubit<AppState> {
   bool editProfileAbsorbing = true;
 
   AppCubit() : super(AppInitial());
+
+  static get(context) => BlocProvider.of<AppCubit>(context);
 
   startSystemAudioCall(String phoneNumber, {Map<String, dynamic>? qp}) async {
     try {
@@ -70,9 +76,11 @@ class AppCubit extends Cubit<AppState> {
   }
 
   searchInNotifications(String searchedString) {}
+
   searchInProfileReports(String searchedString) {}
 
   filterNotifications(String selectedDate) {}
+
   filterProfileReports(String selectedDate) {}
 
   showDateDialogue(BuildContext context) async {
@@ -82,5 +90,44 @@ class AppCubit extends Cubit<AppState> {
   void changeBodyAbsorbingValue(bool absorbing) {
     editProfileAbsorbing = absorbing;
     emit(EnableEditProfileState());
+  }
+
+  // get clinical pharmacists data
+
+  ClinicalPharmacistModel? model;
+
+  void getPharmacistData() {
+    emit(GetPharmacistLoadingState());
+
+    FirebaseFirestore.instance
+        .collection('Pharmacists')
+        .doc(token)
+        .get()
+        .then((value) {
+      model = ClinicalPharmacistModel.fromJson(value.data());
+
+      emit(GetPharmacistSuccessState());
+    }).catchError((error) {
+      emit(GetPharmacistErrorState());
+      print(error.toString());
+    });
+  }
+
+  List<DoctorModel> physicians = [];
+
+  void getPhysicianData() {
+    emit(GetPhysiciansLoadingState());
+
+    FirebaseFirestore.instance.collection('Physicians').get().then((value) {
+      value.docs.forEach((element) {
+        physicians.add(
+          DoctorModel.fromJson(element.data()),
+        );
+      });
+      emit(GetPhysiciansSuccessState());
+    }).catchError((error) {
+      emit(GetPhysiciansErrorState());
+      print(error.toString());
+    });
   }
 }
