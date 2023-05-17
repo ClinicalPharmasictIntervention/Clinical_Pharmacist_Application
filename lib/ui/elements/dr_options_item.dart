@@ -1,13 +1,15 @@
+import 'package:clinical_pharmacist_intervention/data/models/doctor_model.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/dr_item.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/options_item.dart';
-import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
+import 'package:flutter/material.dart';
 
-class DrDiscussionItem extends StatelessWidget {
-  DrDiscussionItem({
+class DrOptionsItem extends StatelessWidget {
+  DrOptionsItem({
     Key? key,
+   required this.doctor,
     // required this.dr
   }) : super(key: key);
-  // Dr dr;
+  DoctorModel? doctor;
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +39,14 @@ class DrDiscussionItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              DrItem(name: "name", department: "department"),
-              OptionsItem(phoneNumber: "phoneNumber", chatId: "chatId")
+              DrItem(
+                name: doctor!.name,
+                department: doctor!.department,
+              ),
+              OptionsItem(
+                  phoneNumber: doctor!.phoneNumber,
+                  email: doctor!.email,
+                  chatId: "chatId")
             ],
           ),
         ),

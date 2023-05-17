@@ -112,4 +112,8 @@ class ReportsCubit extends Cubit<ReportsStates> {
   void onAutoCompleteChanged() {
     emit(ReportsAutoCompleteChanged());
   }
+
+  void validateFormFields() {
+    emit(ReportsValidateFormFieldsState());
+  }
 }

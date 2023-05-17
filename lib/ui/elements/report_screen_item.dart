@@ -7,6 +7,9 @@ class ReportScreenItem extends StatelessWidget {
     required this.title,
     required this.readOnly,
     this.hintSize,
+    this.keyboardType,
+    this.controller,
+    this.validate,
     Key? key,
   }) : super(key: key);
 
@@ -14,6 +17,9 @@ class ReportScreenItem extends StatelessWidget {
   String title;
   bool readOnly = false;
   double? hintSize = 20.0;
+  var controller;
+  var validate;
+  var keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +38,13 @@ class ReportScreenItem extends StatelessWidget {
         ],
       ),
       child: ReportScreenTextField(
-          title: title, readOnly: readOnly, hintSize: hintSize),
+        controller: controller,
+        validate: validate,
+        keyboardType: keyboardType,
+        title: title,
+        readOnly: readOnly,
+        hintSize: hintSize,
+      ),
     );
   }
 }

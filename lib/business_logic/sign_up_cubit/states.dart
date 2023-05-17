@@ -10,3 +10,5 @@ class SignUpErrorState extends SignUpStates {
   String error;
   SignUpErrorState(this.error);
 }
+
+class SignUpValidateFieldsState extends SignUpStates {}

@@ -19,3 +19,5 @@ class ReportsChangeSecondRadioMode extends ReportsStates {}
 class ReportsChangeThirdRadioMode extends ReportsStates {}
 
 class ReportsAutoCompleteChanged extends ReportsStates {}
+
+class ReportsValidateFormFieldsState extends ReportsStates {}

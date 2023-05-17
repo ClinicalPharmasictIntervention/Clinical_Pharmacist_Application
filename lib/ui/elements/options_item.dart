@@ -1,12 +1,19 @@
 import 'dart:ui';
 
+import 'package:clinical_pharmacist_intervention/business_logic/cubit/app_cubit.dart';
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
-import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OptionsItem extends StatelessWidget {
-  OptionsItem({Key? key, required this.phoneNumber, required this.chatId})
+  OptionsItem(
+      {Key? key,
+      required this.phoneNumber,
+      required this.email,
+      required this.chatId})
       : super(key: key);
   String phoneNumber;
+  String email;
   String chatId;
 
   @override
@@ -19,32 +26,41 @@ class OptionsItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               //call
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
-                        Colors.pink.shade400,
-                        Colors.pink.shade300,
-                        Colors.pink.shade200
-                      ]),
-                      color: Colors.pink[300],
-                      borderRadius: BorderRadius.all(Radius.circular(7.0))),
-                  width: 140,
-                  height: 50,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
-                      Text("call", style: TextStyle(fontSize: 24)),
-                      Icon(
-                        IconBroken.Call,
-                        size: 22,
-                      )
-                    ],
-                  ),
-                ),
+              BlocConsumer<AppCubit, AppState>(
+                listener: (context, state) {
+                },
+                builder: (context, state) {
+                  return GestureDetector(
+                    onTap: () {
+                      context.read<AppCubit>().startSystemAudioCall(phoneNumber);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: [
+                            Colors.pink.shade400,
+                            Colors.pink.shade300,
+                            Colors.pink.shade200
+                          ]),
+                          color: Colors.pink[300],
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(7.0))),
+                      width: 140,
+                      height: 50,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: const [
+                          Text("call", style: TextStyle(fontSize: 24)),
+                          Icon(
+                            IconBroken.Call,
+                            size: 22,
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
-              SizedBox(
+            const  SizedBox(
                 width: 10,
               ),
               //chat
@@ -77,7 +93,7 @@ class OptionsItem extends StatelessWidget {
               //contradiction
             ],
           ),
-          SizedBox(
+        const  SizedBox(
             height: 10,
           ),
           GestureDetector(
@@ -90,18 +106,23 @@ class OptionsItem extends StatelessWidget {
                     Colors.purple.shade200
                   ]),
                   color: Colors.blue[300],
-                  borderRadius: BorderRadius.all(Radius.circular(7.0))),
+                  borderRadius: const BorderRadius.all(Radius.circular(7.0))),
               width: 300,
               height: 50,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  Text("Make a contradiction", style: TextStyle(fontSize: 22)),
-                  Icon(
-                    IconBroken.Danger,
-                    size: 22,
-                  )
-                ],
+              child: GestureDetector(
+                onTap: (){
+                  context.read<AppCubit>().sendContradiction("dev.cs.mohamed@gmail.com", "mo17amer@gmail.com", "Mohamed H");
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: const [
+                    Text("Make a contradiction", style: TextStyle(fontSize: 22)),
+                    Icon(
+                      IconBroken.Danger,
+                      size: 22,
+                    )
+                  ],
+                ),
               ),
             ),
           ),

@@ -9,13 +9,15 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(60.0),
-        child: Text(
-          'My Interventions',
-          style: txtTheme(context).displaySmall!.copyWith(
-                fontSize: 35,
-                fontWeight: FontWeight.bold,
-                fontFamily: Lora,
-              ),
+        child: Center(
+          child: Text(
+            'Special Home Screen In Progress',
+            style: txtTheme(context).displaySmall!.copyWith(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: Lora,
+                ),
+          ),
         ),
       ),
     );

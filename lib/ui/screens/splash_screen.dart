@@ -1,6 +1,6 @@
 import 'package:clinical_pharmacist_intervention/main.dart';
+import 'package:clinical_pharmacist_intervention/shared/network/local/cache_helper.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
-import 'package:clinical_pharmacist_intervention/ui/screens/choose_acount_type_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/layout_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/login_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/register_screen.dart';
@@ -124,13 +124,15 @@ class SplashScreen extends StatelessWidget {
       skip: const Text("Skip"),
       done: const Text("Let\'s Go"),
       onDone: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => AccountTypeScreen()));
+        CacheHelper.savaDate(key: 'onBoarding', value: true);
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => LayoutScreen()));
       },
       onSkip: () {
+        CacheHelper.savaDate(key: 'onBoarding', value: true);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => RegisterScreen()),
+          MaterialPageRoute(builder: (context) => SignUpScreen()),
         );
       },
       next: Text('Next'),
