@@ -125,12 +125,12 @@ class SplashScreen extends StatelessWidget {
       done: const Text("Let\'s Go"),
       onDone: () {
         CacheHelper.savaDate(key: 'onBoarding', value: true);
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LayoutScreen()));
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => SignUpScreen()));
       },
       onSkip: () {
         CacheHelper.savaDate(key: 'onBoarding', value: true);
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => SignUpScreen()),
         );

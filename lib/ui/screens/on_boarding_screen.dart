@@ -59,35 +59,34 @@ class OnBoardingScreen extends StatelessWidget {
                       animatedTexts: [
                         TyperAnimatedText(
                           'CPI',
-                          speed: const Duration(seconds: 1),
+                          speed: const Duration(milliseconds: 600),
                         ),
                         FadeAnimatedText(
                           'Clinical',
-                          duration: const Duration(seconds: 2),
+                          duration: const Duration(seconds: 1),
                         ),
                         FadeAnimatedText(
                           'Pharmacist',
-                          duration: const Duration(seconds: 2),
+                          duration: const Duration(seconds: 1),
                         ),
                         FadeAnimatedText(
                           'Intervention',
-                          duration: const Duration(seconds: 2),
+                          duration: const Duration(seconds: 1),
                         ),
                       ],
                       totalRepeatCount: 1,
                       displayFullTextOnTap: true,
-                      onNextBeforePause: (int index, bool isLast) {
-                        if (isLast) {
-                          Navigator.push(
-                            context,
-                            PageTransition(
-                              duration: const Duration(milliseconds: 4000),
-                              type: PageTransitionType.theme,
-                              child: SplashScreen(),
-                            ),
-                          );
-                        }
+                      onFinished: () {
+                        Navigator.pushReplacement(
+                          context,
+                          PageTransition(
+                            duration: const Duration(milliseconds: 2000),
+                            type: PageTransitionType.theme,
+                            child: homeOrRegisterWidget!,
+                          ),
+                        );
                       },
+                      pause: Duration(milliseconds: 10),
                     ),
                   ),
                 ),

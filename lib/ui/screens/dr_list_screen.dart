@@ -1,77 +1,129 @@
-import 'package:clinical_pharmacist_intervention/data/models/doctor_model.dart';
+import 'package:build_context_provider/build_context_provider.dart';
+import 'package:clinical_pharmacist_intervention/business_logic/cubit/app_cubit.dart';
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
+import 'package:clinical_pharmacist_intervention/shared/utilities.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_textfield.dart';
+import 'package:clinical_pharmacist_intervention/ui/elements/dr_item.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/dr_options_item.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
-import 'package:easy_search_bar/easy_search_bar.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/make_report_screen.dart';
+import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DrDiscussionScreen extends StatelessWidget {
-  const DrDiscussionScreen({super.key});
+  DrDiscussionScreen({
+    required this.isReportScreen,
+    this.drAppToken,
+  });
 
   @override
+  bool isReportScreen = false;
+  String? drAppToken;
+
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 12.0),
-      child: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/background.jpg'),
-            fit: BoxFit.cover,
-          ),
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/background.jpg'),
+          fit: BoxFit.cover,
         ),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          /*
-          appBar: AppBar(
-            elevation: 0,
-            title: const Text(
-              "Doctors List",
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
-            titleSpacing: 3.0,
-            centerTitle: true,
-            backgroundColor: Colors.white,
-          ),
-          */
-          body: Column(
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          leading: isReportScreen
+              ? IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(
+                    IconBroken.Arrow___Left_2,
+                    color: Colors.black,
+                  ),
+                )
+              : null,
+          leadingWidth: isReportScreen ? 50 : 0,
+          title: Row(
             children: [
-              const SizedBox(
-                height: 70,
+              const Icon(
+                size: 30,
+                IconBroken.User1,
+                color: Colors.black87,
               ),
-              SizedBox(
-                width: 360,
+              const SizedBox(
+                width: 15.0,
+              ),
+              Text(
+                'Physicians',
+                style: txtTheme(context).headlineLarge!.copyWith(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 30.0,
+                      color: Colors.black87,
+                      fontFamily: Lora,
+                    ),
+              ),
+            ],
+          ),
+          backgroundColor: Colors.transparent,
+          bottomOpacity: 0.0,
+          elevation: 0.0,
+        ),
+        body: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * .05,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 7,
                 child: DefaultTextField(
                   hintTxt: 'Search with physician name',
                   prefixIcon: IconBroken.Search,
                   onTxtChange: (text) {},
                 ),
               ),
-              Expanded(
-                child: SizedBox(
-                  height: double.infinity,
-                  child: ListView.builder(
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            BlocConsumer<AppCubit, AppState>(
+              listener: (context, state) {},
+              builder: (context, state) {
+                var cubit = AppCubit.get(context);
+                return Expanded(
+                  child: SizedBox(
+                    height: double.infinity,
+                    child: ListView.builder(
                       itemBuilder: (context, index) {
-                        DoctorModel doctor = DoctorModel(
-                            name: "Samer Othman",
-                            department: "Orthopedics",
-                            id: "2301so",
-                            phoneNumber: "01011245647",
-                            email: "dev.cs.mohamed@gmail.com");
-                        return DrOptionsItem(
-                          doctor: doctor,
+                        if (!isReportScreen) {
+                          return DrOptionsItem(
+                            doctor: cubit.physicians[index],
+                          );
+                        }
+                        return InkWell(
+                          onTap: () {
+                            navigateTo(
+                                context,
+                                MakeReportScreen(
+                                  drAppToken: cubit.physicians[index].appToken,
+                                  drId: cubit.physicians[index].id,
+                                ));
+                          },
+                          child: DrItem(
+                            department: cubit.physicians[index].department!,
+                            name: cubit.physicians[index].name!,
+                          ),
                         );
                       },
-                      // separatorBuilder: (context, index) {
-                      //   return Divider();
-                      // },
-                      itemCount: 10),
-                ),
-              ),
-            ],
-          ),
+                      itemCount: cubit.physicians.length,
+                    ),
+                  ),
+                );
+              },
+            )
+          ],
         ),
       ),
     );

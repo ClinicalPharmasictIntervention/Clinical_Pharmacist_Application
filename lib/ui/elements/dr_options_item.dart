@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class DrOptionsItem extends StatelessWidget {
   DrOptionsItem({
     Key? key,
-   required this.doctor,
+    required this.doctor,
     // required this.dr
   }) : super(key: key);
   DoctorModel? doctor;
@@ -40,13 +40,16 @@ class DrOptionsItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               DrItem(
-                name: doctor!.name,
-                department: doctor!.department,
+                name: doctor!.name!,
+                department: doctor!.department!,
               ),
               OptionsItem(
-                  phoneNumber: doctor!.phoneNumber,
-                  email: doctor!.email,
-                  chatId: "chatId")
+                phoneNumber: doctor!.phoneNumber,
+                email: doctor!.email,
+                chatId: doctor!.id!,
+                name: doctor!.name!,
+                appToken: doctor!.appToken,
+              )
             ],
           ),
         ),

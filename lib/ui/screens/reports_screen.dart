@@ -1,10 +1,12 @@
 import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/cubit.dart';
 import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/states.dart';
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
+import 'package:clinical_pharmacist_intervention/ui/elements/default_app_bar.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_daily_report_card.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_filter_chip.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_textfield.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/dr_list_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/make_report_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/report_details_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
@@ -33,7 +35,9 @@ class ReportsScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MakeReportScreen()),
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          DrDiscussionScreen(isReportScreen: true)),
                 );
               },
               child: Icon(Icons.add, color: secondaryColor),
@@ -43,7 +47,7 @@ class ReportsScreen extends StatelessWidget {
               leadingWidth: 0,
               title: Row(
                 children: [
-                  Icon(
+                  const Icon(
                     size: 30,
                     IconBroken.Document,
                     color: Colors.black87,
@@ -67,11 +71,11 @@ class ReportsScreen extends StatelessWidget {
               elevation: 0.0,
             ),
             body: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: Column(
                 children: [
-                  Container(
-                    width: 360,
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * .94,
                     child: DefaultTextField(
                       hintTxt: 'Search with resident name',
                       prefixIcon: IconBroken.Search,
@@ -83,32 +87,41 @@ class ReportsScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        DefaultFilterChip(
-                          context: context,
-                          title: 'Accepted',
-                          color: cubit.acceptSelected,
-                          onSelected: (value) {
-                            cubit.changeFilterChip(stateType: 'Accepted');
-                          },
-                          icon: IconBroken.Shield_Done,
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.32,
+                          child: DefaultFilterChip(
+                            context: context,
+                            title: 'Accepted',
+                            color: cubit.acceptSelected,
+                            onSelected: (value) {
+                              cubit.changeFilterChip(stateType: 'Accepted');
+                            },
+                            icon: IconBroken.Shield_Done,
+                          ),
                         ),
-                        DefaultFilterChip(
-                          context: context,
-                          title: 'Pending',
-                          color: cubit.pendingSelected,
-                          onSelected: (value) {
-                            cubit.changeFilterChip(stateType: 'Pending');
-                          },
-                          icon: IconBroken.Time_Circle,
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          child: DefaultFilterChip(
+                            context: context,
+                            title: 'Pending',
+                            color: cubit.pendingSelected,
+                            onSelected: (value) {
+                              cubit.changeFilterChip(stateType: 'Pending');
+                            },
+                            icon: IconBroken.Time_Circle,
+                          ),
                         ),
-                        DefaultFilterChip(
-                          context: context,
-                          title: 'Rejected',
-                          color: cubit.rejectedSelected,
-                          onSelected: (value) {
-                            cubit.changeFilterChip(stateType: 'Rejected');
-                          },
-                          icon: IconBroken.Shield_Fail,
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          child: DefaultFilterChip(
+                            context: context,
+                            title: 'Rejected',
+                            color: cubit.rejectedSelected,
+                            onSelected: (value) {
+                              cubit.changeFilterChip(stateType: 'Rejected');
+                            },
+                            icon: IconBroken.Shield_Fail,
+                          ),
                         ),
                       ],
                     ),
@@ -122,12 +135,15 @@ class ReportsScreen extends StatelessWidget {
                           builder: (context) => ReportDetailsScreen(),
                         ),
                         child: Center(
-                          child: DefaultDailyReportCard(
-                            context: context,
-                            residentName: 'Ali',
-                            physicianName: 'Karim',
-                            time: '3.15',
-                            isProfile: false,
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * .94,
+                            child: DefaultDailyReportCard(
+                              context: context,
+                              residentName: 'Ali',
+                              physicianName: 'Karim',
+                              time: '3.15',
+                              isProfile: false,
+                            ),
                           ),
                         ),
                       ),

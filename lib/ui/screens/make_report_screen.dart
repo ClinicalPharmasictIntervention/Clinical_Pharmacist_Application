@@ -12,6 +12,14 @@ import 'package:substring_highlight/substring_highlight.dart';
 import 'package:flutter/material.dart';
 
 class MakeReportScreen extends StatelessWidget {
+  MakeReportScreen({
+    this.drAppToken,
+    this.drId,
+  });
+
+  String? drAppToken;
+  String? drId;
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ReportsCubit, ReportsStates>(
@@ -58,7 +66,10 @@ class MakeReportScreen extends StatelessWidget {
                       data: ThemeData(
                         canvasColor: const Color(0xffc1ddeb),
                       ),
-                      child: BuildReportStepper(),
+                      child: BuildReportStepper(
+                        drAppToken: drAppToken,
+                        drId: drId,
+                      ),
                     ),
                   ),
                   const SizedBox(

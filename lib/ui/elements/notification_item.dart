@@ -24,17 +24,40 @@ class NotificationItem extends StatelessWidget {
                 width: 50,
                 child: Image.asset(
                     "assets/images/notification_${notification.type}.png")),
-            title: Text(notification.clinicalPharmacistName),
-            subtitle: Text(notification.patientName),
+            title: Text(
+              'Physician Name: ${notification.physicianName}',
+            ),
+            subtitle: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: Text('Patient Name: ${notification.patientName}'),
+            ),
             isThreeLine: false,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text(notification.date),
-             // const SizedBox(width: 2),
-              Text(notification.time),
-              Text(notification.status),
+              Text(
+                '${notification.date}',
+                style: TextStyle(
+                  color: Colors.indigo,
+                ),
+              ),
+              // const SizedBox(width: 2),
+              Text(
+                '${notification.time}',
+                style: TextStyle(
+                  color: Colors.indigo,
+                ),
+              ),
+              Text(
+                '${notification.status}',
+                style: TextStyle(
+                  color: notification.status == 'Accepted'
+                      ? Colors.green
+                      : Colors.red,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ],
           ),
           const Divider(

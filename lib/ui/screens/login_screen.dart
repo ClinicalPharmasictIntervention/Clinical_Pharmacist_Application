@@ -1,11 +1,15 @@
+import 'package:clinical_pharmacist_intervention/business_logic/cubit/app_cubit.dart';
 import 'package:clinical_pharmacist_intervention/business_logic/sign_in_cubit/cubit.dart';
 import 'package:clinical_pharmacist_intervention/business_logic/sign_in_cubit/states.dart';
+import 'package:clinical_pharmacist_intervention/shared/network/local/cache_helper.dart';
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/shared/utilities.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/clicable_text.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_textfield.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/layout_screen.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/register_screen.dart';
+import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,7 +32,7 @@ class SignInScreen extends StatelessWidget {
             ),
           ),
           child: Scaffold(
-            appBar: AppBar(),
+            // appBar: AppBar(),
             backgroundColor: Colors.transparent,
             body: Padding(
               padding: const EdgeInsetsDirectional.all(12.0),
@@ -39,13 +43,10 @@ class SignInScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(
-                        height: 30,
-                      ),
                       Center(
                         child: Container(
-                          height: 300.0,
-                          width: 300.0,
+                          height: 400.0,
+                          width: 400.0,
                           decoration: const BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage('assets/images/logo.png'),
@@ -53,21 +54,21 @@ class SignInScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(0),
-                        child: const Text(
+                      const Padding(
+                        padding: EdgeInsets.all(0),
+                        child: Text(
                           "Login",
                           style: TextStyle(
                             fontSize: 40,
                             fontWeight: FontWeight.bold,
-                            letterSpacing: 30.0,
+                            letterSpacing: 10.0,
                             // color: Colors.blue,
                             //decoration: TextDecoration.underline,
                           ),
                         ),
                       ),
                       const SizedBox(
-                        height: 50,
+                        height: 30,
                       ),
                       DefaultTextField(
                         controller: emailController,
@@ -103,22 +104,39 @@ class SignInScreen extends StatelessWidget {
                       const SizedBox(
                         height: 30,
                       ),
-                      Center(
-                        child: PrimaryBtn(
-                          btnTitle: "SignIn",
-                          onPressed: () {
-                            if (formKey.currentState!.validate()) {
-                              cubit.userSignIn(
-                                email: emailController.text,
-                                password: passwordController.text,
-                              );
-                              navigateTo(context, LayoutScreen());
-                            } else {
-                              cubit.validateFields();
-                            }
+                      Builder(builder: (context) {
+                        AppCubit.get(context).getNotifications();
+                        return BlocConsumer<AppCubit, AppState>(
+                          listener: (context, state) {},
+                          builder: (context, state) {
+                            var cubit2 = AppCubit.get(context);
+                            return Center(
+                              child: PrimaryBtn(
+                                btnTitle: "SignIn",
+                                onPressed: () {
+                                  if (formKey.currentState!.validate()) {
+                                    cubit.userSignIn(
+                                      email: emailController.text,
+                                      password: passwordController.text,
+                                    );
+                                    cubit2.getNotifications();
+                                    cubit2.getPharmacistData();
+
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => LayoutScreen(),
+                                      ),
+                                    );
+                                  } else {
+                                    cubit.validateFields();
+                                  }
+                                },
+                              ),
+                            );
                           },
-                        ),
-                      ),
+                        );
+                      }),
                       const SizedBox(
                         height: 10,
                       ),
@@ -133,7 +151,12 @@ class SignInScreen extends StatelessWidget {
                             const SizedBox(
                               width: 20,
                             ),
-                            ClicableText(txt: "sign up now", onPressed: () {}),
+                            ClicableText(
+                              txt: "sign up now",
+                              onPressed: () {
+                                navigateTo(context, SignUpScreen());
+                              },
+                            ),
                           ],
                         ),
                       ),

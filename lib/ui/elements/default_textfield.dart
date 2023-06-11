@@ -38,7 +38,7 @@ class DefaultTextField extends StatelessWidget {
       validator: validate,
       controller: controller,
       onChanged: (val) {
-        onTxtChange!(val);
+        if (onTxtChange != null) onTxtChange!(val);
       },
       keyboardType: txtInputType,
       enabled: isEnabled,

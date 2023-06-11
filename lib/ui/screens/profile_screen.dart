@@ -1,11 +1,16 @@
 import 'package:clinical_pharmacist_intervention/business_logic/cubit/app_cubit.dart';
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/shared/utilities.dart';
+import 'package:clinical_pharmacist_intervention/ui/elements/build_calindar_item.dart';
+import 'package:clinical_pharmacist_intervention/ui/elements/build_date_dialogue_actions.dart';
+import 'package:clinical_pharmacist_intervention/ui/elements/build_date_dialogue_title.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_daily_report_card.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_textfield.dart';
+import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/edit_profile_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/reports_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/report_details_screen.dart';
+import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -23,14 +28,41 @@ class ProfileScreen extends StatelessWidget {
         ),
       ),
       child: Scaffold(
+        appBar: AppBar(
+          leadingWidth: 0,
+          backgroundColor: Colors.transparent,
+          bottomOpacity: 0.0,
+          elevation: 0.0,
+          title: Row(
+            children: [
+              const Icon(
+                size: 30,
+                IconBroken.Notification,
+                color: Colors.black87,
+              ),
+              const SizedBox(
+                width: 15.0,
+              ),
+              Text(
+                'Profile',
+                style: txtTheme(context).headlineLarge!.copyWith(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 30.0,
+                      color: Colors.black87,
+                      fontFamily: Lora,
+                    ),
+              ),
+            ],
+          ),
+        ),
         backgroundColor: Colors.transparent,
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
               backgroundColor: Colors.transparent,
               automaticallyImplyLeading: false,
-              expandedHeight: MediaQuery.of(context).size.height * .32,
-              collapsedHeight: MediaQuery.of(context).size.height * .32,
+              expandedHeight: MediaQuery.of(context).size.height * .40,
+              collapsedHeight: MediaQuery.of(context).size.height * .40,
               floating: false,
               flexibleSpace: drawFlixibleSpaceFirstSliverAppBar(context),
             ),
@@ -42,14 +74,18 @@ class ProfileScreen extends StatelessWidget {
               leading: BlocConsumer<AppCubit, AppState>(
                 listener: (context, state) {
                   if (state is ShowDateDialogueState) {
-                    ShowDateDialogue(context);
+                    showDateDialogue(
+                        context,
+                        const BuildDateDialogueTitle(),
+                        BuildCalendarItem(context),
+                        const [BuildDateDialogueAction()]);
                   }
                 },
                 builder: (context, state) {
                   return drawLeaddingSecondSliverAppBar(context);
                 },
               ),
-              leadingWidth: 55,
+              leadingWidth: MediaQuery.of(context).size.width * .2,
               actions: [
                 BlocConsumer<AppCubit, AppState>(
                   listener: (context, state) {
@@ -75,11 +111,10 @@ class ProfileScreen extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: DefaultDailyReportCard(
-                        context: context,
-                        physicianName: 'Karim',
-                        residentName: 'Ali',
-                        date: DateTime.now().toString().substring(0, 16),
                         isProfile: true,
+                        context: context,
+                        residentName: "kk",
+                        physicianName: 'Ali',
                       ),
                     ),
                   );
@@ -105,12 +140,9 @@ class ProfileScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(
-                width: 30,
-              ),
               SizedBox(
-                width: 80,
-                height: 80,
+                width: MediaQuery.of(context).size.width * .4,
+                height: MediaQuery.of(context).size.height * .2,
                 child: CircleAvatar(
                   child: Image.asset("assets/images/avatar_doctor.png"),
                 ),
@@ -118,24 +150,29 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              BlocConsumer<AppCubit, AppState>(
-                  listener: (context, state) {},
-                  builder: (context, state) {
-                    return const Text(
-                      "name",
-                      style: TextStyle(
-                        fontSize: 22,
-                      ),
-                    );
-                  }),
+              Builder(builder: (context) {
+                AppCubit.get(context).getPharmacistData();
+                return BlocConsumer<AppCubit, AppState>(
+                    listener: (context, state) {},
+                    builder: (context, state) {
+                      var cubit = AppCubit.get(context);
+                      return Text(
+                        cubit.clinicalPharmacistModel.name,
+                        style: TextStyle(
+                          fontSize: 22,
+                        ),
+                      );
+                    });
+              }),
               const SizedBox(
                 height: 5,
               ),
               BlocConsumer<AppCubit, AppState>(
                   listener: (context, state) {},
                   builder: (context, state) {
-                    return const Text(
-                      "id",
+                    var cubit = AppCubit.get(context);
+                    return Text(
+                      cubit.clinicalPharmacistModel.hospitalId,
                       style: TextStyle(fontSize: 18, color: Colors.grey),
                     );
                   }),
@@ -144,8 +181,6 @@ class ProfileScreen extends StatelessWidget {
                 builder: (context, state) {
                   return GestureDetector(
                     onTap: () {
-                      //BlocProvider.of<AppCubit>(context).goTo(context,EditProfileScreen());
-                      //AppCubit().goTo(context, EditProfileScreen());
                       context
                           .read<AppCubit>()
                           .goTo(context, EditProfileScreen());
@@ -179,11 +214,8 @@ class ProfileScreen extends StatelessWidget {
         context.read<AppCubit>().showDateDialogue(context);
       },
       child: Padding(
-        padding:
-            const EdgeInsetsDirectional.only(top: 8.0, start: 8, end: 16.0),
+        padding: const EdgeInsetsDirectional.only(top: 4.0, start: 8, end: 8.0),
         child: SizedBox(
-          // height: 50,
-          width: 50,
           child: Image.asset(
             "assets/images/notification_filter.png",
           ),
@@ -196,10 +228,9 @@ class ProfileScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
-        width: 350,
-        height: 50,
+        width: MediaQuery.of(context).size.width * .8,
         child: DefaultTextField(
-            hintTxt: "search with ",
+            hintTxt: "search with resident name",
             onTxtChange: (searchedString) {
               context.read<AppCubit>().searchInProfileReports(searchedString);
             }),

@@ -1,3 +1,4 @@
+import 'package:clinical_pharmacist_intervention/business_logic/cubit/app_cubit.dart';
 import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/cubit.dart';
 import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/states.dart';
 import 'package:clinical_pharmacist_intervention/shared/cubit/cubit.dart';
@@ -5,6 +6,8 @@ import 'package:clinical_pharmacist_intervention/shared/utilities.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_radio_item.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/report_screen_item.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/dr_list_screen.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/layout_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/reports_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/make_report_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
@@ -15,74 +18,150 @@ import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 
 class BuildReportStepper extends StatelessWidget {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController consultantController = TextEditingController();
-  TextEditingController departController = TextEditingController();
-  TextEditingController residentNameController = TextEditingController();
-  TextEditingController ageController = TextEditingController();
-  TextEditingController bedController = TextEditingController();
-  TextEditingController medicalController = TextEditingController();
-  TextEditingController fieldController = TextEditingController();
+  BuildReportStepper({
+    this.drAppToken,
+    this.drId,
+  });
 
-  final formKey = GlobalKey<FormState>();
+  String? drAppToken;
+  String? drId;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  // TextEditingController nameController = TextEditingController();
+  // TextEditingController consultantController = TextEditingController();
+  // TextEditingController departController = TextEditingController();
+  // TextEditingController residentNameController = TextEditingController();
+  // TextEditingController ageController = TextEditingController();
+  // TextEditingController bedController = TextEditingController();
+  // TextEditingController medicalController = TextEditingController();
+  // TextEditingController fieldController = TextEditingController();
+
+  List<TextEditingController> controller = [];
 
   @override
   Widget build(BuildContext context) {
+    for (int i = 0; i < 18; ++i) {
+      controller.add(TextEditingController());
+    }
     return BlocConsumer<ReportsCubit, ReportsStates>(
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = ReportsCubit.get(context);
-        return Form(
-          key: formKey,
-          child: Stepper(
-            steps: [
-              buildOneStep(context, 0, "Resident",
-                  drawStep1Content(context, cubit), cubit),
-              buildOneStep(context, 1, "Problem",
-                  drawStep2Content(context, cubit), cubit),
-              buildOneStep(context, 2, "Intervention",
-                  drawStep3Content(context, cubit), cubit),
-            ],
-            currentStep: cubit.currentStep,
-            type: StepperType.horizontal,
-            elevation: 0,
-            onStepContinue: () {
-              final isFinalStep = cubit.currentStep == 2;
-              if (isFinalStep) {
-                print('completed');
+        return BlocConsumer<AppCubit, AppState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            var cubit2 = AppCubit.get(context);
+            return Form(
+              key: formKey,
+              child: Stepper(
+                steps: [
+                  buildOneStep(context, 0, "Resident",
+                      drawStep1Content(context, cubit), cubit),
+                  buildOneStep(context, 1, "Problem",
+                      drawStep2Content(context, cubit), cubit),
+                  buildOneStep(context, 2, "Recommend..",
+                      drawStep3Content(context, cubit), cubit),
+                ],
+                currentStep: cubit.currentStep,
+                type: StepperType.horizontal,
+                elevation: 0,
+                onStepContinue: () {
+                  final isFinalStep = cubit.currentStep == 2;
 
-                showQuickAlert(
-                  context: context,
-                  alertType: QuickAlertType.success,
-                  dialogMessage: 'Wait For Physician Acceptance',
-                  actionTitle: 'Your Report Is Done Successfully!',
-                  nextButtonTitle: 'Reports',
-                  backButtonTitle: 'Another',
-                  onNext: () {
-                    navigateTo(context, ReportsScreen());
-                  },
-                  onBack: () {
-                    navigateTo(context, MakeReportScreen());
-                  },
-                );
-              } else {
-                cubit.changeForwardStep();
-              }
-            },
-            onStepCancel: cubit.currentStep == 0
-                ? null
-                : () {
-                    cubit.changeBackwardStep();
-                  },
-            onStepTapped: (step) {
-              cubit.onTappedStep(step);
-            },
-            controlsBuilder: (context, ControlsDetails controlDetail) {
-              final isLastStep = controlDetail.currentStep == 2;
+                  if (isFinalStep) {
+                    print('completed');
 
-              return drawControllerBuilder(context, isLastStep, controlDetail);
-            },
-          ),
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Center(
+                                child: Text('Are you sure to send report?')),
+                            actions: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 30.0,
+                                ),
+                                child: PrimaryBtn(
+                                    btnTitle: 'No',
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    }),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 30.0),
+                                child: PrimaryBtn(
+                                    btnTitle: 'Yes',
+                                    onPressed: () {
+                                      cubit2.sendNotificationData(
+                                        physicianName:
+                                            controller[0].text.toString(),
+                                        patientName:
+                                            controller[1].text.toString(),
+                                        receiverId: drId,
+                                        status: 'Pending',
+                                      );
+                                      sendNotify(
+                                        title: 'Intervention Request',
+                                        body: 'From pharmacist Ali',
+                                        token: drAppToken,
+                                      );
+
+                                      showQuickAlert(
+                                        context: context,
+                                        alertType: QuickAlertType.success,
+                                        dialogMessage:
+                                            'Wait For Physician Acceptance',
+                                        actionTitle:
+                                            'Your Report Is Done Successfully!',
+                                        nextButtonTitle: 'Reports',
+                                        backButtonTitle: 'Another',
+                                        onNext: () {
+                                          navigateTo(context, LayoutScreen());
+                                        },
+                                        onBack: () {
+                                          navigateTo(
+                                              context,
+                                              DrDiscussionScreen(
+                                                  isReportScreen: true,
+                                                  drAppToken: drAppToken));
+                                        },
+                                      );
+                                    }),
+                              ),
+                            ],
+                            backgroundColor: defaultColor,
+                            titleTextStyle:
+                                txtTheme(context).headlineLarge!.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 20.0,
+                                      color: Colors.black87,
+                                      fontFamily: Lora,
+                                    ),
+                          );
+                        });
+                  } else {
+                    cubit.changeForwardStep();
+                  }
+                },
+                onStepCancel: cubit.currentStep == 0
+                    ? null
+                    : () {
+                        cubit.changeBackwardStep();
+                      },
+                onStepTapped: (step) {
+                  cubit.onTappedStep(step);
+                },
+                controlsBuilder: (context, ControlsDetails controlDetail) {
+                  final isLastStep = controlDetail.currentStep == 2;
+
+                  return drawControllerBuilder(
+                      context, isLastStep, controlDetail);
+                },
+              ),
+            );
+          },
         );
       },
     );
@@ -115,9 +194,9 @@ class BuildReportStepper extends StatelessWidget {
           context: context,
           title: cardTitles[0],
           readOnly: false,
-          controller: nameController,
+          controller: controller[2],
           validate: (value) {
-            if (nameController.text.isEmpty) {
+            if (value.isEmpty) {
               return 'Your name is empty';
             } else {
               return null;
@@ -131,9 +210,9 @@ class BuildReportStepper extends StatelessWidget {
           context: context,
           title: cardTitles[1],
           readOnly: false,
-          controller: consultantController,
+          controller: controller[3],
           validate: (value) {
-            if (consultantController.text.isEmpty) {
+            if (value.isEmpty) {
               return 'Consultant name is empty';
             } else {
               return null;
@@ -147,7 +226,7 @@ class BuildReportStepper extends StatelessWidget {
           context: context,
           title: cardTitles[2],
           readOnly: false,
-          controller: departController,
+          controller: controller[4],
           validate: (value) {
             print('dsfs');
             if (value.isEmpty) {
@@ -164,9 +243,9 @@ class BuildReportStepper extends StatelessWidget {
           context: context,
           title: cardTitles[3],
           readOnly: false,
-          controller: residentNameController,
+          controller: controller[5],
           validate: (value) {
-            if (residentNameController.text.isEmpty) {
+            if (value.isEmpty) {
               return 'Resident name is empty';
             } else {
               return null;
@@ -197,9 +276,9 @@ class BuildReportStepper extends StatelessWidget {
                 title: 'Age',
                 readOnly: false,
                 hintSize: 17,
-                controller: ageController,
+                controller: controller[6],
                 validate: (value) {
-                  if (ageController.text.isEmpty) {
+                  if (value.isEmpty) {
                     return 'Resident age is empty';
                   } else {
                     return null;
@@ -229,9 +308,9 @@ class BuildReportStepper extends StatelessWidget {
           context: context,
           title: cardTitles[4],
           readOnly: false,
-          controller: bedController,
+          controller: controller[7],
           validate: (value) {
-            if (bedController.text.isEmpty) {
+            if (value.isEmpty) {
               return 'Bed number is empty';
             } else {
               return null;
@@ -246,9 +325,9 @@ class BuildReportStepper extends StatelessWidget {
           context: context,
           title: cardTitles[5],
           readOnly: false,
-          controller: medicalController,
+          controller: controller[8],
           validate: (value) {
-            if (medicalController.text.isEmpty) {
+            if (value.isEmpty) {
               return 'Medical record number is empty';
             } else {
               return null;
@@ -264,11 +343,8 @@ class BuildReportStepper extends StatelessWidget {
     var cardTitles = [
       'Problem Type',
       'Problem Description',
-      'Is this a drug therapy problem ?',
-      'Error Category',
-      'Error Description',
-      'Stage and Type of error',
-      'Is this problem also a medical error ?',
+      'Error Category ( Severity )',
+      'Stage and Type of The Error',
       'What\'s your reference?',
     ];
     return Column(
@@ -277,124 +353,78 @@ class BuildReportStepper extends StatelessWidget {
           context: context,
           title: cardTitles[0],
           readOnly: false,
+          validate: (value) {
+            if (value.isEmpty) {
+              return 'Problem type is empty';
+            } else {
+              return null;
+            }
+          },
+          controller: controller[9],
         ),
         const SizedBox(
-          height: 20.0,
+          height: 40.0,
         ),
         ReportScreenItem(
           context: context,
           title: cardTitles[1],
           readOnly: false,
+          validate: (value) {
+            if (value.isEmpty) {
+              return 'Problem description is empty';
+            } else {
+              return null;
+            }
+          },
+          controller: controller[10],
         ),
         const SizedBox(
-          height: 20.0,
+          height: 40.0,
         ),
         ReportScreenItem(
           context: context,
           title: cardTitles[2],
-          readOnly: true,
+          readOnly: false,
+          validate: (value) {
+            if (value.isEmpty) {
+              return 'Error category is empty';
+            } else {
+              return null;
+            }
+          },
+          controller: controller[12],
         ),
         const SizedBox(
-          height: 10.0,
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: DefaultRadioItem(
-                context: context,
-                selectedRadio: cubit.selectedRadio1,
-                value: 0,
-                label: 'Yes',
-                activeColor: secondaryColor,
-                onChanged: (value) {
-                  cubit.changeSecondRadioMode(value);
-                },
-              ),
-            ),
-            Expanded(
-              child: DefaultRadioItem(
-                context: context,
-                selectedRadio: cubit.selectedRadio1,
-                value: 1,
-                label: 'No',
-                activeColor: secondaryColor,
-                onChanged: (value) {
-                  cubit.changeSecondRadioMode(value);
-                },
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 10.0,
+          height: 40.0,
         ),
         ReportScreenItem(
           context: context,
           title: cardTitles[3],
           readOnly: false,
+          validate: (value) {
+            if (value.isEmpty) {
+              return 'Stage and Type of The Error is empty';
+            } else {
+              return null;
+            }
+          },
+          controller: controller[10],
         ),
         const SizedBox(
-          height: 20.0,
+          height: 40.0,
         ),
         ReportScreenItem(
           context: context,
           title: cardTitles[4],
           readOnly: false,
-        ),
-        const SizedBox(
-          height: 20.0,
-        ),
-        ReportScreenItem(
-          context: context,
-          title: cardTitles[5],
-          readOnly: false,
-        ),
-        const SizedBox(
-          height: 20.0,
-        ),
-        ReportScreenItem(
-          context: context,
-          title: cardTitles[6],
-          readOnly: true,
-        ),
-        const SizedBox(
-          height: 10.0,
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: DefaultRadioItem(
-                context: context,
-                selectedRadio: cubit.selectedRadio2,
-                value: 0,
-                label: 'Yes',
-                activeColor: secondaryColor,
-                onChanged: (value) {
-                  cubit.changeThirdRadioMode(value);
-                },
-              ),
-            ),
-            Expanded(
-              child: DefaultRadioItem(
-                context: context,
-                selectedRadio: cubit.selectedRadio2,
-                value: 1,
-                label: 'No',
-                activeColor: secondaryColor,
-                onChanged: (value) {
-                  cubit.changeThirdRadioMode(value);
-                },
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 10.0,
-        ),
-        ReportScreenItem(
-          context: context,
-          title: cardTitles[7],
-          readOnly: false,
+          validate: (value) {
+            if (value.isEmpty) {
+              return 'reference is empty';
+            } else {
+              return null;
+            }
+          },
+          controller: controller[15],
         ),
       ],
     );
@@ -412,6 +442,14 @@ class BuildReportStepper extends StatelessWidget {
           context: context,
           title: cardTitles[0],
           readOnly: false,
+          validate: (value) {
+            if (value.isEmpty) {
+              return 'intervention is empty';
+            } else {
+              return null;
+            }
+          },
+          controller: controller[16],
         ),
         const SizedBox(
           height: 20.0,
@@ -425,7 +463,7 @@ class BuildReportStepper extends StatelessWidget {
                 itemBuilder: (context, index) => InterventionItem(
                   context,
                   cubit.drugs,
-                  fieldController,
+                  controller[17],
                   cubit,
                   cubit.drugNumber,
                 ),

@@ -11,6 +11,7 @@ class ReportScreenTextField extends StatelessWidget {
     this.controller,
     this.hintSize,
     this.keyboardType,
+    this.onComplete,
   }) : super(key: key);
   bool readOnly;
   String title;
@@ -18,6 +19,7 @@ class ReportScreenTextField extends StatelessWidget {
   var controller;
   var validate;
   var keyboardType;
+  VoidCallback? onComplete;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class ReportScreenTextField extends StatelessWidget {
       validator: validate,
       readOnly: readOnly,
       keyboardType: keyboardType,
+      onEditingComplete: onComplete,
       style: const TextStyle(
         fontSize: 18,
         fontFamily: Lora,
@@ -50,6 +53,7 @@ class ReportScreenTextField extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     fontSize: hintSize,
                     fontFamily: Lora,
+                    height: 1.5,
                   ),
                 ),
               )

@@ -1,32 +1,9 @@
-abstract class SignUpStates {}
+abstract class ChatStates {}
 
-class SignUpInitialState extends SignUpStates {}
+class ChatInitialState extends ChatStates {}
 
-class SignUpLoadingState extends SignUpStates {}
+class ChatSendMessageSuccessState extends ChatStates {}
 
-class SignUpSuccessState extends SignUpStates {}
+class ChatSendMessageErrorState extends ChatStates {}
 
-class SignUpErrorState extends SignUpStates {
-  String error;
-  SignUpErrorState(this.error);
-}
-
-class CreateUserLoadingState extends SignUpStates {}
-
-class CreateUserSuccessState extends SignUpStates {}
-
-class CreateUserErrorState extends SignUpStates {
-  String error;
-  CreateUserErrorState(this.error);
-}
-
-class UpdateUserLoadingState extends SignUpStates {}
-
-class UpdateUserSuccessState extends SignUpStates {}
-
-class UpdateUserErrorState extends SignUpStates {
-  String error;
-  UpdateUserErrorState(this.error);
-}
-
-class SignUpValidateFieldsState extends SignUpStates {}
+class ChatGetMessagesSuccessState extends ChatStates {}

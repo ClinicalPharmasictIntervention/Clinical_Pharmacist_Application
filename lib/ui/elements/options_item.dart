@@ -2,19 +2,25 @@ import 'dart:ui';
 
 import 'package:clinical_pharmacist_intervention/business_logic/cubit/app_cubit.dart';
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
+import 'package:clinical_pharmacist_intervention/shared/utilities.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/chat_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OptionsItem extends StatelessWidget {
-  OptionsItem(
-      {Key? key,
-      required this.phoneNumber,
-      required this.email,
-      required this.chatId})
-      : super(key: key);
-  String phoneNumber;
-  String email;
+  OptionsItem({
+    Key? key,
+    this.phoneNumber,
+    this.email,
+    required this.chatId,
+    required this.name,
+    required this.appToken,
+  }) : super(key: key);
+  String? phoneNumber;
+  String? email;
   String chatId;
+  String name;
+  String? appToken;
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +33,13 @@ class OptionsItem extends StatelessWidget {
             children: [
               //call
               BlocConsumer<AppCubit, AppState>(
-                listener: (context, state) {
-                },
+                listener: (context, state) {},
                 builder: (context, state) {
                   return GestureDetector(
                     onTap: () {
-                      context.read<AppCubit>().startSystemAudioCall(phoneNumber);
+                      context
+                          .read<AppCubit>()
+                          .startSystemAudioCall(phoneNumber!);
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -60,12 +67,20 @@ class OptionsItem extends StatelessWidget {
                   );
                 },
               ),
-            const  SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               //chat
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  navigateTo(
+                      context,
+                      ChatDetailsScreen(
+                        receiverId: chatId,
+                        name: name,
+                        drAppToken: appToken,
+                      ));
+                },
                 child: Container(
                   decoration: BoxDecoration(
                       gradient: LinearGradient(colors: [
@@ -93,7 +108,7 @@ class OptionsItem extends StatelessWidget {
               //contradiction
             ],
           ),
-        const  SizedBox(
+          const SizedBox(
             height: 10,
           ),
           GestureDetector(
@@ -110,13 +125,17 @@ class OptionsItem extends StatelessWidget {
               width: 300,
               height: 50,
               child: GestureDetector(
-                onTap: (){
-                  context.read<AppCubit>().sendContradiction("dev.cs.mohamed@gmail.com", "mo17amer@gmail.com", "Mohamed H");
+                onTap: () {
+                  context.read<AppCubit>().sendContradiction(
+                      "dev.cs.mohamed@gmail.com",
+                      "mo17amer@gmail.com",
+                      "Mohamed H");
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: const [
-                    Text("Make a contradiction", style: TextStyle(fontSize: 22)),
+                    Text("Make a contradiction",
+                        style: TextStyle(fontSize: 22)),
                     Icon(
                       IconBroken.Danger,
                       size: 22,

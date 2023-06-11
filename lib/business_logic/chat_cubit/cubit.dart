@@ -1,114 +1,80 @@
-import 'package:clinical_pharmacist_intervention/business_logic/sign_in_cubit/states.dart';
-import 'package:clinical_pharmacist_intervention/business_logic/sign_up_cubit/states.dart';
-import 'package:clinical_pharmacist_intervention/data/models/clinical_pharmacist_model.dart';
-import 'package:clinical_pharmacist_intervention/data/models/doctor_model.dart';
-import 'package:clinical_pharmacist_intervention/shared/network/local/cache_helper.dart';
+import 'dart:convert';
+
+import 'package:clinical_pharmacist_intervention/business_logic/chat_cubit/states.dart';
+import 'package:clinical_pharmacist_intervention/data/models/message_model.dart';
+import 'package:clinical_pharmacist_intervention/data/models/notification_model.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
 
-class SignUpCubit extends Cubit<SignUpStates> {
-  SignUpCubit() : super(SignUpInitialState());
+class ChatCubit extends Cubit<ChatStates> {
+  ChatCubit() : super(ChatInitialState());
 
-  static get(context) => BlocProvider.of<SignUpCubit>(context);
+  static get(context) => BlocProvider.of<ChatCubit>(context);
 
-  void userSignUp({
-    required String name,
-    required String id,
-    required String hospitalId,
-    required String email,
-    required String phoneNumber,
-    required String password,
+  void sendMessage({
+    required receiverId,
+    required dateTime,
+    required text,
   }) {
-    emit(SignUpLoadingState());
-    FirebaseAuth.instance
-        .createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    )
-        .then((value) {
-      token = value.user!.uid;
-      createUser(
-        name: name,
-        id: token!,
-        hospitalId: hospitalId,
-        phoneNumber: phoneNumber,
-        email: email,
-      );
-
-      print(token);
-
-      CacheHelper.savaDate(key: 'token', value: token).then((value) {
-        emit(SignUpSuccessState());
-      });
-    }).catchError((error) {
-      emit(SignUpErrorState(error));
-    });
-  }
-
-  void validateFields() {
-    emit(SignUpValidateFieldsState());
-  }
-
-  void createUser({
-    required String name,
-    required String id,
-    required String hospitalId,
-    required String phoneNumber,
-    required String email,
-  }) {
-    emit(CreateUserLoadingState());
-
-    ClinicalPharmacistModel model = ClinicalPharmacistModel(
-      name: name,
-      id: id,
-      hospitalId: hospitalId,
-      phoneNumber: phoneNumber,
-      email: email,
+    MessageModel model = MessageModel(
+      senderId: token,
+      receiverId: receiverId,
+      text: text,
+      dateTime: dateTime,
     );
 
+    //set my chat
     FirebaseFirestore.instance
         .collection('Pharmacists')
-        .doc(id)
-        .set(model.toMap())
+        .doc(token)
+        .collection('chats')
+        .doc(receiverId)
+        .collection('messages')
+        .add(model.toMap())
         .then((value) {
-      emit(CreateUserSuccessState());
+      emit(ChatSendMessageSuccessState());
     }).catchError((error) {
-      emit(CreateUserErrorState(error.toString()));
+      emit(ChatSendMessageErrorState());
     });
 
-    // DoctorModel model = DoctorModel(
-    //   name: name,
-    //   id: id,
-    //   department: 'ward',
-    //   hospitalId: hospitalId,
-    //   phoneNumber: phoneNumber,
-    //   email: email,
-    // );
-    //
-    // FirebaseFirestore.instance
-    //     .collection('Physicians')
-    //     .doc(id)
-    //     .set(model.toMap())
-    //     .then((value) {
-    //   emit(CreateUserSuccessState());
-    // }).catchError((error) {
-    //   emit(CreateUserErrorState(error.toString()));
-    // });
+    //set receiver chat
+    FirebaseFirestore.instance
+        .collection('Physicians')
+        .doc(receiverId)
+        .collection('chats')
+        .doc(token)
+        .collection('messages')
+        .add(model.toMap())
+        .then((value) {
+      emit(ChatSendMessageSuccessState());
+    }).catchError((error) {
+      emit(ChatSendMessageErrorState());
+    });
   }
 
-  void updateUser({
-    required String key,
-    required String value,
+  List<MessageModel> messages = [];
+
+  void getMessages({
+    required receiverId,
   }) {
-    emit(UpdateUserLoadingState());
-    FirebaseFirestore.instance.collection('Pharmacists').doc(token).update({
-      key: value,
-    }).then((value) {
-      emit(UpdateUserSuccessState());
-    }).catchError((error) {
-      emit(UpdateUserErrorState(error.toString()));
+    FirebaseFirestore.instance
+        .collection('Pharmacists')
+        .doc(token)
+        .collection('chats')
+        .doc(receiverId)
+        .collection('messages')
+        .orderBy('dateTime')
+        .snapshots()
+        .listen((event) {
+      messages = [];
+      event.docs.forEach((element) {
+        messages.add(MessageModel.fromJson(element.data()));
+      });
+      emit(ChatGetMessagesSuccessState());
     });
   }
+
+  //Notifications
 }

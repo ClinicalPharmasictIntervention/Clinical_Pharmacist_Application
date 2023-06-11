@@ -1,11 +1,13 @@
 import 'package:clinical_pharmacist_intervention/business_logic/cubit/app_cubit.dart';
 
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
+import 'package:clinical_pharmacist_intervention/shared/utilities.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/reports_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/dr_list_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/home_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/notification_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/profile_screen.dart';
+import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,7 +22,9 @@ class _LayoutScreenState extends State<LayoutScreen> {
     HomeScreen(),
     ReportsScreen(),
     const NotificationScreen(),
-    const DrDiscussionScreen(),
+    DrDiscussionScreen(
+      isReportScreen: false,
+    ),
     const ProfileScreen(),
   ];
 
@@ -29,9 +33,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppState>(
-      listener: (context, state) {
-
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         return Container(
           decoration: const BoxDecoration(

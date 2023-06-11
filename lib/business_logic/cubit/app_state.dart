@@ -26,3 +26,9 @@ class GetPhysiciansLoadingState extends AppState {}
 class GetPhysiciansSuccessState extends AppState {}
 
 class GetPhysiciansErrorState extends AppState {}
+
+class SendNotificationSuccessState extends AppState {}
+
+class SendNotificationErrorState extends AppState {}
+
+class GetNotificationSuccessState extends AppState {}

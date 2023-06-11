@@ -23,44 +23,38 @@ class ReportDetailsScreen extends StatelessWidget {
           bottomOpacity: 0.0,
           elevation: 0.0,
           title: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  width: 200,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    gradient: LinearGradient(
-                      colors: [
-                        secondaryColor.withOpacity(0.5),
-                        Colors.tealAccent.withOpacity(0.3),
-                        secondaryColor.withOpacity(0.5),
-                      ],
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Report 1',
-                      style: txtTheme(context).headlineLarge!.copyWith(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 35.0,
-                        color: Colors.white,
-                        fontFamily: Lora,
-                        shadows: [
-                          BoxShadow(
-                            color: accentColor,
-                            blurRadius: 10,
-                            spreadRadius: 20,
-                            offset: Offset(3, 3),
-                          ),
-                        ],
+            child: Container(
+              width: 200,
+              height: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                gradient: LinearGradient(
+                  colors: [
+                    secondaryColor.withOpacity(0.5),
+                    Colors.tealAccent.withOpacity(0.3),
+                    secondaryColor.withOpacity(0.5),
+                  ],
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  'Report 1',
+                  style: txtTheme(context).headlineLarge!.copyWith(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 35.0,
+                    color: Colors.white,
+                    fontFamily: Lora,
+                    shadows: [
+                      BoxShadow(
+                        color: accentColor,
+                        blurRadius: 10,
+                        spreadRadius: 20,
+                        offset: Offset(3, 3),
                       ),
-                    ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
           ),
           actions: [
@@ -100,13 +94,6 @@ class ReportDetailsScreen extends StatelessWidget {
                         ),
                         Text(
                           'Consultant Name: Mohamed Ahmed Abd El-Hakeem',
-                          style: textTheme(context),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          'Physician Name: Mohamed Ahmed Abd El-Hakeem',
                           style: textTheme(context),
                         ),
                         SizedBox(

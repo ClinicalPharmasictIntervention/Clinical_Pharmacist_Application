@@ -55,13 +55,13 @@ class SignUpScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 40,
                           fontWeight: FontWeight.bold,
-                          letterSpacing: 20.0,
+                          letterSpacing: 10.0,
                           // color: Colors.blue,
                           //decoration: TextDecoration.underline,
                         ),
                       ),
                       const SizedBox(
-                        height: 50,
+                        height: 30,
                       ),
                       DefaultTextField(
                         validate: (value) {
@@ -205,11 +205,11 @@ class SignUpScreen extends StatelessWidget {
                             onPressed: () {
                               if (formKey.currentState!.validate()) {
                                 cubit.userSignUp(
-                                  userName: userNameController.text,
+                                  name: userNameController.text,
                                   id: idController.text,
-                                  hospitalID: hospitalID.text,
+                                  hospitalId: hospitalID.text,
                                   email: emailController.text,
-                                  phone: phoneController.text,
+                                  phoneNumber: phoneController.text,
                                   password: passwordController.text,
                                 );
                                 navigateTo(context, SignInScreen());
@@ -235,11 +235,7 @@ class SignUpScreen extends StatelessWidget {
                             ClicableText(
                               txt: "Sign in now",
                               onPressed: () {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //       builder: (context) => LoginScreen()),
-                                // );
+                                navigateTo(context, SignInScreen());
                               },
                             ),
                           ],

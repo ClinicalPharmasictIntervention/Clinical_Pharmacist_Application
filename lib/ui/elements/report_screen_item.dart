@@ -10,6 +10,7 @@ class ReportScreenItem extends StatelessWidget {
     this.keyboardType,
     this.controller,
     this.validate,
+    this.onComplete,
     Key? key,
   }) : super(key: key);
 
@@ -20,6 +21,7 @@ class ReportScreenItem extends StatelessWidget {
   var controller;
   var validate;
   var keyboardType;
+  VoidCallback? onComplete;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,7 @@ class ReportScreenItem extends StatelessWidget {
         title: title,
         readOnly: readOnly,
         hintSize: hintSize,
+        onComplete: onComplete,
       ),
     );
   }

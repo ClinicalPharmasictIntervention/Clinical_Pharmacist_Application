@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:clinical_pharmacist_intervention/data/models/clinical_pharmacist_model.dart';
 import 'package:clinical_pharmacist_intervention/data/models/doctor_model.dart';
+import 'package:clinical_pharmacist_intervention/data/models/notification_model.dart';
 import 'package:clinical_pharmacist_intervention/shared/utilities.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -92,9 +93,96 @@ class AppCubit extends Cubit<AppState> {
     emit(EnableEditProfileState());
   }
 
+  NotificationModel? notificationModel;
+
+  void sendNotificationData({
+    required physicianName,
+    required receiverId,
+    required patientName,
+    required status,
+    type,
+  }) {
+    notificationModel = NotificationModel(
+      physicianName: physicianName,
+      patientName: patientName,
+      date:
+          '${DateTime.now().day.toString()}/${DateTime.now().month.toString()}/${DateTime.now().year.toString()}',
+      time:
+          '${DateTime.now().hour.toString()} : ${DateTime.now().minute.toString()}',
+      status: status,
+      type: 'recommendation',
+    );
+
+    // FirebaseFirestore.instance
+    //     .collection('Pharmacists')
+    //     .doc(token)
+    //     .collection('notificationCenter')
+    //     .doc('BooFjMVX3eXrrY5ZglvBm2TJT1g2')
+    //     .collection('notifications')
+    //     .add(notificationModel!.toMap())
+    //     .then((value) {
+    //   emit(SendNotificationSuccessState());
+    // }).catchError((error) {
+    //   emit(SendNotificationErrorState());
+    // });
+
+    FirebaseFirestore.instance
+        .collection('Physicians')
+        .doc(receiverId)
+        .collection('notificationCenter')
+        .doc(token)
+        .collection('notifications')
+        .add(notificationModel!.toMap())
+        .then((value) {
+      emit(SendNotificationSuccessState());
+    }).catchError((error) {
+      emit(SendNotificationErrorState());
+    });
+  }
+
+  Map<String, dynamic> notificationsId = {};
+
+  void getNotificationsId() {
+    FirebaseFirestore.instance
+        .collection('Pharmacists')
+        .doc(token)
+        .collection('notificationCenter')
+        .snapshots()
+        .listen((event) {
+      notificationsId = {};
+// experenment code
+      event.docs.forEach((element) {
+        notificationsId.addAll(element.data());
+      });
+    });
+  }
+
+  List<NotificationModel> notifications = [];
+
+  void getNotifications() {
+    getNotificationsId();
+
+    //get all notifications
+    FirebaseFirestore.instance
+        .collection('Pharmacists')
+        .doc(token)
+        .collection('notificationCenter')
+        .doc('BooFjMVX3eXrrY5ZglvBm2TJT1g2')
+        .collection('notifications')
+        .snapshots()
+        .listen((event) {
+      notifications = [];
+
+      event.docs.forEach((e) {
+        notifications.add(NotificationModel.fromJson(e.data()));
+      });
+      emit(GetNotificationSuccessState());
+    });
+  }
+
   // get clinical pharmacists data
 
-  ClinicalPharmacistModel? model;
+  ClinicalPharmacistModel? clinicalPharmacistModel;
 
   void getPharmacistData() {
     emit(GetPharmacistLoadingState());
@@ -104,8 +192,10 @@ class AppCubit extends Cubit<AppState> {
         .doc(token)
         .get()
         .then((value) {
-      model = ClinicalPharmacistModel.fromJson(value.data());
+      clinicalPharmacistModel = ClinicalPharmacistModel.fromJson(value.data());
 
+      print(value.id);
+      pharmacistModel = clinicalPharmacistModel!;
       emit(GetPharmacistSuccessState());
     }).catchError((error) {
       emit(GetPharmacistErrorState());

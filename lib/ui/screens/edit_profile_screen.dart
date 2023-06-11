@@ -1,47 +1,74 @@
 import 'package:clinical_pharmacist_intervention/business_logic/cubit/app_cubit.dart';
+import 'package:clinical_pharmacist_intervention/business_logic/sign_in_cubit/states.dart';
+import 'package:clinical_pharmacist_intervention/business_logic/sign_up_cubit/cubit.dart';
+import 'package:clinical_pharmacist_intervention/business_logic/sign_up_cubit/states.dart';
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/shared/utilities.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_textfield.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
+import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EditProfileScreen extends StatelessWidget {
   EditProfileScreen({super.key});
+
   final enableEditingBodyKey = GlobalKey();
+  var phoneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/background.jpg'),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: BlocConsumer<AppCubit, AppState>(
-          listener: (context, state) {},
-          builder: (context, state) {
-            return Scaffold(
-              backgroundColor: Colors.transparent,
-              body: drawBody(context),
-              floatingActionButton:
-                  (context.read<AppCubit>().editProfileAbsorbing == false)
-                      ? null
-                      : drawEnableEditingFloatingActionButton(context),
-            );
-          }),
+    return BlocConsumer<SignUpCubit, SignUpStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        var cubit = SignUpCubit.get(context);
+        return Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/background.jpg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: BlocConsumer<AppCubit, AppState>(
+              listener: (context, state) {},
+              builder: (context, state) {
+                return Scaffold(
+                  appBar: AppBar(
+                    leading: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        size: 30,
+                        IconBroken.Arrow___Left_2,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    backgroundColor: Colors.transparent,
+                    bottomOpacity: 0.0,
+                    elevation: 0.0,
+                  ),
+                  backgroundColor: Colors.transparent,
+                  body: drawBody(context, cubit),
+                  floatingActionButton:
+                      (context.read<AppCubit>().editProfileAbsorbing == false)
+                          ? null
+                          : drawEnableEditingFloatingActionButton(context),
+                );
+              }),
+        );
+      },
     );
   }
 
-  drawBody(BuildContext context) {
+  drawBody(BuildContext context, cubit) {
     return AbsorbPointer(
       absorbing: (context.read<AppCubit>().editProfileAbsorbing == false)
           ? false
           : true,
       key: enableEditingBodyKey,
       child: Padding(
-        padding: const EdgeInsetsDirectional.all(12.0),
+        padding: const EdgeInsetsDirectional.all(15.0),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -113,6 +140,7 @@ class EditProfileScreen extends StatelessWidget {
                 height: 20,
               ),
               DefaultTextField(
+                controller: phoneController,
                 labelTxt: "Phone Number",
                 hintTxt: "your current phone number",
                 prefixIcon: IconBroken.Call,
@@ -156,7 +184,13 @@ class EditProfileScreen extends StatelessWidget {
               Center(
                 child: PrimaryBtn(
                   btnTitle: "Confirm",
-                  onPressed: () {},
+                  onPressed: () {
+                    cubit.updateUser(
+                      key: 'phoneNumber',
+                      value: phoneController.text,
+                    );
+                    Navigator.pop(context);
+                  },
                 ),
               ),
               const SizedBox(

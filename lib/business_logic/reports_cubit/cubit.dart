@@ -116,4 +116,8 @@ class ReportsCubit extends Cubit<ReportsStates> {
   void validateFormFields() {
     emit(ReportsValidateFormFieldsState());
   }
+
+  String? drAppId;
+
+  // Firebase of reports
 }
