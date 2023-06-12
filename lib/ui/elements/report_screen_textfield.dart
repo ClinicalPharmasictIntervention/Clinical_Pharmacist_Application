@@ -44,6 +44,7 @@ class ReportScreenTextField extends StatelessWidget {
         ),
         contentPadding: const EdgeInsetsDirectional.only(start: 15),
         border: InputBorder.none,
+        labelStyle: TextStyle(color: Colors.blue),
         label: !readOnly
             ? Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5.0),

@@ -19,10 +19,10 @@ class MakeReportScreen extends StatelessWidget {
 
   String? drAppToken;
   String? drId;
+  ReportsCubit reportsCubit = ReportsCubit();
 
   @override
   Widget build(BuildContext context) {
-    ReportsCubit reportsCubit = ReportsCubit();
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -40,9 +40,8 @@ class MakeReportScreen extends StatelessWidget {
                 reportsCubit.icons[reportsCubit.currentStep],
                 reportsCubit.titles[reportsCubit.currentStep],
               ),
-              floatingActionButton:
-                  drawFloatingActionButton(reportsCubit.currentStep, reportsCubit),
-
+              floatingActionButton: drawFloatingActionButton(
+                  reportsCubit.currentStep, reportsCubit),
               body: Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Column(
@@ -54,10 +53,9 @@ class MakeReportScreen extends StatelessWidget {
                           canvasColor: const Color(0xffc1ddeb),
                         ),
                         child: BuildReportStepper(
-                          drAppToken: drAppToken,
-                          drId: drId,
-                          reportsCubit:reportsCubit
-                        ),
+                            drAppToken: drAppToken,
+                            drId: drId,
+                            reportsCubit: reportsCubit),
                       ),
                     ),
                     const SizedBox(
@@ -103,7 +101,7 @@ drawFloatingActionButton(int currentStep, cubit) {
   }
 }
 
- InterventionItem(
+InterventionItem(
   context,
   List<String> drugs,
   fieldController,

@@ -1,5 +1,19 @@
+import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/cubit.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/report_screen_textfield.dart';
+import 'package:cool_dropdown/cool_dropdown.dart';
+import 'package:cool_dropdown/customPaints/arrow_down_painter.dart';
+import 'package:cool_dropdown/enums/dropdown_align.dart';
+import 'package:cool_dropdown/enums/dropdown_animation.dart';
+import 'package:cool_dropdown/enums/dropdown_item_render.dart';
+import 'package:cool_dropdown/enums/dropdown_triangle_align.dart';
+import 'package:cool_dropdown/enums/result_render.dart';
+import 'package:cool_dropdown/models/cool_dropdown_item.dart';
+import 'package:cool_dropdown/options/dropdown_item_options.dart';
+import 'package:cool_dropdown/options/dropdown_options.dart';
+import 'package:cool_dropdown/options/dropdown_triangle_options.dart';
 import 'package:flutter/material.dart';
+
+import '../themes/constants.dart';
 
 class ReportScreenItem extends StatelessWidget {
   ReportScreenItem({

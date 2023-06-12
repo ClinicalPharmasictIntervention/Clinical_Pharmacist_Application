@@ -5,7 +5,6 @@ import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 
-
 class FakeLanding extends StatelessWidget {
   const FakeLanding({Key? key}) : super(key: key);
 
@@ -23,10 +22,6 @@ class FakeLanding extends StatelessWidget {
     );
   }
 }
-
-
-
-
 
 class MM extends StatefulWidget {
   @override
@@ -92,7 +87,6 @@ class _MMState extends State<MM> {
               'assets/${fruits[i]}.svg',
             ),
           ),
-
           selectedIcon: Container(
             margin: EdgeInsets.only(left: 10),
             height: 25,
@@ -109,7 +103,7 @@ class _MMState extends State<MM> {
 
   @override
   Widget build(BuildContext context) {
-      final problemTypeDropdownController = DropdownController();
+    final problemTypeDropdownController = DropdownController();
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -153,14 +147,7 @@ class _MMState extends State<MM> {
               height: 100,
             ),
             Center(
-              child: 
-
-
-  
-
-
-              
-              WillPopScope(
+              child: WillPopScope(
                 onWillPop: () async {
                   if (problemTypeDropdownController.isOpen) {
                     problemTypeDropdownController.close();
@@ -220,8 +207,6 @@ class _MMState extends State<MM> {
                   ),
                 ),
               ),
-
-
             ),
             SizedBox(
               height: 200,

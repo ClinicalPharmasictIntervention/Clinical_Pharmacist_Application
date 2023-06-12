@@ -1,6 +1,7 @@
 import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/cubit.dart';
 import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/states.dart';
 import 'package:clinical_pharmacist_intervention/shared/utilities.dart';
+import 'package:clinical_pharmacist_intervention/ui/elements/build_stepe_dropdown_item.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_radio_item.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/report_screen_item.dart';
@@ -17,8 +18,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 
 class BuildReportStepper extends StatelessWidget {
-
-
   BuildReportStepper({
     this.drAppToken,
     this.drId,
@@ -33,41 +32,39 @@ class BuildReportStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocConsumer<ReportsCubit, ReportsStates>(
-      listener: (context, state) {} ,
-      builder: (context, state) {
-        
-    return Form(
-        key: formKey,
-        child: Stepper(
-          steps: [
-            buildOneStep(context, 0, "Resident",
-                drawStep1Content(context, reportsCubit), reportsCubit),
-            buildOneStep(context, 1, "Problem",
-                drawStep2Content(context, reportsCubit), reportsCubit),
-            buildOneStep(context, 2, "Recommend..",
-                drawStep3Content(context, reportsCubit), reportsCubit),
-          ],
-          currentStep: reportsCubit!.currentStep,
-          type: StepperType.horizontal,
-          elevation: 0,
-          onStepContinue: onStepContinue(context),
-          onStepCancel: onStepCancel(),
-          onStepTapped: (newStep) {
-            print(newStep);
-            
-            onStepTapped(newStep);
-          },
-          controlsBuilder: (context, ControlsDetails controlDetail) {
-            final isLastStep = controlDetail.currentStep == 2;
-    
-            return drawControllerBuilder(context, isLastStep, controlDetail);
-          },
-        ),
-      );
-      }
-    );
+        listener: (context, state) {},
+        builder: (context, state) {
+          return Form(
+            key: formKey,
+            child: Stepper(
+              steps: [
+                buildOneStep(context, 0, "Resident",
+                    drawStep1Content(context, reportsCubit), reportsCubit!),
+                buildOneStep(context, 1, "Problem",
+                    drawStep2Content(context, reportsCubit), reportsCubit!),
+                buildOneStep(context, 2, "Recommend..",
+                    drawStep3Content(context, reportsCubit), reportsCubit!),
+              ],
+              currentStep: reportsCubit!.currentStep,
+              type: StepperType.horizontal,
+              elevation: 0,
+              onStepContinue: onStepContinue(context),
+              onStepCancel: onStepCancel(),
+              onStepTapped: (newStep) {
+                onStepTappped(newStep);
+                reportsCubit!.changeCurrentStep(newStep);
+                ReportsCubit.get(context).changeCurrentStep(newStep);
+              },
+              controlsBuilder: (context, ControlsDetails controlDetail) {
+                final isLastStep = controlDetail.currentStep == 2;
+
+                return drawControllerBuilder(
+                    context, isLastStep, controlDetail);
+              },
+            ),
+          );
+        });
   }
 
   // STEP NUMBER ONE
@@ -179,84 +176,13 @@ class BuildReportStepper extends StatelessWidget {
   drawStep2Content(BuildContext context, cubit) {
     return Column(
       children: [
-        ReportScreenItem(
-          context: context,
-          title: 'Problem Type',
-          readOnly: false,
-          validate: (value) {
-            if (value.isEmpty) {
-              return 'Problem type is empty';
-            } else {
-              return null;
-            }
-          },
-          controller: reportsCubit!.problemTypeController,
+        BuildStepperDropDownList(
+          label: "Problem Type",
+          itemsList: reportsCubit!.problemTypesList,
+          reportsCubit: reportsCubit,
         ),
         const SizedBox(
           height: 40.0,
-        ),
-        WillPopScope(
-          onWillPop: () async {
-            if (problemTypeDropdownController.isOpen) {
-              problemTypeDropdownController.close();
-              return Future.value(false);
-            } else {
-              return Future.value(true);
-            }
-          },
-          child: CoolDropdown<String>(
-            controller: problemTypeDropdownController,
-            dropdownList: [
-              CoolDropdownItem<String>(label: "1", value: '1'),
-              CoolDropdownItem<String>(label: "2", value: '2'),
-            ],
-            defaultItem: null,
-            onChange: (value) async {
-              if (problemTypeDropdownController.isError) {
-                await problemTypeDropdownController.resetError();
-              }
-              // fruitDropdownController.close();
-              print(value);
-            },
-            onOpen: (value) {
-              print(value);
-            },
-            resultOptions: const ResultOptions(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              width: 200,
-              icon: SizedBox(
-                width: 10,
-                height: 10,
-                child: CustomPaint(
-                  painter: DropdownArrowPainter(),
-                ),
-              ),
-              render: ResultRender.all,
-              placeholder: 'Select Fruit',
-              isMarquee: true,
-            ),
-            dropdownOptions: const DropdownOptions(
-                top: 20,
-                height: 400,
-                gap: DropdownGap.all(5),
-                borderSide: BorderSide(width: 1, color: Colors.black),
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                align: DropdownAlign.left,
-                animationType: DropdownAnimationType.size),
-            dropdownTriangleOptions: const DropdownTriangleOptions(
-              width: 20,
-              height: 30,
-              align: DropdownTriangleAlign.left,
-              borderRadius: 3,
-              left: 20,
-            ),
-            dropdownItemOptions: const DropdownItemOptions(
-              isMarquee: true,
-              mainAxisAlignment: MainAxisAlignment.start,
-              render: DropdownItemRender.all,
-              height: 50,
-            ),
-          ),
         ),
         ReportScreenItem(
           context: context,
@@ -274,34 +200,18 @@ class BuildReportStepper extends StatelessWidget {
         const SizedBox(
           height: 40.0,
         ),
-        ReportScreenItem(
-          context: context,
-          title: 'Error Category ( Severity )',
-          readOnly: false,
-          validate: (value) {
-            if (value.isEmpty) {
-              return 'Error category is empty';
-            } else {
-              return null;
-            }
-          },
-          controller: reportsCubit!.erroCategoryController,
+        BuildStepperDropDownList(
+          label: "Problem Category (Severity)",
+          itemsList: reportsCubit!.problemCategories,
+          reportsCubit: reportsCubit,
         ),
         const SizedBox(
           height: 40.0,
         ),
-        ReportScreenItem(
-          context: context,
-          title: 'Stage and Type of The Error',
-          readOnly: false,
-          validate: (value) {
-            if (value.isEmpty) {
-              return 'Stage and Type of The Error is empty';
-            } else {
-              return null;
-            }
-          },
-          controller: reportsCubit!.errorTypeController,
+        BuildStepperDropDownList(
+          label: "Stage and Type of The Error",
+          itemsList: reportsCubit!.problemCategories,
+          reportsCubit: reportsCubit,
         ),
         const SizedBox(
           height: 40.0,
@@ -325,15 +235,11 @@ class BuildReportStepper extends StatelessWidget {
 
   //STEP NUMBER THREE
   drawStep3Content(BuildContext context, cubit) {
-    var cardTitles = [
-      'Write Your Intervention Here..',
-    ];
-
     return Column(
       children: [
         ReportScreenItem(
           context: context,
-          title: cardTitles[0],
+          title: 'Write Your Intervention Here..',
           readOnly: false,
           validate: (value) {
             if (value.isEmpty) {
@@ -376,15 +282,16 @@ class BuildReportStepper extends StatelessWidget {
   }
 
   buildOneStep(BuildContext context, int currentStep, String stepTitle,
-      Widget stepContent, cubit) {
+      Widget stepContent, ReportsCubit reportsCubit) {
     if (currentStep == 2) {
-      drawFloatingActionButton(currentStep, cubit);
+      drawFloatingActionButton(currentStep, reportsCubit);
     }
+
     return Step(
-      state: cubit.currentStep > currentStep
+      state: reportsCubit.currentStep > currentStep
           ? StepState.complete
           : StepState.indexed,
-      isActive: cubit.currentStep >= currentStep,
+      isActive: reportsCubit.currentStep >= currentStep,
       title: drawStepTitle(context, stepTitle),
       content: stepContent,
     );
@@ -431,7 +338,7 @@ class BuildReportStepper extends StatelessWidget {
 
   onStepContinue(BuildContext context) {
     final isFinalStep = reportsCubit!.currentStep == 2;
-
+/*
     if (isFinalStep) {
       print('completed');
 
@@ -504,6 +411,7 @@ class BuildReportStepper extends StatelessWidget {
     } else {
       reportsCubit!.changeForwardStep();
     }
+    */
   }
 
   onStepCancel() {
@@ -514,8 +422,7 @@ class BuildReportStepper extends StatelessWidget {
           };
   }
 
-  onStepTapped(int newStep) {
+  onStepTappped(int newStep) {
     reportsCubit!.changeCurrentStep(newStep);
-    print(reportsCubit!.currentStep);
   }
 }

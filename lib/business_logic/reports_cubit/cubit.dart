@@ -1,10 +1,13 @@
 import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/states.dart';
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
+import 'package:cool_dropdown/controllers/dropdown_controller.dart';
+import 'package:cool_dropdown/models/cool_dropdown_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ReportsCubit extends Cubit<ReportsStates> {
+
   ReportsCubit() : super(ReportsInitialState());
 
   static get(context) => BlocProvider.of<ReportsCubit>(context);
@@ -14,13 +17,65 @@ class ReportsCubit extends Cubit<ReportsStates> {
   TextEditingController bedController = TextEditingController();
   TextEditingController medicalController = TextEditingController();
 
-  TextEditingController problemTypeController = TextEditingController();
   TextEditingController problemDescController = TextEditingController();
-  TextEditingController erroCategoryController = TextEditingController();
-  TextEditingController errorTypeController = TextEditingController();
   TextEditingController refrencesController = TextEditingController();
 
-    TextEditingController interventionController = TextEditingController();
+  TextEditingController interventionController = TextEditingController();
+
+  DropdownController problemTypeDropdownController = DropdownController();
+  DropdownController errorCategoryDropdownController = DropdownController();
+  DropdownController errorTypeDropdownController = DropdownController();
+
+    List<CoolDropdownItem<String>> problemTypesList = [
+    
+     CoolDropdownItem(
+      label: '[Unnecessary Drug] There is no valid indication.',
+      value: '[Unnecessary Drug] There is no valid indication.',
+    ),
+        CoolDropdownItem(
+      label: '[Unnecessary Drug] Therapeutic Duplication \n (Multiple-drugs used for a condition that requires single-drug)',
+      value: '[Unnecessary Drug] Therapeutic Duplication \n (Multiple-drugs used for a condition that requires single-drug)',
+    ), 
+        CoolDropdownItem(
+      label: '[Unnecessary Drug] The condition is more appropriately \n treated with non-drug therapy.',
+      value: '[Unnecessary Drug] The condition is more appropriately \n treated with non-drug therapy.',
+    ),
+ 
+  ];
+
+    List<CoolDropdownItem<String>> problemCategories = [
+    
+     CoolDropdownItem(
+      label: '[Unnecessary Drug] There is no valid indication.',
+      value: '[Unnecessary Drug] There is no valid indication.',
+    ),
+        CoolDropdownItem(
+      label: '[Unnecessary Drug] Therapeutic Duplication \n (Multiple-drugs used for a condition that requires single-drug)',
+      value: '[Unnecessary Drug] Therapeutic Duplication \n (Multiple-drugs used for a condition that requires single-drug)',
+    ), 
+        CoolDropdownItem(
+      label: '[Unnecessary Drug] The condition is more appropriately \n treated with non-drug therapy.',
+      value: '[Unnecessary Drug] The condition is more appropriately \n treated with non-drug therapy.',
+    ),
+ 
+  ];
+
+    List<CoolDropdownItem<String>> errorTypesList = [
+    
+     CoolDropdownItem(
+      label: '[Unnecessary Drug] There is no valid indication.',
+      value: '[Unnecessary Drug] There is no valid indication.',
+    ),
+        CoolDropdownItem(
+      label: '[Unnecessary Drug] Therapeutic Duplication \n (Multiple-drugs used for a condition that requires single-drug)',
+      value: '[Unnecessary Drug] Therapeutic Duplication \n (Multiple-drugs used for a condition that requires single-drug)',
+    ), 
+        CoolDropdownItem(
+      label: '[Unnecessary Drug] The condition is more appropriately \n treated with non-drug therapy.',
+      value: '[Unnecessary Drug] The condition is more appropriately \n treated with non-drug therapy.',
+    ),
+ 
+  ];
 
 
   var acceptSelected = secondaryColor;
@@ -53,7 +108,7 @@ class ReportsCubit extends Cubit<ReportsStates> {
     IconBroken.Info_Circle,
     IconBroken.Edit,
   ];
-   int currentStep=0;
+  int currentStep = 0;
 
   void changeForwardStep() {
     currentStep++;
@@ -65,8 +120,9 @@ class ReportsCubit extends Cubit<ReportsStates> {
     emit(ReportschangeBackwardStep());
   }
 
-  void changeCurrentStep(value) {
+  changeCurrentStep(int value) {
     currentStep = value;
+    print("vvvvvvvvvvvv$currentStep");
     emit(ReportsTappedStep());
   }
 
