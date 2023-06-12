@@ -10,6 +10,7 @@ import 'package:clinical_pharmacist_intervention/ui/screens/layout_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/on_boarding_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/register_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/splash_screen.dart';
+import 'package:clinical_pharmacist_intervention/ui/test_ui.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';

@@ -66,6 +66,8 @@ dependencies:
   analog_clock: ^0.1.1
   date_ranger: ^0.0.2
   cr_calendar: ^1.0.0+1
+  cool_dropdown: ^2.1.0
+  flutter_svg: ^2.0.6
 
 
 

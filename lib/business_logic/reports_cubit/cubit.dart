@@ -53,7 +53,7 @@ class ReportsCubit extends Cubit<ReportsStates> {
     IconBroken.Info_Circle,
     IconBroken.Edit,
   ];
-  int currentStep = 0;
+   int currentStep=0;
 
   void changeForwardStep() {
     currentStep++;
@@ -65,7 +65,7 @@ class ReportsCubit extends Cubit<ReportsStates> {
     emit(ReportschangeBackwardStep());
   }
 
-  void onTappedStep(value) {
+  void changeCurrentStep(value) {
     currentStep = value;
     emit(ReportsTappedStep());
   }
