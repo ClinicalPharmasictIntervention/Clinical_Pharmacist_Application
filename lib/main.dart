@@ -5,6 +5,7 @@ import 'package:clinical_pharmacist_intervention/business_logic/sign_up_cubit/cu
 import 'package:clinical_pharmacist_intervention/shared/bloc_observer.dart';
 import 'package:clinical_pharmacist_intervention/business_logic/cubit/app_cubit.dart';
 import 'package:clinical_pharmacist_intervention/shared/network/local/cache_helper.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/home_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/layout_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/on_boarding_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/register_screen.dart';
@@ -99,7 +100,7 @@ class MyApp extends StatelessWidget {
             foregroundColor: Colors.black54,
           ),
         ),
-        home: startWidget,
+        home: LayoutScreen(),
       ),
     );
   }

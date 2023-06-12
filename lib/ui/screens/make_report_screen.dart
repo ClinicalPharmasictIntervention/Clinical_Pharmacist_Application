@@ -22,66 +22,66 @@ class MakeReportScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ReportsCubit, ReportsStates>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        var cubit = ReportsCubit.get(context);
-        return Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/background.jpg'),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            floatingActionButton:
-                drawFloatingActionButton(cubit.currentStep, cubit),
-            appBar: AppBar(
+    ReportsCubit reportsCubit = ReportsCubit();
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/background.jpg'),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: BlocConsumer<ReportsCubit, ReportsStates>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            return Scaffold(
               backgroundColor: Colors.transparent,
-              elevation: 0,
-              bottomOpacity: 0,
-              title: BuildReportScreenAppBarTitle(
-                context: context,
-                icon: cubit.icons[cubit.currentStep],
-                titleText: cubit.titles[cubit.currentStep],
+              appBar: drawAppBar(
+                context,
+                reportsCubit.icons[reportsCubit.currentStep],
+                reportsCubit.titles[reportsCubit.currentStep],
               ),
-              leading: IconButton(
-                icon: Icon(
-                  IconBroken.Arrow___Left_2,
-                  color: Colors.black,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-            body: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Theme(
-                      data: ThemeData(
-                        canvasColor: const Color(0xffc1ddeb),
-                      ),
-                      child: BuildReportStepper(
-                        drAppToken: drAppToken,
-                        drId: drId,
+              floatingActionButton:
+                  drawFloatingActionButton(reportsCubit.currentStep, reportsCubit),
+
+              body: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Theme(
+                        data: ThemeData(
+                          canvasColor: const Color(0xffc1ddeb),
+                        ),
+                        child: BuildReportStepper(
+                          drAppToken: drAppToken,
+                          drId: drId,
+                          reportsCubit:reportsCubit
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20.0,
-                  ),
-                ],
+                    const SizedBox(
+                      height: 20.0,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ),
-        );
-      },
+            );
+          }),
     );
+  }
+
+  drawAppBar(BuildContext context, IconData icon, String titleText) {
+    return AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        bottomOpacity: 0,
+        title: BuildReportScreenAppBarTitle(
+          context: context,
+          icon: icon,
+          titleText: titleText,
+        ),
+        leading: const BuildReportScreenAppBarLeading());
   }
 }
 
@@ -103,7 +103,7 @@ drawFloatingActionButton(int currentStep, cubit) {
   }
 }
 
-Widget InterventionItem(
+ InterventionItem(
   context,
   List<String> drugs,
   fieldController,

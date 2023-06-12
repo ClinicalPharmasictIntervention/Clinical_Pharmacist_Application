@@ -12,7 +12,6 @@ import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:cr_calendar/cr_calendar.dart';
-import 'package:audioplayers/audioplayers.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -29,13 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   bool? playNotificationSound = true;
   AssetsAudioPlayer? assetsAudioPlayer;
-  AudioPlayer? _audioPlayer;
-  bool _isMuted = false;
   bool _isPlaying = false;
-  Duration? _currentDuration;
-  Duration? _totalDuration;
-  late String? _currentDurationValue = _currentDuration.toString();
-  late String? _totalDurationValue = _totalDuration.toString();
 
   @override
   void initState() {
@@ -60,34 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       child: Scaffold(
-        appBar: AppBar(
-          leadingWidth: 0,
-          title: Row(
-            children: [
-              const Icon(
-                IconBroken.Home,
-                color: Colors.black,
-                size: 30,
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              Text(
-                'Home',
-                style: txtTheme(context).headlineLarge!.copyWith(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 30.0,
-                      color: Colors.black87,
-                      fontFamily: Lora,
-                    ),
-              ),
-            ],
-          ),
-          backgroundColor: Colors.transparent,
-          bottomOpacity: 0.0,
-          elevation: 0.0,
-        ),
         backgroundColor: Colors.transparent,
+        appBar: drawAppBar(context),
         body: Column(
           children: [
             drawSafeArea(context),
@@ -346,12 +313,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   drawStatusConterContainer(BuildContext context) {
-    return Padding(
+    return const Padding(
       padding: EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Text(
+          Text(
             "Attetion, Please!!!!",
             style: TextStyle(
               fontSize: 18,
@@ -359,15 +326,15 @@ class _HomeScreenState extends State<HomeScreen> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(
+          SizedBox(
             height: 10,
           ),
-          const SizedBox(
+          SizedBox(
             height: 120,
             width: 120,
             child: CircleAvatar(
               backgroundColor: Colors.grey,
-              child: const Text(
+              child: Text(
                 "50",
                 style: TextStyle(
                   fontSize: 22,
@@ -380,7 +347,7 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(
             height: 5,
           ),
-          const Text(
+          Text(
             "Pending Interventions",
             style: TextStyle(
               fontSize: 20,
@@ -395,21 +362,21 @@ class _HomeScreenState extends State<HomeScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 "5 ACC",
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                 ),
               ),
-              const Text(
+              Text(
                 "50 PEN",
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                 ),
               ),
-              const Text(
+              Text(
                 "3 Rej",
                 style: TextStyle(
                   fontSize: 14,
@@ -423,15 +390,13 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  CrCalendarController _controller = CrCalendarController();
-
   drawDateContainer(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
+    return const Padding(
+      padding: EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Today",
             style: TextStyle(
               fontSize: 22,
@@ -440,7 +405,7 @@ class _HomeScreenState extends State<HomeScreen> {
               letterSpacing: 3,
             ),
           ),
-          const SizedBox(
+          SizedBox(
             height: 5,
           ),
           Expanded(
@@ -476,7 +441,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {
                   if (_isPlaying == true) {
                     setState(() {
-                      assetsAudioPlayer!.stop();
+                      assetsAudioPlayer!.pause();
                       _isPlaying = false;
                     });
                   } else {
@@ -499,7 +464,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           const Text(
@@ -522,11 +487,41 @@ class _HomeScreenState extends State<HomeScreen> {
               letterSpacing: 1,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           )
         ],
       ),
+    );
+  }
+
+  drawAppBar(BuildContext context) {
+    return AppBar(
+      leadingWidth: 0,
+      title: Row(
+        children: [
+          const Icon(
+            IconBroken.Home,
+            color: Colors.black,
+            size: 30,
+          ),
+          const SizedBox(
+            width: 15,
+          ),
+          Text(
+            'Home',
+            style: txtTheme(context).headlineLarge!.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 30.0,
+                  color: Colors.black87,
+                  fontFamily: Lora,
+                ),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.transparent,
+      bottomOpacity: 0.0,
+      elevation: 0.0,
     );
   }
 }

@@ -33,7 +33,7 @@ class ClinicalPharmacistDiscussionItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClinicalPharmacistItem(name: "name", department: "clinical"),
-              OptionsItem(phoneNumber: "phoneNumber", email: "", chatId: "chatId", )
+              OptionsItem(phoneNumber: "phoneNumber", email: "", chatId: "chatId", name: '', appToken: '', )
             ],
           ),
         ),

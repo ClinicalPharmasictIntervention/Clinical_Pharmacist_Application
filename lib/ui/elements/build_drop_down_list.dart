@@ -1,15 +1,13 @@
-import 'package:clinical_pharmacist_intervention/shared/shared_variables.dart';
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class BuildDropDownList extends StatelessWidget {
   const BuildDropDownList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var departmentsList = [];
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -47,7 +45,7 @@ class BuildDropDownList extends StatelessWidget {
         //value: department,
 
         onChanged: (String? ch) {
-          myDepartment = ch!;
+        //  myDepartment = ch!;
         },
 
         items: departmentsList.map<DropdownMenuItem<String>>(

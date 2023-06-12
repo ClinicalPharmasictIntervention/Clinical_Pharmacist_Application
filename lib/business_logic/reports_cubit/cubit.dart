@@ -9,6 +9,20 @@ class ReportsCubit extends Cubit<ReportsStates> {
 
   static get(context) => BlocProvider.of<ReportsCubit>(context);
 
+  TextEditingController residentNameController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
+  TextEditingController bedController = TextEditingController();
+  TextEditingController medicalController = TextEditingController();
+
+  TextEditingController problemTypeController = TextEditingController();
+  TextEditingController problemDescController = TextEditingController();
+  TextEditingController erroCategoryController = TextEditingController();
+  TextEditingController errorTypeController = TextEditingController();
+  TextEditingController refrencesController = TextEditingController();
+
+    TextEditingController interventionController = TextEditingController();
+
+
   var acceptSelected = secondaryColor;
   var pendingSelected = Colors.grey[400];
   var rejectedSelected = Colors.grey[400];
