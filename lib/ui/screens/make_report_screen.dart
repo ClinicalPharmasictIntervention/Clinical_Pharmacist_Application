@@ -1,6 +1,5 @@
 import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/cubit.dart';
 import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/states.dart';
-import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/build_steper.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/report_screen_appbar.dart';
@@ -42,7 +41,7 @@ class MakeReportScreen extends StatelessWidget {
               ),
               floatingActionButton: drawFloatingActionButton(
                   reportsCubit.currentStep, reportsCubit),
-              body: Padding(
+               body: Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
