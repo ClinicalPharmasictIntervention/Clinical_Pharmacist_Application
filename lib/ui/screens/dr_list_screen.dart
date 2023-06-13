@@ -1,5 +1,6 @@
 import 'package:build_context_provider/build_context_provider.dart';
 import 'package:clinical_pharmacist_intervention/business_logic/cubit/app_cubit.dart';
+import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/cubit.dart';
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/shared/utilities.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_textfield.dart';
@@ -92,6 +93,7 @@ class DrDiscussionScreen extends StatelessWidget {
               listener: (context, state) {},
               builder: (context, state) {
                 var cubit = AppCubit.get(context);
+                AppCubit.get(context).getData(path: "v1/physician/",storeList: AppCubit.get(context).physicians);
                 return Expanded(
                   child: SizedBox(
                     height: double.infinity,
@@ -104,6 +106,9 @@ class DrDiscussionScreen extends StatelessWidget {
                         }
                         return InkWell(
                           onTap: () {
+                              ReportsCubit().doctor!.id=cubit.physicians[index].id;
+                              print("hh $ReportsCubit().doctor!.id");
+
                             navigateTo(
                                 context,
                                 MakeReportScreen(

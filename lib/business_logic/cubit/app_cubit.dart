@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:clinical_pharmacist_intervention/data/models/clinical_pharmacist_model.dart';
 import 'package:clinical_pharmacist_intervention/data/models/doctor_model.dart';
 import 'package:clinical_pharmacist_intervention/data/models/notification_model.dart';
+import 'package:clinical_pharmacist_intervention/data/web_services/dio_helper.dart';
 import 'package:clinical_pharmacist_intervention/shared/utilities.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -203,7 +204,7 @@ class AppCubit extends Cubit<AppState> {
     });
   }
 
-  List<DoctorModel> physicians = [];
+  List physicians = [];
 
   void getPhysicianData() {
     emit(GetPhysiciansLoadingState());
@@ -219,5 +220,12 @@ class AppCubit extends Cubit<AppState> {
       emit(GetPhysiciansErrorState());
       print(error.toString());
     });
+  }
+
+
+  getData({String? path, Map<String, dynamic>? queryParameter, List? storeList}){
+    DioHelper.getData(path: path, storeList: storeList ).then((value) => print(value));
+
+    emit(getDataState());
   }
 }

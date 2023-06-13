@@ -2,9 +2,11 @@ import 'package:clinical_pharmacist_intervention/business_logic/chat_cubit/cubit
 import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/cubit.dart';
 import 'package:clinical_pharmacist_intervention/business_logic/sign_in_cubit/cubit.dart';
 import 'package:clinical_pharmacist_intervention/business_logic/sign_up_cubit/cubit.dart';
+import 'package:clinical_pharmacist_intervention/data/web_services/dio_helper.dart';
 import 'package:clinical_pharmacist_intervention/shared/bloc_observer.dart';
 import 'package:clinical_pharmacist_intervention/business_logic/cubit/app_cubit.dart';
 import 'package:clinical_pharmacist_intervention/shared/network/local/cache_helper.dart';
+import 'package:clinical_pharmacist_intervention/shared/shared_variables.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/home_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/layout_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/on_boarding_screen.dart';
@@ -25,6 +27,10 @@ void main() async {
   Bloc.observer = MyBlocObserver();
   await Firebase.initializeApp();
   await CacheHelper.init();
+  DioHelper.init();
+  DioHelper.getData(path: "v1/physician/",);
+
+
   FirebaseMessaging.onBackgroundMessage(backgroundMessage);
 
   FirebaseMessaging.onMessageOpenedApp.listen((message) {

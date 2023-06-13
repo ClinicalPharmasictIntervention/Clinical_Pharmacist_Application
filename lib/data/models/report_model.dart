@@ -10,40 +10,33 @@ class ReportModel {
     this.id,
     this.date,
     this.time,
-    this.drug,
     this.drugProblem,
     this.intervention,
     this.resident,
     this.clinicalPharmacist,
     this.physician,
-    this.department,
     this.reference,
   });
-
-  DrugModel? drug;
+  DoctorModel? physician;
+  ClinicalPharmacistModel? clinicalPharmacist;
+  ResidentModel? resident;
   DrugProblemModel? drugProblem;
+  String? reference;
   InterventionModel? intervention;
   String? id;
   String? date;
   String? time;
-  ResidentModel? resident;
-  ClinicalPharmacistModel? clinicalPharmacist;
-  DoctorModel? physician;
-  String? department;
-  String? reference;
 
   ReportModel.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
       id = json['id'];
       date = json['date'];
       time = json['time'];
-      drug = json['drug'];
       drugProblem = json['drugProblem'];
       intervention = json['intervention'];
       resident = json['resident'];
       clinicalPharmacist = json['clinicalPharmacist'];
       physician = json['physician'];
-      department = json['department'];
       reference = json['reference'];
     }
   }
@@ -53,13 +46,11 @@ class ReportModel {
       'id': id,
       'date': date,
       'time': time,
-      'drug': drug,
       'drugProblem': drugProblem,
       'intervention': intervention,
       'resident': resident,
       'clinicalPharmacist': clinicalPharmacist,
       'physician': physician,
-      'department': department,
       'reference': reference,
     };
   }

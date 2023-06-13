@@ -32,3 +32,5 @@ class SendNotificationSuccessState extends AppState {}
 class SendNotificationErrorState extends AppState {}
 
 class GetNotificationSuccessState extends AppState {}
+
+class getDataState extends AppState{}

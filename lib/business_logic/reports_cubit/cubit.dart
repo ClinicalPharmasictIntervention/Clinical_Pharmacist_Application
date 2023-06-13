@@ -1,4 +1,6 @@
 import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/states.dart';
+import 'package:clinical_pharmacist_intervention/data/models/clinical_pharmacist_model.dart';
+import 'package:clinical_pharmacist_intervention/data/models/doctor_model.dart';
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
 import 'package:cool_dropdown/controllers/dropdown_controller.dart';
@@ -12,21 +14,7 @@ class ReportsCubit extends Cubit<ReportsStates> {
 
   static get(context) => BlocProvider.of<ReportsCubit>(context);
 
-  TextEditingController residentNameController = TextEditingController();
-  TextEditingController ageController = TextEditingController();
-  TextEditingController bedController = TextEditingController();
-  TextEditingController medicalController = TextEditingController();
-
-  TextEditingController problemDescController = TextEditingController();
-  TextEditingController refrencesController = TextEditingController();
-
-  TextEditingController interventionController = TextEditingController();
-
-  DropdownController problemTypeDropdownController = DropdownController();
-  DropdownController errorCategoryDropdownController = DropdownController();
-  DropdownController errorTypeDropdownController = DropdownController();
-
-    List<CoolDropdownItem<String>> problemTypesList = [
+      List<CoolDropdownItem<String>> problemTypesList = [
     
      CoolDropdownItem(
       label: '[Unnecessary Drug] There is no valid indication.',
@@ -78,9 +66,28 @@ class ReportsCubit extends Cubit<ReportsStates> {
   ];
 
 
+  TextEditingController residentNameController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
+  TextEditingController bedController = TextEditingController();
+  TextEditingController medicalController = TextEditingController();
+
+  DropdownController problemTypeDropdownController = DropdownController();
+  DropdownController errorCategoryDropdownController = DropdownController();
+  DropdownController errorTypeDropdownController = DropdownController();
+  TextEditingController problemDescController = TextEditingController();
+  TextEditingController refrencesController = TextEditingController();
+
+  TextEditingController interventionController = TextEditingController();
+
+  DoctorModel? doctor;
+  ClinicalPharmacistModel? clinPharmacist;   // after login
+
+
+
   var acceptSelected = secondaryColor;
   var pendingSelected = Colors.grey[400];
   var rejectedSelected = Colors.grey[400];
+
 
   void changeFilterChip({required String stateType}) {
     if (stateType == 'Accepted') {
@@ -190,4 +197,7 @@ class ReportsCubit extends Cubit<ReportsStates> {
   String? drAppId;
 
   // Firebase of reports
+
+
+
 }
