@@ -79,10 +79,11 @@ class _DrDiscussionScreenState extends State<DrDiscussionScreen> {
                           } else {
                             return InkWell(
                               onTap: () {
+                                
                                 navigateTo(
                                   context,
                                   MakeReportScreen(
-                                    doctor: doctor,
+                                   // doctor: doctor,
                                   ),
                                 );
                               },

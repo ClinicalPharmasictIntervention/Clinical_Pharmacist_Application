@@ -31,6 +31,10 @@ class ReportsCubit extends Cubit<ReportsStates> {
   String? bedNumber;
   String? medicalRecordNumber;
 
+  void setDoctor(DoctorModel? doctor) {
+    this.doctor=doctor;
+  }
+
   void setResidentName(String residentName) {
     residentNameController.text = residentName;
     this.residentName = residentName;
@@ -128,21 +132,47 @@ class ReportsCubit extends Cubit<ReportsStates> {
     ),
     CoolDropdownItem(
       label:
-          '[Unnecessary Drug] The condition is more appropriately \n treated with non-drug therapy.',
+          '[Selection]  Allergy \n (drug is not the most appropriate due to known or potential allergy)',
       value:
-          '[Unnecessary Drug] The condition is more appropriately \n treated with non-drug therapy.',
+          '[Selection]  Allergy \n (drug is not the most appropriate due to known or potential allergy)',
     ),
     CoolDropdownItem(
       label:
-          '[Unnecessary Drug] The condition is more appropriately \n treated with non-drug therapy.',
+          '[Selection]  The selected drug is not the most effective for \n this condition according to guidelines or patient respons',
       value:
-          '[Unnecessary Drug] The condition is more appropriately \n treated with non-drug therapy.',
+          '[Selection]  The selected drug is not the most effective for \n this condition according to guidelines or patient respons',
     ),
+        CoolDropdownItem(
+      label:
+          '[Drug Interactions]  A drug interaction that may affect effectiveness or safety',
+      value:
+          '[Drug Interactions]  A drug interaction that may affect effectiveness or safety',
+    ),
+
     CoolDropdownItem(
       label:
-          '[Unnecessary Drug] The condition is more appropriately \n treated with non-drug therapy.',
+          '[Dosing Regimen]  Duration of drug therapy is not appropriate \n (too short/ long).',
       value:
-          '[Unnecessary Drug] The condition is more appropriately \n treated with non-drug therapy.',
+          '[Dosing Regimen]  Duration of drug therapy is not appropriate \n (too short/ long).',
+    ),
+        CoolDropdownItem(
+      label:
+          '[Instructions for Prep./Adm.]  The Administration time may affect effectiveness or safety',
+      value:
+          '[Instructions for Prep./Adm.]  The Administration time may affect effectiveness or safety',
+    ),
+        CoolDropdownItem(
+      label:
+          '[Monitoring] The drug causes an undesirable effect/ unpredicted Allergic reaction \n (although initial appropriate selection and dosing)',
+      value:
+          '[Monitoring] The drug causes an undesirable effect/ unpredicted Allergic reaction \n (although initial appropriate selection and dosing)',
+    ),
+
+            CoolDropdownItem(
+      label:
+          '[Adherence]  The patient cannot swallow or self-administer the drug appropriately.',
+      value:
+          '[Adherence]  The patient cannot swallow or self-administer the drug appropriately.',
     ),
   ];
 
@@ -195,20 +225,37 @@ class ReportsCubit extends Cubit<ReportsStates> {
 
   List<CoolDropdownItem<String>> errorTypesList = [
     CoolDropdownItem(
-      label: '[Unnecessary Drug] There is no valid indication.',
-      value: '[Unnecessary Drug] There is no valid indication.',
+      label: '[Ordering Process o.p]  Wrong patient',
+      value: '[Ordering Process o.p]  Wrong patient',
     ),
     CoolDropdownItem(
       label:
-          '[Unnecessary Drug] Therapeutic Duplication \n (Multiple-drugs used for a condition that requires single-drug)',
+          '[Ordering Process o.p]  Wrong Drug Name',
       value:
-          '[Unnecessary Drug] Therapeutic Duplication \n (Multiple-drugs used for a condition that requires single-drug)',
+          '[Ordering Process o.p]  Wrong Drug Name',
     ),
     CoolDropdownItem(
       label:
-          '[Unnecessary Drug] The condition is more appropriately \n treated with non-drug therapy.',
+          '[Ordering Process o.p]  Unapproved Abbreviations',
       value:
-          '[Unnecessary Drug] The condition is more appropriately \n treated with non-drug therapy.',
+          '[Ordering Process o.p]  Unapproved Abbreviations',
+    ),
+
+      CoolDropdownItem(
+      label: '[Ordering Process o.p]  Repetition',
+      value: '[Ordering Process o.p]  Repetition',
+    ),
+    CoolDropdownItem(
+      label:
+          '[Administration]  Nurse repeated administration of the same drug',
+      value:
+          '[Administration]  Nurse repeated administration of the same drug',
+    ),
+    CoolDropdownItem(
+      label:
+          '[Administration]  Wrong IV flow rate',
+      value:
+          '[Administration]  Wrong IV flow rate',
     ),
   ];
 
@@ -256,20 +303,26 @@ class ReportsCubit extends Cubit<ReportsStates> {
     IconBroken.Info_Circle,
     IconBroken.Edit,
   ];
-  int currentStep = 0;
+  int currentStep=0 ;
+  bool isLastStep=false;
 
   void changeForwardStep() {
     currentStep++;
+   isLastStep= (currentStep==2)? true:false;
     emit(ReportschangeForwardStep());
   }
 
   void changeBackwardStep() {
     currentStep--;
+       isLastStep= (currentStep==2)? true:false;
+
     emit(ReportschangeBackwardStep());
   }
 
   changeCurrentStep(int value) {
     currentStep = value;
+       isLastStep= (currentStep==2)? true:false;
+
     emit(ReportsTappedStep());
   }
 
@@ -367,50 +420,8 @@ class ReportsCubit extends Cubit<ReportsStates> {
     }
   }
 
+  List<String> problemTypes=[];
 
-Future<List<String>> getProblemTypes() async {
-  List<String> ProblemTypes=[];
-
-    try {
-      Response response = await dio.get("${baseUrl}v1/problemType/");
-      print(response.data["data"].toString());
-
-
-      response.data["data"].forEach((problemType) {
-        ProblemTypes.add(problemType["ProblemType"]);
-      });
-
-      print("object  $ProblemTypes");
-
-      fillProblemTypesList(ProblemTypes);
-
-      emit(GetProblemTypeState(ProblemTypes));
-
-      return ProblemTypes;
-    } catch (e) {
-      print(e.toString());
-      return [];
-    }
-  }
-
-  List<CoolDropdownItem<String>>? fillProblemTypesList(List list) {
-    List<CoolDropdownItem<String>>? l=[];
-    list.forEach(
-      (e) {
-        l.add(
-          CoolDropdownItem<String>(
-            label: e["ProblemType"],
-            value: e["ProblemType"],
-          ),
-        );
-      },
-    );
-
-    print("ggggggggggggggggggggggggggggggggg$l");
-    emit(FillProblemTypeState(l));
-
-    return l;
-  }
 
   
 
@@ -433,4 +444,6 @@ Future<List<String>> getProblemTypes() async {
       return [];
     }
   }
+
+
 }
