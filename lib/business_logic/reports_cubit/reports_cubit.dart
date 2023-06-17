@@ -368,11 +368,11 @@ class ReportsCubit extends Cubit<ReportsStates> {
   }
 
 
-List<String> getProblemTypes()  {
+Future<List<String>> getProblemTypes() async {
   List<String> ProblemTypes=[];
 
     try {
-      Response response =  dio.get("${baseUrl}v1/problemType/") as Response;
+      Response response = await dio.get("${baseUrl}v1/problemType/");
       print(response.data["data"].toString());
 
 

@@ -31,12 +31,11 @@ class _MakeReportScreenState extends State<MakeReportScreen> {
 
   @override
   initState() {
- BlocProvider.of<ReportsCubit>(context);
+ BlocProvider.of<ReportsCubit>(context).getProblemTypes();
     reportsCubit.doctor=widget.doctor;
     print(reportsCubit.doctor!.name);
 
        allDrugs= BlocProvider.of<ReportsCubit>(context).getDrugs();
-  problemTypes= reportsCubit.getProblemTypes();
     super.initState();
   }
 

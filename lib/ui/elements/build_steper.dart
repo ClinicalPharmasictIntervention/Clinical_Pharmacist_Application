@@ -234,7 +234,7 @@ class _BuildReportStepperState extends State<BuildReportStepper> {
       children: [
         BuildStepperDropDownList(
           label: "Problem Type",
-          itemsList: reportsCubit.fillProblemTypesList(reportsCubit.getProblemTypes()),
+          itemsList: [],//reportsCubit.fillProblemTypesList(reportsCubit.getProblemTypes()),
           reportsCubit: widget.reportsCubit,
           controller: widget.reportsCubit!.problemTypeDropdownController,
           onChange: (problemType) async {
