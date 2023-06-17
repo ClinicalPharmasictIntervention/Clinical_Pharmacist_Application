@@ -86,16 +86,10 @@ class ReportDetailsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Your Name: Marwa Alaa Abd El-Shakoor',
+                          'Clinical Pharmacist Name: Marwa Alaa Abd El-Shakoor',
                           style: textTheme(context),
                         ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          'Consultant Name: Mohamed Ahmed Abd El-Hakeem',
-                          style: textTheme(context),
-                        ),
+                     
                         SizedBox(
                           height: 15,
                         ),
@@ -103,13 +97,8 @@ class ReportDetailsScreen extends StatelessWidget {
                           'Report Date: 2021(07) July',
                           style: textTheme(context),
                         ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          'Department: ward',
-                          style: textTheme(context),
-                        ),
+                     
+                       
                         SizedBox(
                           height: 50,
                         ),
@@ -211,10 +200,7 @@ class ReportDetailsScreen extends StatelessWidget {
                         SizedBox(
                           height: 15,
                         ),
-                        Text(
-                          'Is this a drug therapy problem ?: Yes',
-                          style: textTheme(context),
-                        ),
+                       
                         SizedBox(
                           height: 15,
                         ),
@@ -225,13 +211,7 @@ class ReportDetailsScreen extends StatelessWidget {
                         SizedBox(
                           height: 15,
                         ),
-                        Text(
-                          'Error Description: none',
-                          style: textTheme(context),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
+                       
                         Text(
                           'Stage and Type of error: none',
                           style: textTheme(context),
@@ -239,13 +219,7 @@ class ReportDetailsScreen extends StatelessWidget {
                         SizedBox(
                           height: 15,
                         ),
-                        Text(
-                          'Is tis problem also a medical error ?: No',
-                          style: textTheme(context),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
+                        
                         Text(
                           'What\'s your reference ?: lexicomp',
                           style: textTheme(context),
