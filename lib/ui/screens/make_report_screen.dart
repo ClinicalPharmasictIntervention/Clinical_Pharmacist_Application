@@ -36,6 +36,7 @@ class _MakeReportScreenState extends State<MakeReportScreen> {
     allDrugs = BlocProvider.of<ReportsCubit>(context).getDrugs();
     super.initState();
   }
+
   @override
   List<String> titles = [
     'Resident Info',
@@ -59,7 +60,6 @@ class _MakeReportScreenState extends State<MakeReportScreen> {
   int drugNumber = 1;
   bool isCompleted = false;
   TextEditingController? fieldController;
- 
 
   Widget build(BuildContext context) {
     return Container(
@@ -150,7 +150,7 @@ class _MakeReportScreenState extends State<MakeReportScreen> {
                             ),
                             Row(
                               children: [
-                                                Expanded(
+                                Expanded(
                                   child: defaultRadio(
                                       context, selectedRadio2, 0, 'Male',
                                       (value) {
@@ -223,7 +223,7 @@ class _MakeReportScreenState extends State<MakeReportScreen> {
                               onChange: (medicalRecordNumber) {
                                 reportsCubit!.setMedicalRecordNumber(
                                     medicalRecordNumber);
-                                    print(medicalRecordNumber);
+                                print(medicalRecordNumber);
                               },
                               validate: (value) {
                                 if (value.isEmpty) {
@@ -386,7 +386,7 @@ class _MakeReportScreenState extends State<MakeReportScreen> {
                                     itemBuilder: (context, index) =>
                                         InterventionItem(
                                       context,
-                                     reportsCubit.drugs,
+                                      reportsCubit.drugs,
                                       fieldController,
                                       drugNumber,
                                     ),
@@ -396,7 +396,8 @@ class _MakeReportScreenState extends State<MakeReportScreen> {
                                     ),
                                     itemCount: drugNumber,
                                     shrinkWrap: true,
-                                    physics: const NeverScrollableScrollPhysics(),
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
                                   ),
                                 ),
                               ],

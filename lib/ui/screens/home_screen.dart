@@ -256,7 +256,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const Text(
-                "Last 5 Monthes",
+                "Last 4 Monthes",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               )
             ],

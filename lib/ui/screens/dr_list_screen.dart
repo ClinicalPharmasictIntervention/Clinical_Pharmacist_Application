@@ -83,7 +83,7 @@ class _DrDiscussionScreenState extends State<DrDiscussionScreen> {
                                 navigateTo(
                                   context,
                                   MakeReportScreen(
-                                   // doctor: doctor,
+                                    doctor: doctor,
                                   ),
                                 );
                               },

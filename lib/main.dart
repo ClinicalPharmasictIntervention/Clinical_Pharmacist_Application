@@ -89,7 +89,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => AppCubit()
             ..getPharmacistData()
-            ..getPhysicianData()
+            ..getPhysicians()
             ..getNotifications()
            ,
         ),
