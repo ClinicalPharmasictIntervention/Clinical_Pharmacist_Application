@@ -1,38 +1,32 @@
-class RepositoryServices{
-  RepositoryServices(this.data);
+import 'package:clinical_pharmacist_intervention/data/models/doctor_model.dart';
+import 'package:clinical_pharmacist_intervention/data/web_services/dio_helper.dart';
 
-  List? data;
+class RepositoryServices {
+  RepositoryServices(this.dioHelper);
+  final DioHelper dioHelper;
+  Future<List<dynamic>> getPhysicians() async {
+    final physicians = await dioHelper.getPhysicians(path: "v1/physician/");
+    print("object repooooooooooooooooooooooooooooooooooooooooo");
+    print(physicians["data"]);
 
-  getData(){
-    
+    final List list = physicians["data"]
+        .map((physician) => DoctorModel.fromJson(physician))
+        .toList();
+
+    return list;
   }
-
+}
 
 /*
 
- fromJson(Map<String, dynamic>? json) {
-    if (json != null) {
-      name = json['name'];
-      id = json['id'];
-      hospitalId = json['hospitalId'];
-      department = json['department'];
-      phoneNumber = json['phoneNumber'];
-      email = json['email'];
-      appToken = json['appToken'];
-    }
-  }
+  DoctorModel doc=   DoctorModel.fromJson(response.data["data"][0]);
+   List<DoctorModel> docList=[];
 
-  Map<String, dynamic> toMap() {
-    return {
-      'name': name,
-      'id': id,
-      'hospitalId': hospitalId,
-      'department': department,
-      'phoneNumber': phoneNumber,
-      'email': email,
-      'appToken': appToken,
-    };
-  } 
+   for(int i=0; i<response.data["data"].length; i++){
+     doc=   DoctorModel.fromJson(response.data["data"][i]);
+    docList.add(doc);
+print(docList[i].department);
 
-  */
-}
+   }
+
+   */

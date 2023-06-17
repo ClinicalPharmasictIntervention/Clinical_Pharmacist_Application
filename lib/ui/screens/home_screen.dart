@@ -1,6 +1,10 @@
 import 'dart:async';
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:clinical_pharmacist_intervention/business_logic/cubit/app_cubit.dart';
 import 'package:clinical_pharmacist_intervention/data/models/charts_models.dart';
+import 'package:clinical_pharmacist_intervention/data/repository/repo.dart';
+import 'package:clinical_pharmacist_intervention/data/web_services/dio_helper.dart';
+import 'package:clinical_pharmacist_intervention/shared/shared_variables.dart';
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/shared/utilities.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/build_analogue_clock.dart';
@@ -11,7 +15,7 @@ import 'package:clinical_pharmacist_intervention/ui/screens/profile_screen.dart'
 import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:cr_calendar/cr_calendar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -33,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     assetsAudioPlayer = AssetsAudioPlayer();
+
 
     super.initState();
   }

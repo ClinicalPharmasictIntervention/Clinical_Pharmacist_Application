@@ -1,18 +1,18 @@
 import 'package:clinical_pharmacist_intervention/business_logic/chat_cubit/cubit.dart';
-import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/cubit.dart';
+import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/reports_cubit.dart';
 import 'package:clinical_pharmacist_intervention/business_logic/sign_in_cubit/cubit.dart';
 import 'package:clinical_pharmacist_intervention/business_logic/sign_up_cubit/cubit.dart';
+import 'package:clinical_pharmacist_intervention/data/models/doctor_model.dart';
+import 'package:clinical_pharmacist_intervention/data/repository/repo.dart';
 import 'package:clinical_pharmacist_intervention/data/web_services/dio_helper.dart';
 import 'package:clinical_pharmacist_intervention/shared/bloc_observer.dart';
 import 'package:clinical_pharmacist_intervention/business_logic/cubit/app_cubit.dart';
 import 'package:clinical_pharmacist_intervention/shared/network/local/cache_helper.dart';
-import 'package:clinical_pharmacist_intervention/shared/shared_variables.dart';
-import 'package:clinical_pharmacist_intervention/ui/screens/home_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/layout_screen.dart';
+import 'package:clinical_pharmacist_intervention/ui/screens/make_report_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/on_boarding_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/register_screen.dart';
 import 'package:clinical_pharmacist_intervention/ui/screens/splash_screen.dart';
-import 'package:clinical_pharmacist_intervention/ui/test_ui.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -27,8 +27,7 @@ void main() async {
   Bloc.observer = MyBlocObserver();
   await Firebase.initializeApp();
   await CacheHelper.init();
-  DioHelper.init();
-  DioHelper.getData(path: "v1/physician/",);
+  await DioHelper.init();
 
 
   FirebaseMessaging.onBackgroundMessage(backgroundMessage);
@@ -91,7 +90,8 @@ class MyApp extends StatelessWidget {
           create: (context) => AppCubit()
             ..getPharmacistData()
             ..getPhysicianData()
-            ..getNotifications(),
+            ..getNotifications()
+           ,
         ),
         BlocProvider(create: (context) => ReportsCubit()),
         BlocProvider(create: (context) => SignInCubit()),
@@ -107,7 +107,7 @@ class MyApp extends StatelessWidget {
             foregroundColor: Colors.black54,
           ),
         ),
-        home: LayoutScreen(),
+        home: LayoutScreen()//(doctor: DoctorModel(),),
       ),
     );
   }

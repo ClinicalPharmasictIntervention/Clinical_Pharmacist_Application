@@ -2,10 +2,13 @@ import 'package:bloc/bloc.dart';
 import 'package:clinical_pharmacist_intervention/data/models/clinical_pharmacist_model.dart';
 import 'package:clinical_pharmacist_intervention/data/models/doctor_model.dart';
 import 'package:clinical_pharmacist_intervention/data/models/notification_model.dart';
+import 'package:clinical_pharmacist_intervention/data/repository/repo.dart';
 import 'package:clinical_pharmacist_intervention/data/web_services/dio_helper.dart';
+import 'package:clinical_pharmacist_intervention/shared/shared_variables.dart';
 import 'package:clinical_pharmacist_intervention/shared/utilities.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
@@ -207,8 +210,6 @@ class AppCubit extends Cubit<AppState> {
   List physicians = [];
 
   void getPhysicianData() {
-    emit(GetPhysiciansLoadingState());
-
     FirebaseFirestore.instance.collection('Physicians').get().then((value) {
       value.docs.forEach((element) {
         physicians.add(
@@ -222,10 +223,22 @@ class AppCubit extends Cubit<AppState> {
     });
   }
 
+  List<dynamic> doctors = [];
 
-  getData({String? path, Map<String, dynamic>? queryParameter, List? storeList}){
-    DioHelper.getData(path: path, storeList: storeList ).then((value) => print(value));
+  Dio dio = Dio();
+  Future<List> getPhysicians() async {
+    try {
+      Response response = await dio.get("${baseUrl}v1/physician/");
 
-    emit(getDataState());
+      final List list = response.data["data"]
+          .map((physician) => DoctorModel.fromJson(physician))
+          .toList();
+      emit(GetPhysiciansLoadingState(list));
+
+      return list;
+    } catch (e) {
+      print(e.toString());
+      return [];
+    }
   }
 }

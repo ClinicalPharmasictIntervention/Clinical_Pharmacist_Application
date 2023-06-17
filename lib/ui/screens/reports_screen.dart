@@ -1,5 +1,5 @@
-import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/cubit.dart';
-import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/states.dart';
+import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/reports_cubit.dart';
+import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/reports_states.dart';
 import 'package:clinical_pharmacist_intervention/shared/styles/icons_broken.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_app_bar.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_daily_report_card.dart';
@@ -15,7 +15,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-class ReportsScreen extends StatelessWidget {
+import '../../business_logic/cubit/app_cubit.dart';
+
+class ReportsScreen extends StatefulWidget {
+  @override
+  State<ReportsScreen> createState() => _ReportsScreenState();
+}
+
+class _ReportsScreenState extends State<ReportsScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ReportsCubit, ReportsStates>(
@@ -37,7 +44,11 @@ class ReportsScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          DrDiscussionScreen(isReportScreen: true)),
+                          DrDiscussionScreen(
+                            isReportScreen: true,
+                            
+                            ),
+                          ),
                 );
               },
               child: Icon(Icons.add, color: secondaryColor),

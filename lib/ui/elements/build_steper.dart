@@ -1,5 +1,5 @@
-import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/cubit.dart';
-import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/states.dart';
+import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/reports_cubit.dart';
+import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/reports_states.dart';
 import 'package:clinical_pharmacist_intervention/shared/utilities.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/build_stepe_dropdown_item.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/default_radio_item.dart';
@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 
-class BuildReportStepper extends StatelessWidget {
+class BuildReportStepper extends StatefulWidget {
   BuildReportStepper({
     this.drAppToken,
     this.drId,
@@ -28,43 +28,73 @@ class BuildReportStepper extends StatelessWidget {
   String? drId;
   ReportsCubit? reportsCubit;
 
+  @override
+  State<BuildReportStepper> createState() => _BuildReportStepperState();
+}
+
+class _BuildReportStepperState extends State<BuildReportStepper> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+ 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ReportsCubit, ReportsStates>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          return Form(
-            key: formKey,
-            child: Stepper(
-              steps: [
-                buildOneStep(context, 0, "Resident",
-                    drawStep1Content(context, reportsCubit), reportsCubit!),
-                buildOneStep(context, 1, "Problem",
-                    drawStep2Content(context, reportsCubit), reportsCubit!),
-                buildOneStep(context, 2, "Recommend..",
-                    drawStep3Content(context, reportsCubit), reportsCubit!),
-              ],
-              currentStep: reportsCubit!.currentStep,
-              type: StepperType.horizontal,
-              elevation: 0,
-              onStepContinue: onStepContinue(context),
-              onStepCancel: onStepCancel(),
-              onStepTapped: (newStep) {
-                onStepTappped(newStep);
-                reportsCubit!.changeCurrentStep(newStep);
-                ReportsCubit.get(context).changeCurrentStep(newStep);
-              },
-              controlsBuilder: (context, ControlsDetails controlDetail) {
-                final isLastStep = controlDetail.currentStep == 2;
+        listener: (context, state) {
+    
+      
+      /*else if (state is FillProblemTypeState) {
+        problemTypess = state.problemTypes;
+        print("object");
+        print(problemTypess.toString());
+      } 
+      
+      else if (state is GeterrorCategoryState) {
+        errorCategory = state.errorCategory;
+        printToast(errorCategory);
+      } else if (state is GetErrorTypeState) {
+        errorTypes = state.errorTypes;
+        printToast(errorTypes);
+      }
 
-                return drawControllerBuilder(
-                    context, isLastStep, controlDetail);
-              },
-            ),
-          );
-        });
+
+      */
+    }, builder: (context, state) {
+      return Form(
+        key: formKey,
+        child: Stepper(
+          steps: [
+            buildOneStep(
+                context,
+                0,
+                "Resident",
+                drawStep1Content(context, widget.reportsCubit),
+                widget.reportsCubit!),
+            buildOneStep(context, 1, "Problem", drawStep2Content(context,widget.reportsCubit!),
+                widget.reportsCubit!),
+            buildOneStep(
+                context,
+                2,
+                "Recommend..",
+                drawStep3Content(context, widget.reportsCubit),
+                widget.reportsCubit!),
+          ],
+          currentStep: widget.reportsCubit!.currentStep,
+          type: StepperType.horizontal,
+          elevation: 0,
+          onStepContinue: onStepContinue(context),
+          onStepCancel: onStepCancel(),
+          onStepTapped: (newStep) {
+            onStepTappped(newStep);
+            widget.reportsCubit!.changeCurrentStep(newStep);
+          },
+          controlsBuilder: (context, ControlsDetails controlDetail) {
+            final isLastStep = controlDetail.currentStep == 2;
+
+            return drawControllerBuilder(context, isLastStep, controlDetail);
+          },
+        ),
+      );
+    });
   }
 
   // STEP NUMBER ONE
@@ -75,7 +105,11 @@ class BuildReportStepper extends StatelessWidget {
           context: context,
           title: 'Resident Name',
           readOnly: false,
-          controller: reportsCubit!.residentNameController,
+          controller: widget.reportsCubit!.residentNameController,
+          onChange: (residentName) {
+            widget.reportsCubit!.setResidentName(residentName);
+          },
+          onComplete: () {},
           validate: (value) {
             if (value.isEmpty) {
               return 'Resident name is empty';
@@ -92,12 +126,17 @@ class BuildReportStepper extends StatelessWidget {
             Expanded(
               child: DefaultRadioItem(
                 context: context,
-                selectedRadio: cubit.selectedRadio,
-                value: 0,
+                selectedRadio: widget.reportsCubit!.residentGenderValue!,
+                value: widget.reportsCubit!.maleGenderValue!,
                 label: 'Male',
                 activeColor: secondaryColor,
-                onChanged: (value) {
-                  cubit.changeFirstRadioMode(value);
+                onChanged: (genderValue) {
+                  print(genderValue);
+                  if (widget.reportsCubit!.residentGenderValue == 1) {
+                    widget.reportsCubit!.setResidntGenderValue(1);
+                  } else {
+                    widget.reportsCubit!.setResidntGenderValue(1);
+                  }
                 },
               ),
             ),
@@ -108,7 +147,10 @@ class BuildReportStepper extends StatelessWidget {
                 title: 'Age',
                 readOnly: false,
                 hintSize: 17,
-                controller: reportsCubit!.ageController,
+                controller: widget.reportsCubit!.ageController,
+                onChange: (residentAge) {
+                  widget.reportsCubit!.setResidentAge(residentAge);
+                },
                 validate: (value) {
                   if (value.isEmpty) {
                     return 'Resident age is empty';
@@ -122,12 +164,18 @@ class BuildReportStepper extends StatelessWidget {
             Expanded(
               child: DefaultRadioItem(
                 context: context,
-                selectedRadio: cubit.selectedRadio,
-                value: 1,
+                selectedRadio: widget.reportsCubit!.residentGenderValue!,
+                value: widget.reportsCubit!.femaleGenderValue!,
                 label: 'Female',
                 activeColor: secondaryColor,
-                onChanged: (value) {
-                  cubit.changeFirstRadioMode(value);
+                onChanged: (genderValue) {
+                  if (widget.reportsCubit!.residentGenderValue == 0) {
+                    widget.reportsCubit!.setResidntGenderValue(0);
+                  } else {
+                    widget.reportsCubit!.setResidntGenderValue(0);
+                  }
+
+                  print(genderValue);
                 },
               ),
             ),
@@ -140,7 +188,10 @@ class BuildReportStepper extends StatelessWidget {
           context: context,
           title: 'Bed Number',
           readOnly: false,
-          controller: reportsCubit!.bedController,
+          controller: widget.reportsCubit!.bedController,
+          onChange: (bedNumber) {
+            widget.reportsCubit!.setBedNumber(bedNumber.toString());
+          },
           validate: (value) {
             if (value.isEmpty) {
               return 'Bed number is empty';
@@ -157,7 +208,10 @@ class BuildReportStepper extends StatelessWidget {
           context: context,
           title: 'Medical Record Number',
           readOnly: false,
-          controller: reportsCubit!.medicalController,
+          controller: widget.reportsCubit!.medicalController,
+          onChange: (medicalRecordNumber) {
+            widget.reportsCubit!.setMedicalRecordNumber(medicalRecordNumber);
+          },
           validate: (value) {
             if (value.isEmpty) {
               return 'Medical record number is empty';
@@ -173,13 +227,23 @@ class BuildReportStepper extends StatelessWidget {
   final problemTypeDropdownController = DropdownController();
 
   // STEP NUMBER TWO
-  drawStep2Content(BuildContext context, cubit) {
+  drawStep2Content(
+    BuildContext context, ReportsCubit reportsCubit
+  ) {
     return Column(
       children: [
         BuildStepperDropDownList(
           label: "Problem Type",
-          itemsList: reportsCubit!.problemTypesList,
-          reportsCubit: reportsCubit,
+          itemsList: reportsCubit.fillProblemTypesList(reportsCubit.getProblemTypes()),
+          reportsCubit: widget.reportsCubit,
+          controller: widget.reportsCubit!.problemTypeDropdownController,
+          onChange: (problemType) async {
+            widget.reportsCubit!.setProblemType(problemType);
+            if (widget.reportsCubit!.problemTypeDropdownController.isError) {
+              await widget.reportsCubit!.problemTypeDropdownController
+                  .resetError();
+            }
+          },
         ),
         const SizedBox(
           height: 40.0,
@@ -188,6 +252,9 @@ class BuildReportStepper extends StatelessWidget {
           context: context,
           title: 'Problem Description',
           readOnly: false,
+          onChange: (problemDesc) {
+            widget.reportsCubit!.setProblemDescription(problemDesc);
+          },
           validate: (value) {
             if (value.isEmpty) {
               return 'Problem description is empty';
@@ -195,23 +262,39 @@ class BuildReportStepper extends StatelessWidget {
               return null;
             }
           },
-          controller: reportsCubit!.problemDescController,
+          controller: widget.reportsCubit!.problemDescController,
         ),
         const SizedBox(
           height: 40.0,
         ),
         BuildStepperDropDownList(
-          label: "Problem Category (Severity)",
-          itemsList: reportsCubit!.problemCategories,
-          reportsCubit: reportsCubit,
+          label: "Error Category",
+          itemsList: reportsCubit.errorCategoriesList,
+          reportsCubit: widget.reportsCubit,
+          controller: widget.reportsCubit!.errorCategoryDropdownController,
+          onChange: (errorCategory) async {
+            widget.reportsCubit!.seterrorCategory(errorCategory);
+            if (widget.reportsCubit!.errorCategoryDropdownController.isError) {
+              await widget.reportsCubit!.errorCategoryDropdownController
+                  .resetError();
+            }
+          },
         ),
         const SizedBox(
           height: 40.0,
         ),
         BuildStepperDropDownList(
           label: "Stage and Type of The Error",
-          itemsList: reportsCubit!.problemCategories,
-          reportsCubit: reportsCubit,
+          itemsList: [],
+          reportsCubit: widget.reportsCubit,
+          controller: widget.reportsCubit!.errorTypeDropdownController,
+          onChange: (errorType) async {
+            widget.reportsCubit!.setErrorType(errorType);
+            if (widget.reportsCubit!.errorTypeDropdownController.isError) {
+              await widget.reportsCubit!.errorTypeDropdownController
+                  .resetError();
+            }
+          },
         ),
         const SizedBox(
           height: 40.0,
@@ -220,6 +303,9 @@ class BuildReportStepper extends StatelessWidget {
           context: context,
           title: 'What\'s your reference?',
           readOnly: false,
+          onChange: (ref) async {
+            widget.reportsCubit!.setReference(ref);
+          },
           validate: (value) {
             if (value.isEmpty) {
               return 'reference is empty';
@@ -227,7 +313,7 @@ class BuildReportStepper extends StatelessWidget {
               return null;
             }
           },
-          controller: reportsCubit!.refrencesController,
+          controller: widget.reportsCubit!.refrencesController,
         ),
       ],
     );
@@ -241,6 +327,9 @@ class BuildReportStepper extends StatelessWidget {
           context: context,
           title: 'Write Your Intervention Here..',
           readOnly: false,
+          onChange: (intervention) {
+            widget.reportsCubit!.setInterventionTxt(intervention);
+          },
           validate: (value) {
             if (value.isEmpty) {
               return 'Write Your Intervention Here..';
@@ -248,7 +337,7 @@ class BuildReportStepper extends StatelessWidget {
               return null;
             }
           },
-          controller: reportsCubit!.interventionController,
+          controller: widget.reportsCubit!.interventionController,
         ),
         const SizedBox(
           height: 20.0,
@@ -261,10 +350,10 @@ class BuildReportStepper extends StatelessWidget {
               child: ListView.separated(
                 itemBuilder: (context, index) => InterventionItem(
                   context,
-                  cubit.drugs,
+                  [],
                   null,
-                  cubit,
-                  cubit.drugNumber,
+                  widget.reportsCubit,
+                  widget.reportsCubit!.drugNumber,
                 ),
                 separatorBuilder: (context, index) => const SizedBox(
                   height: 40,
@@ -337,8 +426,8 @@ class BuildReportStepper extends StatelessWidget {
   }
 
   onStepContinue(BuildContext context) {
-    final isFinalStep = reportsCubit!.currentStep == 2;
-/*
+    final isFinalStep = widget.reportsCubit!.currentStep == 2;
+
     if (isFinalStep) {
       print('completed');
 
@@ -375,7 +464,7 @@ class BuildReportStepper extends StatelessWidget {
                         sendNotify(
                           title: 'Intervention Request',
                           body: 'From pharmacist Ali',
-                          token: drAppToken,
+                          token: widget.drAppToken,
                         );
 
                         showQuickAlert(
@@ -386,14 +475,14 @@ class BuildReportStepper extends StatelessWidget {
                           nextButtonTitle: 'Reports',
                           backButtonTitle: 'Another',
                           onNext: () {
-                            navigateTo(context, LayoutScreen());
+                            widget.reportsCubit!.goTo(context, LayoutScreen());
                           },
                           onBack: () {
-                            navigateTo(
+                            widget.reportsCubit!.goTo(
                                 context,
                                 DrDiscussionScreen(
                                     isReportScreen: true,
-                                    drAppToken: drAppToken));
+                                    drAppToken: widget.drAppToken));
                           },
                         );
                       }),
@@ -409,20 +498,19 @@ class BuildReportStepper extends StatelessWidget {
             );
           });
     } else {
-      reportsCubit!.changeForwardStep();
+      widget.reportsCubit!.changeForwardStep();
     }
-    */
   }
 
   onStepCancel() {
-    return reportsCubit!.currentStep == 0
+    return widget.reportsCubit!.currentStep == 0
         ? null
         : () {
-            reportsCubit!.changeBackwardStep();
+            widget.reportsCubit!.changeBackwardStep();
           };
   }
 
   onStepTappped(int newStep) {
-    reportsCubit!.changeCurrentStep(newStep);
+    widget.reportsCubit!.changeCurrentStep(newStep);
   }
 }

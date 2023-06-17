@@ -21,7 +21,12 @@ class GetPharmacistSuccessState extends AppState {}
 
 class GetPharmacistErrorState extends AppState {}
 
-class GetPhysiciansLoadingState extends AppState {}
+class GetPhysiciansLoadingState extends AppState {
+  final List<dynamic> physicians;
+
+  GetPhysiciansLoadingState(this.physicians);
+
+}
 
 class GetPhysiciansSuccessState extends AppState {}
 

@@ -19,25 +19,16 @@ class DoctorModel {
 
   DoctorModel.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      name = json['name'];
-      id = json['id'];
-      hospitalId = json['hospitalId'];
+      name = json['userName'];
+      id = json['_id'];
+      hospitalId = json['hospitalId'].toString();
       department = json['department'];
-      phoneNumber = json['phoneNumber'];
+      phoneNumber = json['phoneNumber'].toString();
       email = json['email'];
       appToken = json['appToken'];
     }
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'name': name,
-      'id': id,
-      'hospitalId': hospitalId,
-      'department': department,
-      'phoneNumber': phoneNumber,
-      'email': email,
-      'appToken': appToken,
-    };
-  }
+
+
 }

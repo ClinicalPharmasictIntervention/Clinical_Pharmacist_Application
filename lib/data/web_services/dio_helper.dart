@@ -1,9 +1,9 @@
+import 'package:clinical_pharmacist_intervention/data/models/doctor_model.dart';
 import 'package:clinical_pharmacist_intervention/shared/shared_variables.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/constants.dart';
 import 'package:dio/dio.dart';
 
 class DioHelper {
-  
   static Dio? dio;
 
   static init() {
@@ -18,12 +18,9 @@ class DioHelper {
     );
   }
 
-  static Future<dynamic> getData(
-      {String? path, Map<String, dynamic>? queryParameter, List? storeList}) async {
+  Future<dynamic> getPhysicians({ String? path, Map<String, dynamic>? queryParameter,}) async {
     try {
-      Response response =
-          await dio!.get(path!, queryParameters: queryParameter!);
-          storeList=response.data;
+      Response response = await dio!.get("${baseUrl}v1/physician/");
 
       return response.data;
     } catch (e) {

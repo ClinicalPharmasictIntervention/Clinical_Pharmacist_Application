@@ -11,7 +11,8 @@ class ReportScreenTextField extends StatelessWidget {
     this.controller,
     this.hintSize,
     this.keyboardType,
-    this.onComplete,
+    this.onComplete, 
+    this.onChange,
   }) : super(key: key);
   bool readOnly;
   String title;
@@ -20,11 +21,14 @@ class ReportScreenTextField extends StatelessWidget {
   var validate;
   var keyboardType;
   VoidCallback? onComplete;
+  Function(String s)? onChange ;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      onChanged: onChange,
+      
       validator: validate,
       readOnly: readOnly,
       keyboardType: keyboardType,

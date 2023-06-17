@@ -11,17 +11,10 @@ class DrugModel {
 
   DrugModel.fromJson(Map<String, dynamic>? json) {
     if (json != null) {
-      id = json['id'];
-      genericName = json['genericName'];
-      brandName = json['brandName'];
+      id = json['_id'];
+      brandName = json['drugName'];
     }
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'genericName': genericName,
-      'brandName': brandName,
-    };
-  }
+
 }

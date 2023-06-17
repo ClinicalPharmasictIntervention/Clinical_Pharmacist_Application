@@ -1,5 +1,6 @@
-import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/cubit.dart';
-import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/states.dart';
+import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/reports_cubit.dart';
+import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/reports_states.dart';
+import 'package:clinical_pharmacist_intervention/data/models/doctor_model.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/build_steper.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/primary_btn.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/report_screen_appbar.dart';
@@ -10,15 +11,36 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:substring_highlight/substring_highlight.dart';
 import 'package:flutter/material.dart';
 
-class MakeReportScreen extends StatelessWidget {
-  MakeReportScreen({
-    this.drAppToken,
-    this.drId,
-  });
+class MakeReportScreen extends StatefulWidget {
+  MakeReportScreen({this.doctor});
 
-  String? drAppToken;
-  String? drId;
+  DoctorModel? doctor;
+
+
+  @override
+  State<MakeReportScreen> createState() => _MakeReportScreenState();
+}
+
+class _MakeReportScreenState extends State<MakeReportScreen> {
   ReportsCubit reportsCubit = ReportsCubit();
+      late var allDrugs;
+  late var problemTypes;
+
+  late var possibleCauses;
+  late var errorTypes;
+
+  @override
+  initState() {
+ BlocProvider.of<ReportsCubit>(context);
+    reportsCubit.doctor=widget.doctor;
+    print(reportsCubit.doctor!.name);
+
+       allDrugs= BlocProvider.of<ReportsCubit>(context).getDrugs();
+  problemTypes= reportsCubit.getProblemTypes();
+    super.initState();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +52,21 @@ class MakeReportScreen extends StatelessWidget {
         ),
       ),
       child: BlocConsumer<ReportsCubit, ReportsStates>(
-          listener: (context, state) {},
+          listener: (context, state) {
+
+              if (state is GetDrugsState) {
+        allDrugs = state.drugs;
+        print(allDrugs);
+      } 
+      
+      else if (state is GetProblemTypeState) {
+        problemTypes = state.problemTypes;
+        reportsCubit.fillProblemTypesList(state.problemTypes);
+        print(reportsCubit.problemTypesList.toString());
+        print(problemTypes.toString());
+      } 
+          
+          },
           builder: (context, state) {
             return Scaffold(
               backgroundColor: Colors.transparent,
@@ -41,7 +77,7 @@ class MakeReportScreen extends StatelessWidget {
               ),
               floatingActionButton: drawFloatingActionButton(
                   reportsCubit.currentStep, reportsCubit),
-               body: Padding(
+              body: Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,8 +88,8 @@ class MakeReportScreen extends StatelessWidget {
                           canvasColor: const Color(0xffc1ddeb),
                         ),
                         child: BuildReportStepper(
-                            drAppToken: drAppToken,
-                            drId: drId,
+                            drAppToken: widget.doctor!.appToken,
+                            drId: widget.doctor!.id,
                             reportsCubit: reportsCubit),
                       ),
                     ),
@@ -82,13 +118,13 @@ class MakeReportScreen extends StatelessWidget {
   }
 }
 
-drawFloatingActionButton(int currentStep, cubit) {
+drawFloatingActionButton(int currentStep, ReportsCubit reportsCubit) {
   if (currentStep == 2) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: FloatingActionButton(
         onPressed: () {
-          cubit.updateNewDrug();
+          reportsCubit.addNewDrug();
         },
         backgroundColor: defaultColor,
         heroTag: const Text('Add another drug'),

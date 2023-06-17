@@ -1,4 +1,4 @@
-import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/cubit.dart';
+import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/reports_cubit.dart';
 import 'package:clinical_pharmacist_intervention/ui/themes/app_theme.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/models/cool_dropdown_item.dart';
@@ -13,12 +13,16 @@ class BuildStepperDropDownList extends StatelessWidget {
     this.label,
     this.itemsList,
     this.reportsCubit,
-    Key? key,
+    this.onChange,
+    Key? key, 
+     this.controller,
   }) : super(key: key);
   ReportsCubit? reportsCubit;
   BuildContext? context;
   String? label;
+  Function (String s)? onChange;
   List<CoolDropdownItem<String>>? itemsList;
+  dynamic controller;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,39 +32,38 @@ class BuildStepperDropDownList extends StatelessWidget {
           padding: const EdgeInsets.all(5.0),
           child: Text(
             label!,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 16,
                 fontFamily: Lora,
                 fontWeight: FontWeight.bold,
                 color: Colors.blue),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 4,
         ),
         WillPopScope(
           onWillPop: () async {
-            if (reportsCubit!.problemTypeDropdownController.isOpen) {
-              reportsCubit!.problemTypeDropdownController.close();
+            if (controller.isOpen) {
+              controller.close();
               return Future.value(false);
             } else {
               return Future.value(true);
             }
           },
+          
+          
           child: CoolDropdown<String>(
-            controller: reportsCubit!.problemTypeDropdownController,
+            controller: controller,
             dropdownList: itemsList!,
             defaultItem: null,
-            onChange: (value) async {
-              if (reportsCubit!.problemTypeDropdownController.isError) {
-                await reportsCubit!.problemTypeDropdownController.resetError();
-              }
-              // reportsCubit!.problemTypeDropdownController.close();
-              print(value);
-            },
+            onChange: onChange!,
+            
+       
             onOpen: (value) {
               print(value);
             },
+            
             resultOptions: ResultOptions(
               textStyle: const TextStyle(
                   color: Colors.black,

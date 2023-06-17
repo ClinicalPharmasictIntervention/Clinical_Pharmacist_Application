@@ -1,4 +1,4 @@
-import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/cubit.dart';
+import 'package:clinical_pharmacist_intervention/business_logic/reports_cubit/reports_cubit.dart';
 import 'package:clinical_pharmacist_intervention/ui/elements/report_screen_textfield.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:cool_dropdown/customPaints/arrow_down_painter.dart';
@@ -25,7 +25,8 @@ class ReportScreenItem extends StatelessWidget {
     this.controller,
     this.validate,
     this.onComplete,
-    Key? key,
+    this.onChange,
+    Key? key, 
   }) : super(key: key);
 
   BuildContext context;
@@ -36,6 +37,8 @@ class ReportScreenItem extends StatelessWidget {
   var validate;
   var keyboardType;
   VoidCallback? onComplete;
+    Function (String s)? onChange;
+
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +64,7 @@ class ReportScreenItem extends StatelessWidget {
         readOnly: readOnly,
         hintSize: hintSize,
         onComplete: onComplete,
+        onChange:onChange,
       ),
     );
   }
